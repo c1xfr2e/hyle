@@ -1,0 +1,42 @@
+{
+    "[python]": {
+        "editor.fontFamily": "Monoid",
+        "editor.fontSize": 11,
+        "editor.tabSize": 4,
+    },
+    "python.autoComplete.extraPaths": [
+        "${.}",
+        "${workspaceFolder}",
+        "${workspaceFolder}/venv/lib/python3.9/site-packages",
+        "${workspaceFolder}/venv/lib/python3.9/site-packages/requests",
+    ],
+    "python.analysis.extraPaths": [
+        "${.}",
+        "${workspaceFolder}",
+        "${workspaceFolder}/venv/lib/python3.9/site-packages",
+        "${workspaceFolder}/venv/lib/python3.9/site-packages/requests"
+    ],
+    "python.formatting.provider": "black",
+    "python.formatting.yapfPath": "${workspaceFolder}/venv/bin/black",
+    "python.formatting.autopep8Args": [
+        "--max-line-length=500"
+    ],
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Path": "${workspaceFolder}/venv/bin/flake8",
+    "python.linting.flake8Args": [
+        "--ignore=E221,E265,E302,E305,E402,E128,E225,E226,F403,F405,E401,F401",
+        "--max-line-length=500"
+    ],
+    "python.analysis.disabled": [
+        "unresolved-import",
+        "inherit-non-class",
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/__pycache__": true
+    }
+}
