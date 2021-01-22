@@ -46,7 +46,7 @@ def get_fund_company_list(session):
     return co_list
 
 
-def save_fund_company_list(col, co_list):
+def store_fund_company_list(mongo_col, co_list):
     ops = [
         pymongo.UpdateOne(
             {"_id": i["gsid"]},
@@ -55,7 +55,7 @@ def save_fund_company_list(col, co_list):
         )
         for i in co_list
     ]
-    col.bulk_write(ops)
+    mongo_col.bulk_write(ops)
 
 
 if __name__ == "__main__":
@@ -63,4 +63,4 @@ if __name__ == "__main__":
     from eastmoney import db
 
     fund_co_list = get_fund_company_list(requests.Session())
-    save_fund_company_list(db.FundCompany, fund_co_list[0:20])
+    store_fund_company_list(db.FundCompany, fund_co_list[0:20])

@@ -4,14 +4,23 @@
     获取某家基金公司旗下的基金列表（按资产规模排序）
 """
 
-from bs4 import BeautifulSoup
+import logging
 from enum import Enum
+
+import pymongo
+from bs4 import BeautifulSoup
 
 
 # 机构类型
 class FondType(Enum):
     Stock = "001"  # 股票型
     Hybrid = "002"  # 混合型
+
+
+def _to_float(text):
+    if not text or text == "-":
+        return 0.0
+    return float(text)
 
 
 def _parse_row(row):
@@ -24,7 +33,7 @@ def _parse_row(row):
     return dict(
         name=a[0].text,
         code=a[1].text,
-        size=float(tds[8].text),
+        size=_to_float(tds[8].text),
         manager=tds[9].text.strip().split(" ")[0],
     )
 
@@ -45,14 +54,39 @@ def get_fund_list(session, gsid, fund_type):
 
     html = BeautifulSoup(resp.content, features="html.parser")
     rows = html.find("tbody").find_all("tr")
-    funds = [_parse_row(r) for r in rows]
+    funds = []
+    for r in rows:
+        f = _parse_row(r)
+        f["co_id"] = gsid
+        f["type"] = {"001": "stock", "002": "hybrid"}.get(fund_type, "")
+        funds.append(f)
     funds.sort(reverse=True, key=lambda x: x["size"])
     return funds
 
 
+def store_fund_list(mongo_col, fund_list, co_name):
+    ops = []
+    for i in fund_list:
+        i["co_name"] = co_name
+        ops.append(
+            pymongo.UpdateOne(
+                {"_id": i["code"]},
+                {"$set": i},
+                upsert=True,
+            )
+        )
+    mongo_col.bulk_write(ops)
+
+
 if __name__ == "__main__":
     import requests
-    from pprint import pprint
+    from eastmoney import db
 
-    fund_list = get_fund_list(requests.Session(), "80000251", FondType.Stock.value)
-    pprint(fund_list)
+    companies = db.FundCompany.find({})
+    sess = requests.Session()
+    for co in companies:
+        stock_funds = get_fund_list(sess, co["gsid"], FondType.Stock.value)
+        if not stock_funds:
+            logging.warning("no stock funds", co["gsid"], co["name"])
+            continue
+        store_fund_list(db.Fund, stock_funds, co["name"])
