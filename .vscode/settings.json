@@ -1,9 +1,4 @@
 {
-    "[python]": {
-        "editor.fontFamily": "Monoid",
-        "editor.fontSize": 11,
-        "editor.tabSize": 4,
-    },
     "python.autoComplete.extraPaths": [
         "${.}",
         "${workspaceFolder}",
@@ -17,7 +12,7 @@
         "${workspaceFolder}/venv/lib/python3.9/site-packages/requests"
     ],
     "python.formatting.provider": "black",
-    "python.formatting.yapfPath": "${workspaceFolder}/venv/bin/black",
+    "python.formatting.blackPath": "${workspaceFolder}/venv/bin/black",
     "python.formatting.autopep8Args": [
         "--max-line-length=500"
     ],
