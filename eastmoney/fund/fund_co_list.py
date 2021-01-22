@@ -6,13 +6,19 @@
 """
 
 import json
+import pymongo
+from datetime import datetime
 
 
-def get_fund_companies(session):
+def _to_float(text):
+    return float(text) if text else 0.0
+
+
+def get_fund_company_list(session):
     url = "http://fund.eastmoney.com/Data/FundRankScale.aspx"
     headers = {
-        "Accept": "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36",
+        "Accept": "*/*; q=0.01",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) Chrome/87.0.4280.141 Safari/537.36",
         "X-Requested-With": "XMLHttpRequest",
         "Referer": "http://fund.eastmoney.com/company/default.html",
         "Accept-Encoding": "gzip, deflate",
@@ -25,15 +31,36 @@ def get_fund_companies(session):
     text = '{"datas"' + resp.text[15:].replace("'", '"')
 
     # 按管理规模从高到低排序
-    fund_co_list = json.loads(text)["datas"]
-    fund_co_list.sort(reverse=True, key=lambda x: 0.0 if not x[7] else float(x[7]))
+    ret_list = json.loads(text)["datas"]
+    co_list = [
+        dict(
+            gsid=i[0],
+            name=i[9],
+            size=_to_float(i[7]),
+            regdate=datetime.strptime(i[2], "%Y-%m-%d"),
+        )
+        for i in ret_list
+    ]
+    co_list.sort(key=lambda x: x["size"], reverse=True)
 
-    return fund_co_list
+    return co_list
+
+
+def save_fund_company_list(col, co_list):
+    ops = [
+        pymongo.UpdateOne(
+            {"_id": i["gsid"]},
+            {"$set": i},
+            upsert=True,
+        )
+        for i in co_list
+    ]
+    col.bulk_write(ops)
 
 
 if __name__ == "__main__":
     import requests
+    from eastmoney import db
 
-    fund_co_list = get_fund_companies(requests.Session())
-    for f in fund_co_list[0:20]:
-        print(f[0], f[1], f[7])
+    fund_co_list = get_fund_company_list(requests.Session())
+    save_fund_company_list(db.FundCompany, fund_co_list[0:20])

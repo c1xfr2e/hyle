@@ -16,7 +16,11 @@ class FondType(Enum):
 
 def _parse_row(row):
     tds = row.find_all("td")
-    a = tds[0].findChildren()  # <td class="fund-name-code">
+    # <td class="fund-name-code">
+    #   <a>基金名</a>
+    #   <a>基金代码</a>
+    # </td>
+    a = tds[0].findChildren()
     return dict(
         name=a[0].text,
         code=a[1].text,
