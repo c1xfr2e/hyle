@@ -2,11 +2,10 @@
 # coding: utf-8
 
 """
-    请求基金公司列表
+    获取基金公司列表（按资产规模排序）
 """
 
 import json
-from pprint import pprint
 
 
 def get_fund_companies(session):
@@ -17,7 +16,7 @@ def get_fund_companies(session):
         "X-Requested-With": "XMLHttpRequest",
         "Referer": "http://fund.eastmoney.com/company/default.html",
         "Accept-Encoding": "gzip, deflate",
-        "Accept-Language": "en,zh-CN;q=0.9,zh;q=0.8 %d\n",
+        "Accept-Language": "en,zh-CN;q=0.9,zh;q=0.8",
     }
     resp = session.get(url, headers=headers)
 
@@ -25,12 +24,16 @@ def get_fund_companies(session):
     # 用单引号替换双引号
     text = '{"datas"' + resp.text[15:].replace("'", '"')
 
-    return json.loads(text)["datas"]
+    # 按管理规模从高到低排序
+    fund_co_list = json.loads(text)["datas"]
+    fund_co_list.sort(reverse=True, key=lambda x: 0.0 if not x[7] else float(x[7]))
+
+    return fund_co_list
 
 
 if __name__ == "__main__":
     import requests
 
-    fund_comp_list = get_fund_companies(requests.Session())
-    for f in fund_comp_list:
-        print(f[0], f[1])
+    fund_co_list = get_fund_companies(requests.Session())
+    for f in fund_co_list[0:20]:
+        print(f[0], f[1], f[7])
