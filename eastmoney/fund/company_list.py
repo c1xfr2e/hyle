@@ -14,7 +14,7 @@ def _to_float(text):
     return float(text) if text else 0.0
 
 
-def get_fund_company_list(session):
+def get_company_list(session):
     url = "http://fund.eastmoney.com/Data/FundRankScale.aspx"
     headers = {
         "Accept": "*/*; q=0.01",
@@ -46,7 +46,7 @@ def get_fund_company_list(session):
     return co_list
 
 
-def store_fund_company_list(mongo_col, co_list):
+def store_company_list(mongo_col, co_list):
     ops = [
         pymongo.UpdateOne(
             {"_id": i["gsid"]},
@@ -62,5 +62,5 @@ if __name__ == "__main__":
     import requests
     from eastmoney import db
 
-    fund_co_list = get_fund_company_list(requests.Session())
-    store_fund_company_list(db.FundCompany, fund_co_list[0:20])
+    fund_co_list = get_company_list(requests.Session())
+    store_company_list(db.FundCompany, fund_co_list[0:20])

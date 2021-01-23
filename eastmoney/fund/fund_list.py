@@ -23,8 +23,8 @@ def _to_float(text):
     return float(text)
 
 
-def _parse_row(row):
-    tds = row.find_all("td")
+def _parse_tr(tr):
+    tds = tr.find_all("td")
     # <td class="fund-name-code">
     #   <a>基金名</a>
     #   <a>基金代码</a>
@@ -53,10 +53,10 @@ def get_fund_list(session, gsid, fund_type):
     resp = session.get(url, headers=headers, params=params)
 
     html = BeautifulSoup(resp.content, features="html.parser")
-    rows = html.find("tbody").find_all("tr")
+    trs = html.find("tbody").find_all("tr")
     funds = []
-    for r in rows:
-        f = _parse_row(r)
+    for tr in trs:
+        f = _parse_tr(tr)
         f["co_id"] = gsid
         f["type"] = {"001": "stock", "002": "hybrid"}.get(fund_type, "")
         funds.append(f)
