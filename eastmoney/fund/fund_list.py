@@ -66,12 +66,15 @@ def get_fund_list(session, gsid, fund_type):
 
 def store_fund_list(mongo_col, fund_list, co_name):
     ops = []
-    for i in fund_list:
-        i["co_name"] = co_name
+    for f in fund_list:
+        # 跳过B类，C类基金
+        if f["name"][-1] in "BC":
+            continue
+        f["co_name"] = co_name
         ops.append(
             pymongo.UpdateOne(
-                {"_id": i["code"]},
-                {"$set": i},
+                {"_id": f["code"]},
+                {"$set": f},
                 upsert=True,
             )
         )
