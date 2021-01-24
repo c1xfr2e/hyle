@@ -96,8 +96,10 @@ if __name__ == "__main__":
 
     sess = requests.Session()
 
-    funds = db.Fund.find(projection=["_id"])
-
+    funds = db.Fund.find(
+        filter={"holdings": {"$exists": 0}},
+        projection=["_id"],
+    )
     holdings_list = [
         {
             "fund_id": f["_id"],
@@ -105,4 +107,5 @@ if __name__ == "__main__":
         }
         for f in funds
     ]
+
     store_holdings_list(db.Fund, holdings_list)

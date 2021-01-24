@@ -82,13 +82,19 @@ def store_fund_list(mongo_col, fund_list, co_name):
 
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(add_help=True)
+    parser.add_argument("-t", "--type", help="基金类型: 001(股票型) 002(混合型)", type=str, default="001")
+    args = parser.parse_args()
+
     import requests
     from eastmoney import db
 
     companies = db.FundCompany.find({})
     sess = requests.Session()
     for co in companies:
-        stock_funds = get_fund_list(sess, co["gsid"], FondType.Stock.value)
+        stock_funds = get_fund_list(sess, co["gsid"], args.type)
         if not stock_funds:
             logging.warning("no stock funds", co["gsid"], co["name"])
             continue
