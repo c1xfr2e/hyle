@@ -13,6 +13,10 @@
     ],
     "python.formatting.provider": "black",
     "python.formatting.blackPath": "${workspaceFolder}/venv/bin/black",
+    "python.formatting.blackArgs": [
+        "--line-length",
+        "500",
+    ],
     "python.formatting.autopep8Args": [
         "--max-line-length=500"
     ],
