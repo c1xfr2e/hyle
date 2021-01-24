@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding: utf-8
+
 """
     获取某家基金公司旗下的基金列表（按资产规模排序）
 """

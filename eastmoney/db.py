@@ -11,3 +11,4 @@ cli = pymongo.MongoClient(URI)[DB]
 
 FundCompany = cli["fund_company"]
 Fund = cli["fund"]
+Realloc = cli["realloc"]
