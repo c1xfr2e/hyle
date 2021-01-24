@@ -38,7 +38,7 @@ def diff_holdings(new_holding, old_holding):
                 "name": h["name"],
                 "code": h["code"],
                 "volume": h["share"] * -1,
-                "net_ratio": h["percent"],
+                "net_ratio": -h["percent"],
             }
         )
 

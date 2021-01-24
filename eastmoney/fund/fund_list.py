@@ -31,6 +31,9 @@ def _parse_tr(tr):
     #   <a>基金代码</a>
     # </td>
     a = tds[0].findChildren()
+    if not a:
+        logging.warning("_parse_tr", tr)
+        return None
     return dict(
         name=a[0].text,
         code=a[1].text,
@@ -58,6 +61,8 @@ def get_fund_list(session, gsid, fund_type):
     funds = []
     for tr in trs:
         f = _parse_tr(tr)
+        if not f:
+            continue
         f["co_id"] = gsid
         f["type"] = {"001": "stock", "002": "hybrid"}.get(fund_type, "")
         funds.append(f)
@@ -95,8 +100,8 @@ if __name__ == "__main__":
     companies = db.FundCompany.find({})
     sess = requests.Session()
     for co in companies:
-        stock_funds = get_fund_list(sess, co["gsid"], args.type)
-        if not stock_funds:
-            logging.warning("no stock funds", co["gsid"], co["name"])
+        funds = get_fund_list(sess, co["gsid"], args.type)
+        if not funds:
+            logging.warning("no funds", co["gsid"], co["name"])
             continue
-        store_fund_list(db.Fund, stock_funds, co["name"])
+        store_fund_list(db.Fund, funds, co["name"])

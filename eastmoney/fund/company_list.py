@@ -63,4 +63,4 @@ if __name__ == "__main__":
     from eastmoney import db
 
     fund_co_list = get_company_list(requests.Session())
-    store_company_list(db.FundCompany, fund_co_list[0:20])
+    store_company_list(db.FundCompany, fund_co_list[0:50])
