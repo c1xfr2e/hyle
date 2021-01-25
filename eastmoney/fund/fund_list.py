@@ -32,7 +32,7 @@ def _parse_tr(tr):
     # </td>
     a = tds[0].findChildren()
     if not a:
-        logging.warning("_parse_tr", tr)
+        logging.warning("unexpected tr %s", tr)
         return None
     return dict(
         name=a[0].text,
@@ -95,13 +95,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     import requests
-    from eastmoney import db
+    from eastmoney.fund import db
 
-    companies = db.FundCompany.find({})
+    companies = db.Company.find({})
     sess = requests.Session()
     for co in companies:
         funds = get_fund_list(sess, co["gsid"], args.type)
         if not funds:
-            logging.warning("no funds", co["gsid"], co["name"])
+            logging.warning("no funds: %s %s", co["gsid"], co["name"])
             continue
         store_fund_list(db.Fund, funds, co["name"])
