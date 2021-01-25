@@ -66,9 +66,9 @@ def diff_position(new_position, old_position):
                 "type": "inc" if volume_change > 0 else "dec",
                 "name": pnew["name"],
                 "code": pnew["code"],
-                "volume": round(volume_change / 10000, 2),
-                "value": round(pnew["value"] - pold["value"], 2),
-                "percent": round(pnew["percent"] - pold["percent"], 2),
+                "volume": abs(round(volume_change / 10000, 2)),
+                "value": abs(round(pnew["value"] - pold["value"], 2)),
+                "percent": abs(round(pnew["percent"] - pold["percent"], 2)),
             }
         )
 
