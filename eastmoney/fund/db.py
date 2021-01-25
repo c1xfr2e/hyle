@@ -9,7 +9,6 @@ DB = "Habermas"
 
 cli = pymongo.MongoClient(URI)[DB]
 
-FundCompany = cli["fund_company"]
+Company = cli["company"]
 Fund = cli["fund"]
-Realloc = cli["realloc"]
-CompanyRealloc = cli["company_realloc"]
+CompanyPositionChange = cli["company_position_change"]

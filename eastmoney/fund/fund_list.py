@@ -6,10 +6,9 @@
 """
 
 import logging
-from enum import Enum
-
 import pymongo
 from bs4 import BeautifulSoup
+from enum import Enum
 
 
 # 机构类型

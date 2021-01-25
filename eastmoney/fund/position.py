@@ -2,7 +2,7 @@
 # coding: utf-8
 
 """
-    获取基金季度持仓
+    获取基金持仓情况
 """
 
 import pymongo
@@ -42,12 +42,12 @@ def _parse_tr(tr):
         code=tds[1].text,
         name=tds[2].text,
         percent=_to_percent(tds[-3].text),
-        share=_to_float(tds[-2].text.replace(",", "")),
+        volume=_to_float(tds[-2].text.replace(",", "")),
         value=_to_float(tds[-1].text.replace(",", "")),
     )
 
 
-def get_holdings(session, fund_code):
+def get_fund_position_list(session, fund_code):
     url = "http://fundf10.eastmoney.com/FundArchivesDatas.aspx"
     headers = {
         "Host": "fundf10.eastmoney.com",
@@ -64,52 +64,52 @@ def get_holdings(session, fund_code):
     }
     resp = session.get(url, headers=headers, params=params)
 
-    holdings_by_date = []
+    position_list = []
     html = BeautifulSoup(resp.content, features="html.parser")
     divs = html.find_all("div", "box")
     for div in divs:
-        holdings = []
+        position = []
         date = div.find("font").text
         trs = div.find("tbody")("tr")
         for tr in trs:
             r = _parse_tr(tr)
             if not r:
                 continue
-            holdings.append(r)
-        holdings_by_date.append(
+            position.append(r)
+        position_list.append(
             dict(
                 date=date,
-                holdings=holdings,
+                position=position,
             )
         )
 
-    return holdings_by_date
+    return position_list
 
 
-def store_holdings_list(mongo_col, holdings_list):
+def store_fund_position_list(mongo_col, position_list):
     ops = [
         pymongo.UpdateOne(
-            {"_id": holdings["fund_id"]},
-            {"$set": {"holdings": holdings["holdings"]}},
+            {"_id": position["fund_id"]},
+            {"$set": {"position": position["position"]}},
         )
-        for holdings in holdings_list
+        for position in position_list
     ]
     mongo_col.bulk_write(ops)
 
 
 if __name__ == "__main__":
     import requests
-    from eastmoney import db
+    from eastmoney.fund import db
 
     sess = requests.Session()
 
     funds = db.Fund.find(projection=["_id"])
-    holdings_list = [
+    position_list = [
         {
             "fund_id": f["_id"],
-            "holdings": get_holdings(sess, f["_id"]),
+            "position": get_fund_position_list(sess, f["_id"]),
         }
         for f in funds
     ]
 
-    store_holdings_list(db.Fund, holdings_list)
+    store_fund_position_list(db.Fund, position_list)
