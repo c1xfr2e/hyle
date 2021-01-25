@@ -57,7 +57,7 @@ def diff_position(new_position, old_position):
         )
 
     for c in update_stock_codes:
-        pold, pnew = old[c], new[c]
+        pnew, pold = new[c], old[c]
         volume_change = pnew["volume"] * 10000 - pold["volume"] * 10000
         if volume_change == 0:
             continue
@@ -68,7 +68,7 @@ def diff_position(new_position, old_position):
                 "code": pnew["code"],
                 "volume": round(volume_change / 10000, 2),
                 "value": round(pnew["value"] - pold["value"], 2),
-                "percent": pnew["percent"],
+                "percent": round(pnew["percent"] - pold["percent"], 2),
             }
         )
 
