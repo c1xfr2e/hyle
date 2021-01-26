@@ -12,7 +12,7 @@ TEMPLATE = """
 {% for fund in fund_list %}
 ### {{fund.name}} {{fund.code}}
 
-| 操作 |股票 | 代码 | 股数 | 市值 | 净值比 |
+| 操作 |股票 | 代码 | 股数（万） | 市值（万）| 净值比 |
 |:------|:------ |:------|:------|:------|:------|
 {% for pc in fund.position_change %}
 | <span style="color:{{pc.color}}">{{pc.operation}}</span> | {{pc.name}} | {{pc.code}} | {{pc.volume}} | {{pc.value}} | {{pc.percent}}% |
