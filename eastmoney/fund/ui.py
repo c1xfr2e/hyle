@@ -2,9 +2,12 @@
 # coding: utf-8
 
 import jinja2
+import os
 
 from eastmoney.fund import db
 
+
+REPORT_DATE = "2020-12-31"
 
 TEMPLATE = """
 # 基金持仓变动 {{report_date}}
@@ -66,9 +69,12 @@ if __name__ == "__main__":
 
     tpl = jinja2.Template(TEMPLATE, trim_blocks=True)
     text = tpl.render(
-        report_date="2020-12-31",
+        report_date=REPORT_DATE,
         fund_list=fund_list,
     )
 
-    with open("./positions.md", "w", encoding="utf-8") as f:
+    outdir = "./output"
+    if not os.path.exists(outdir):
+        os.makedirs(outdir)
+    with open("./output/position-change-{}.md".format(REPORT_DATE), "w", encoding="utf-8") as f:
         f.write(text)
