@@ -1,0 +1,128 @@
+{
+    "Result": {
+        "SuoShuBanKuaiList": [
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "486",
+                "TypeName": "文化传媒",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "923",
+                "TypeName": "字节概念",
+                "Reason": "2020年5月27日回复称蓝色光标与今日头条及抖音互为客户关系,彼此有非常紧密的合作!今日头条是蓝色光标在国内最大的合作伙伴之一,我们与今日头条在品牌、效果、出海、KOL运营商等全方位建立了紧密的合作关系。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "919",
+                "TypeName": "RCS概念",
+                "Reason": "2020年4月8日在互动平台回复投资者提问称:公司旗下亿动Madhouse公司的线上精准受众投放平台(PDB程序化购买平台)PremiumMad 是富媒体(RCS)的一种,但区别于其他形式,PremiumMad更强调优质的媒体与流量。该平台通过API方式对接市场上每类垂直TOP10优质媒体流量,全面符合MMA China(中国无线营销联盟)广告监测与主流第三方监测标准;广告版位全为媒体原生版位(原生开机/信息流/焦点图),无长尾流量及无效banner位;广告主可以通过平台对接的120+主流媒体做跨媒体受众投放,相比传统的媒体包天购买,Premiummad可以实现CPM(按千次展示)收费模式,同时能利用Madhouse的数据标签,充分将广告主预算最大化去触达目标受众。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "867",
+                "TypeName": "富时罗素",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "742",
+                "TypeName": "创业板综",
+                "Reason": "",
+                "Accuracy": ""
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "821",
+                "TypeName": "MSCI中国",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "804",
+                "TypeName": "深股通",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "940",
+                "TypeName": "网红直播",
+                "Reason": "2020年4月28日回复称公司帮助广告主/客户请头部网红进行直播带货业务!公司也开始代理海外网红的业务,签约了一批海外MCN机构和海外知名网红,帮助客户提高海外营销效率。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "830",
+                "TypeName": "区块链",
+                "Reason": "2018年3月28日,联想控股和孙陶然先生持有的拉卡拉集团与蓝色光标宣布成立联合的大数据研究院“昆仑堂”,首先成立了云计算,人工智能、机器人和区块链4个实验室。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "800",
+                "TypeName": "人工智能",
+                "Reason": "2012年1月份,公司增资800万元获得上海智瑧网络的20%股权,该公司拥有具有核心专利技术的人工智能信息交互平台“小i机器人”,小i机器人是中国最大的智能机器提供商,应用覆盖智能终端,智能客服等方面。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "701",
+                "TypeName": "中证500",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "662",
+                "TypeName": "在线教育",
+                "Reason": "2020年2月7日,公司董秘回应称公司今年1月参投了教育科技公司,该公司为教育信息化综合解决方案提供商,其核心产品的云教学系统深度融合了互联网科技与实际教学,实现了中小学校在线信息化教学,为教师提供了协同办公平台。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "638",
+                "TypeName": "创业成份",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "634",
+                "TypeName": "大数据",
+                "Reason": "2019年11月22日回复称蓝色光标iDataBot是一款基于机器学习和大数据处理技术的综合性营销传播数据产品、解决方案与服务平台。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "596",
+                "TypeName": "融资融券",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "568",
+                "TypeName": "深成500",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "300058.SZ",
+                "TypeCode": "150",
+                "TypeName": "北京板块",
+                "Reason": "",
+                "Accuracy": "0"
+            }
+        ]
+    },
+    "Status": 0,
+    "Message": "",
+    "OtherInfo": {}
+}

@@ -1,0 +1,114 @@
+{
+    "Result": {
+        "SuoShuBanKuaiList": [
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "425",
+                "TypeName": "工程建设",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "879",
+                "TypeName": "标准普尔",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "867",
+                "TypeName": "富时罗素",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "821",
+                "TypeName": "MSCI中国",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "718",
+                "TypeName": "证金持股",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "707",
+                "TypeName": "沪股通",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "705",
+                "TypeName": "上证380",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "683",
+                "TypeName": "国企改革",
+                "Reason": "最终控股股东为国务院国资委",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "596",
+                "TypeName": "融资融券",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "505",
+                "TypeName": "中字头",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "500",
+                "TypeName": "HS300_",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "494",
+                "TypeName": "节能环保",
+                "Reason": "2020年12月28日回复称公司的下属相关子公司拥有污水处理项目业务。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "492",
+                "TypeName": "煤化工",
+                "Reason": "2020年半年报显示建筑工程业务是公司的核心业务,涵盖化工、煤化工、石油化工、新材料、电力、环保、基础设施等领域。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "150",
+                "TypeName": "北京板块",
+                "Reason": "",
+                "Accuracy": "0"
+            },
+            {
+                "SecurityCode": "601117.SH",
+                "TypeCode": "712",
+                "TypeName": "一带一路",
+                "Reason": "公司响应国家“一带一路”和“国际产能合作”号召,充分利用现有资源及国家政策优势,积极拓展相关国家市场,2016年公司在俄罗斯、印尼、伊朗、马来西亚等市场签约重大项目,境外新签合同336亿元。提出了以沙特为中心,辐射中东;以俄罗斯为中心,辐射中亚及俄语区;以印尼为中心,辐射东南亚;以巴基斯坦为中心,辐射南亚的海外市场布局战略",
+                "Accuracy": "1"
+            }
+        ]
+    },
+    "Status": 0,
+    "Message": "",
+    "OtherInfo": {}
+}

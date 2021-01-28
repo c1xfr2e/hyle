@@ -1,0 +1,4 @@
+curl -H 'Host: datacenter.eastmoney.com' -H 'Origin: null' -H 'Accept: application/json, text/plain, */*' \
+-H 'User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 iphonex color=b eastmoney_ios appversion_9.0.3 pkg=com.eastmoney.iphone mainBagVersion=9.0.3 statusBarHeight=44.000000 titleBarHeight=44.000000 density=3.000000 fontsize=2' \
+-H 'Accept-Language: zh-cn' \
+--compressed 'https://datacenter.eastmoney.com/securities/api/data/get?filter=(SECUCODE%3D%22300058.SZ%22)&client=APP&source=SECURITIES&type=RPT_F10_FN_QUARTER&sty=SECUCODE,SECURITY_CODE,DATE_TYPE_CODE,REPORT_DATE,YEAR,NET_PROFIT_Q,DEDUCTED_NET_PROFIT_Q,OPERATE_INCOME_Q,EPS_Q,NET_PROFIT_RATIO,DEDUCTED_NET_PROFIT_RATIO,OPERATE_INCOME_RATIO,EPS_RATIO,NET_PROFIT_Q_SIGNAL,DEDUCTED_SIGNAL,OPERATE_SIGNAL,EPS_SIGNAL,TOTAL_OPERATE_INCOME_ZZ,PARENT_NETPROFIT_ZZ,BASIC_EPS_ZZ,DEDUCT_PARENT_NETPROFIT_ZZ,GROUP_ID,ORDER_ID,ISINT'
