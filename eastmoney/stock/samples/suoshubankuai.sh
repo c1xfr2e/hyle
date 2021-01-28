@@ -1,4 +1,5 @@
-curl -H 'Host: emh5.eastmoney.com' \
+curl -i \
+-H 'Host: emh5.eastmoney.com' \
 -H 'Content-Type: application/json;charset=utf-8' \
 -H 'Origin: null' \
 -H 'Accept: application/json, text/plain, */*' \

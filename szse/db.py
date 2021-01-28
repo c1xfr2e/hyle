@@ -9,7 +9,4 @@ DB = "Athena"
 
 cli = pymongo.MongoClient(URI)[DB]
 
-
 Stock = cli["stock"]
-Shareholder = cli["shareholder"]
-Finance = cli["finance"]
