@@ -21,6 +21,12 @@
       "type": "python",
       "request": "launch",
       "module": "szse.${fileBasenameNoExtension}"
+    },
+    {
+      "name": "shse",
+      "type": "python",
+      "request": "launch",
+      "module": "shse.${fileBasenameNoExtension}"
     }
   ]
 }
