@@ -35,7 +35,7 @@ def get_app_topics(session, stock_code, market_code):
         "mainBagVersion": "9.0.3",
         "bankocr": "1",
     }
-    resp = requests.post(url, headers=headers, json=payload)
+    resp = session.post(url, headers=headers, json=payload)
     resp.encoding = "utf-8"
     return resp.json()
 
