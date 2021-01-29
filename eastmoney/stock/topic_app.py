@@ -5,8 +5,7 @@
     获取东方财富 App 股票核心题材
 """
 
-from pprint import pprint
-from urllib.parse import urldefrag
+import logging
 import requests
 
 
@@ -56,7 +55,7 @@ def store_app_topics(mongo_col, stock, topic_list):
         upsert=True,
     )
     if r.raw_result["nModified"] != 1:
-        print(r.raw_result)
+        logging.warning("Update topic failed: %s", r.raw_result)
 
 
 if __name__ == "__main__":

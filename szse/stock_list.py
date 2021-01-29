@@ -97,8 +97,3 @@ if __name__ == "__main__":
 
     stock_list = get_stock_list()
     store_stock_list(db.Stock, stock_list)
-
-    # stock_list = get_stock_list()
-    # print(len([s.code for s in stock_list]))
-    # s = stock_list[0]
-    # print(s._asdict())
