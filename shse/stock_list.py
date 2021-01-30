@@ -41,9 +41,6 @@ stock = namedtuple(
     ],
 )
 
-STOCK_TYPE_MAIN = 1
-STOCK_TYPE_KCB = 8
-
 
 def _get_stock_list_by_page(page: int, stock_type) -> List[stock]:
     url = "http://query.sse.com.cn/security/stock/getStockListData.do"
@@ -94,7 +91,7 @@ def get_stock_list(stock_type) -> List[stock]:
     return stock_list
 
 
-def store_stock_list(mongo_col, stock_list):
+def store_stock_list(mongo_col, stock_list, market):
     ops = [
         pymongo.UpdateOne(
             {"_id": stock.code},
@@ -103,6 +100,7 @@ def store_stock_list(mongo_col, stock_list):
                     "code": stock.code,
                     "name": stock.name,
                     "list_date": stock.list_date,
+                    "market": market,
                     "update_time": datetime.now(),
                 }
             },
@@ -116,10 +114,13 @@ def store_stock_list(mongo_col, stock_list):
 if __name__ == "__main__":
     from shse import db
 
+    STOCK_TYPE_MAIN = 1
+    STOCK_TYPE_KCB = 8
+
     # 主板
     main = get_stock_list(STOCK_TYPE_MAIN)
-    store_stock_list(db.Stock, main)
+    store_stock_list(db.Stock, main, "sh")
 
     # 科创板
     kcb = get_stock_list(STOCK_TYPE_KCB)
-    store_stock_list(db.Stock, kcb)
+    store_stock_list(db.Stock, kcb, "kcb")

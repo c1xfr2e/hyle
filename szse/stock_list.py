@@ -14,9 +14,6 @@ from datetime import datetime
 from typing import List
 
 
-log = logging.getLogger(__name__)
-
-
 def is_downloadable(url) -> bool:
     """
     Does the url contain a downloadable resource?
@@ -48,7 +45,7 @@ def get_stock_list() -> List[stock]:
     url = "http://www.szse.cn/api/report/ShowReport?SHOWTYPE=xls&CATALOGID=1110&TABKEY=tab1"
     resp = requests.get(url)
     if not resp.ok:
-        log.error("request failed: url=%s, response=%s", url, resp)
+        logging.error("request failed: url=%s, response=%s", url, resp)
         exit(-1)
     wb = xlrd.open_workbook(file_contents=resp.content)
     st = wb.sheet_by_index(0)
@@ -82,6 +79,7 @@ def store_stock_list(mongo_col, stock_list):
                     "float_shares": stock.float_shares,
                     "industry": stock.industry,
                     "list_date": stock.list_date,
+                    "market": "sz",
                     "update_time": datetime.now(),
                 }
             },
