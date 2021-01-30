@@ -14,7 +14,7 @@ def get_app_topics(session, stock_code, market_code):
     headers = {
         "Content-Type": "application/json;charset=utf-8",
         "Accept": "application/json, text/plain, */*",
-        "User-Agent": "User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 iphonex color=b eastmoney_ios appversion_9.0.3 pkg=com.eastmoney.iphone",
+        "User-Agent": "User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) Mobile/15E148 iphonex color=b eastmoney_ios appversion_9.0.3 pkg=com.eastmoney.iphone",
         "Cache-Control": "public",
         "Accept-Language": "zh-cn",
     }
@@ -40,6 +40,28 @@ def get_app_topics(session, stock_code, market_code):
     return resp.json()
 
 
+def _topic_filter(t):
+    exclude_names = [
+        "融资融券",
+        "富时罗素",
+        "标准普尔",
+        "MSCI中国",
+        "深股通",
+        "AH股",
+        "创业板综",
+        "50",
+        "100",
+        "180",
+        "300",
+        "380",
+        "500",
+    ]
+    for n in exclude_names:
+        if n in t["TypeName"]:
+            return False
+    return True
+
+
 def store_app_topics(mongo_col, stock, topic_list):
     topics = [
         {
@@ -47,7 +69,7 @@ def store_app_topics(mongo_col, stock, topic_list):
             "reason": t["Reason"],
         }
         for t in topic_list
-        if t["Accuracy"] == "1"
+        if _topic_filter(t)
     ]
     r = mongo_col.update_one(
         {"_id": stock["code"]},
@@ -61,7 +83,12 @@ def store_app_topics(mongo_col, stock, topic_list):
 if __name__ == "__main__":
     from eastmoney.stock import db
 
-    stock_cols = db.Stock.find({})
+    stock_cols = db.Stock.find({"market": "kcb"})
     for stock in stock_cols:
-        t = get_app_topics(requests.Session(), stock["code"], "02")
-        store_app_topics(db.Stock, stock, t["Result"]["SuoShuBanKuaiList"])
+        market_code = {
+            "sh": "01",
+            "kcb": "01",
+            "sz": "02",
+        }[stock["market"]]
+        topic = get_app_topics(requests.Session(), stock["code"], market_code)
+        store_app_topics(db.Stock, stock, topic["Result"]["SuoShuBanKuaiList"])
