@@ -47,7 +47,7 @@ def _sort_position_change_to_list(co_position_change):
 
 def obtain_company_position_change(report_date):
     co_position_change_list = []
-    companies = db.Company.find({})
+    companies = db.FundCompany.find({})
     for co in companies:
         position_changes = db.PositionUpdate.find(
             filter={

@@ -5,10 +5,10 @@ import pymongo
 
 
 URI = "mongodb://localhost:27017"
-DB = "Habermas"
+DB = "hyle"
 
 cli = pymongo.MongoClient(URI)[DB]
 
-Company = cli["company"]
+FundCompany = cli["fund_company"]
 Fund = cli["fund"]
 CompanyPositionChange = cli["company_position_change"]

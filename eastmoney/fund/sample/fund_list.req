@@ -1,4 +1,4 @@
-GET /Company/home/KFSFundNet?gsid=80000251&fundType=001 HTTP/1.1
+GET /FundCompany/home/KFSFundNet?gsid=80000251&fundType=001 HTTP/1.1
 Host: fund.eastmoney.com
 Connection: keep-alive
 Cache-Control: max-age=0

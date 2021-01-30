@@ -42,10 +42,10 @@ def _parse_tr(tr):
 
 
 def get_fund_list(session, gsid, fund_type):
-    url = "http://fund.eastmoney.com/Company/home/KFSFundNet"
+    url = "http://fund.eastmoney.com/FundCompany/home/KFSFundNet"
     headers = {
         "Accept": "text/html, */*; q=0.01",
-        "Referer": "http://fund.eastmoney.com/Company/{gsid}.html".format(gsid=gsid),
+        "Referer": "http://fund.eastmoney.com/FundCompany/{gsid}.html".format(gsid=gsid),
         "X-Requested-With": "XMLHttpRequest",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) Chrome/87.0.4280.141 Safari/537.36",
     }
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     import requests
     from eastmoney.fund import db
 
-    companies = db.Company.find({})
+    companies = db.FundCompany.find({})
     sess = requests.Session()
     for co in companies:
         funds = get_fund_list(sess, co["gsid"], args.type)
