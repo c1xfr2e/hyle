@@ -1,0 +1,125 @@
+{
+    "Result": {
+        "ZuiXinZhiBiao": {
+            "ReportDate": "2020-09-30",
+            "SecurityCode": "688299.SH",
+            "CodeType": 1,
+            "ReportType": "0",
+            "PE": "35.78",
+            "PB": "3.79",
+            "EPS": "0.4783",
+            "BPS": "6.0235",
+            "TotalIncome": "7.36亿",
+            "TotalIncomeYOY": "16.55%",
+            "NetProfit": "1.352亿",
+            "NetProfitYOY": "38.44%",
+            "GrossMargin": "35.61%",
+            "NetMargin": "18.37%",
+            "WeightedYieldOnNetAssets": "8.14%",
+            "AssetLiabilityRatio": "20.18%",
+            "TotalShareCapital": "2.826亿",
+            "TotalMarketValue": "64.48亿",
+            "ShareA": "2.826亿",
+            "MaketValueA": "64.48亿",
+            "TradableShareA": "2.226亿",
+            "TradableMarketValueA": "50.8亿",
+            "ShareB": "--",
+            "MaketValueB": "--",
+            "TradableShareB": "--",
+            "TradableMarketValueB": "--",
+            "CapitalAdequacyRatio": "--",
+            "NPLRatio": "--",
+            "NPLProvisionCoverage": "--",
+            "Commreve": "--",
+            "CommreveYOY": "--",
+            "Premiumearned": "--",
+            "Comexpend": "--",
+            "SurrenderRate": "--",
+            "SolvencyRatio": "--",
+            "SecurityCodeType": 1,
+            "CompanyType": "4",
+            "ListingState": "0",
+            "CodeTypeName": "A股",
+            "CDRNum": "--",
+            "CDRZs": "--",
+            "IsProfit": "是",
+            "IsVotDif": "否",
+            "VotRatio": "--",
+            "SecurityShortName": "长阳科技",
+            "AmtShareRatio": "0.91%",
+            "Goodwill": "--",
+            "Rdexp": "3448万",
+            "RdexpRatio": "4.69%",
+            "Researchstaff": "--",
+            "ResearchstaffRatio": "--"
+        },
+        "SuoShuBanKuaiList": [
+            {
+                "SecurityCode": "688299.SH",
+                "TypeCode": "877",
+                "TypeName": "PCB",
+                "Reason": "TPX离型膜主要用于FPC柔性电路板的压合。目前公司已成功研发了普通型和高阻胶型两大系列的TPX离型膜产品,并实现了小批量的生产和销售。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "TypeCode": "854",
+                "TypeName": "华为概念",
+                "Reason": "2020年3月6日回复称公司主要产品有应用在华为的相关电视终端产品上。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "TypeCode": "588",
+                "TypeName": "太阳能",
+                "Reason": "生产太阳能光伏电池背板的中间层背板基膜。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "TypeCode": "580",
+                "TypeName": "LED",
+                "Reason": "半导体照明用反射膜是高端LED面板灯的重要组成部分,主要用途是将从导光板漏出的光线再反射回出光面,从而提高光利用率、达到节能、增亮的作用。",
+                "Accuracy": "1"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "TypeCode": "523",
+                "TypeName": "新材料",
+                "Reason": "根据国家统计局2018年公布的《战略性新兴产业分类(2018)》(国家统计局令第23号),公司所从事的行业归属于新材料产业中的光学膜制造。",
+                "Accuracy": "1"
+            }
+        ],
+        "XiangGuanGeGuList": null,
+        "DaShiTiXingList": [
+            {
+                "NoticeDate": "2021-04-09",
+                "Content": "披露2020年年报",
+                "EventType": "报表披露"
+            },
+            {
+                "NoticeDate": "2021-01-07",
+                "Content": "杭州南海成长投资合伙企业(有限合伙)于2020-12-16至2021-01-05减持135万股,变动数量占流通股比例0.61%",
+                "EventType": "股东增减持"
+            },
+            {
+                "NoticeDate": "2020-11-07",
+                "Content": "非控股股东陈素娥等计划自2020-11-12起至2021-05-29止进行减持,拟减持股数不超过2946万股,占总股本比例不超过10.43%",
+                "EventType": "增减持计划"
+            },
+            {
+                "NoticeDate": "2020-11-06",
+                "Content": "解禁数量1.549亿股,占总股本比例54.82%,股份类型:首发原股东限售股份",
+                "EventType": "限售解禁"
+            },
+            {
+                "NoticeDate": "2020-10-29",
+                "Content": "2020年三季报归属净利润1.352亿元,同比增长38.44%,基本每股收益0.48元",
+                "EventType": "报表披露"
+            }
+        ]
+    },
+    "Status": 0,
+    "Message": null,
+    "OtherInfo": {}
+}

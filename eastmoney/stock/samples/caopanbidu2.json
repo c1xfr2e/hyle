@@ -1,0 +1,719 @@
+{
+    "Result": {
+        "TiCaiXiangQingList": [
+            {
+                "SecurityCode": "688299.SH",
+                "KeyWord": "聚酯薄膜行业",
+                "MainPoint": "4",
+                "MainPointCon": "",
+                "Classification": "004",
+                "ClassificationName": "行业背景",
+                "IsPoint": "1"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "KeyWord": "技术优势",
+                "MainPoint": "5",
+                "MainPointCon": "",
+                "Classification": "005",
+                "ClassificationName": "核心竞争力",
+                "IsPoint": "1"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "KeyWord": "工艺优势",
+                "MainPoint": "6",
+                "MainPointCon": "",
+                "Classification": "005",
+                "ClassificationName": "核心竞争力",
+                "IsPoint": "1"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "KeyWord": "丰富的研发经验",
+                "MainPoint": "7",
+                "MainPointCon": "",
+                "Classification": "005",
+                "ClassificationName": "核心竞争力",
+                "IsPoint": "1"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "KeyWord": "自愿锁定股份",
+                "MainPoint": "9",
+                "MainPointCon": "",
+                "Classification": "008005",
+                "ClassificationName": "自愿锁定",
+                "IsPoint": "1"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "KeyWord": "股利分配",
+                "MainPoint": "8",
+                "MainPointCon": "",
+                "Classification": "010",
+                "ClassificationName": "其他项目",
+                "IsPoint": "1"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "KeyWord": "稳定股价措施",
+                "MainPoint": "10",
+                "MainPointCon": "",
+                "Classification": "010",
+                "ClassificationName": "其他项目",
+                "IsPoint": "1"
+            }
+        ],
+        "GuBenGuDong": {
+            "ReportDate": "2020-11-06",
+            "SecurityCode": "688299.SH",
+            "TotalEquity": "2.83亿",
+            "TotalEquityPercent": "100.00%",
+            "Ashares": "2.23亿",
+            "ASharesPercent": "78.79%",
+            "ASharesPercentChart": "78.7889624400805",
+            "RestrictedCirculationShares": "5993.57万",
+            "RestrictedCirculationSharesPercent": "21.21%",
+            "RestrictedCirculationSharesPercentChart": "21.2110375599195"
+        },
+        "GuDongRenShuUnit": "",
+        "GuDongRenShuList": [
+            {
+                "SecurityCode": "688299.SH",
+                "ChangeDate": "2020-09-30",
+                "TotalSh": "1.285万",
+                "TotalShChart": "12853",
+                "ChangeWithLastTermSh": "-12.13%",
+                "AvgShare": "5269",
+                "ChangeWithLastTermShare": "13.81%",
+                "StockPrice": "26.91",
+                "StockConvergenceRate": "非常集中",
+                "SumLishold": "56.08",
+                "SumCirLishold": "3.13"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ChangeDate": "2020-06-30",
+                "TotalSh": "1.463万",
+                "TotalShChart": "14628",
+                "ChangeWithLastTermSh": "6.09%",
+                "AvgShare": "4630",
+                "ChangeWithLastTermShare": "-1.26%",
+                "StockPrice": "28.69",
+                "StockConvergenceRate": "较集中",
+                "SumLishold": "56.08",
+                "SumCirLishold": "1.754"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ChangeDate": "2020-03-31",
+                "TotalSh": "1.379万",
+                "TotalShChart": "13788",
+                "ChangeWithLastTermSh": "-26.69%",
+                "AvgShare": "4689",
+                "ChangeWithLastTermShare": "36.40%",
+                "StockPrice": "19.35",
+                "StockConvergenceRate": "较集中",
+                "SumLishold": "56.08",
+                "SumCirLishold": "1.656"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ChangeDate": "2019-12-31",
+                "TotalSh": "1.881万",
+                "TotalShChart": "18807",
+                "ChangeWithLastTermSh": "-67.29%",
+                "AvgShare": "3438",
+                "ChangeWithLastTermShare": "205.75%",
+                "StockPrice": "17.29",
+                "StockConvergenceRate": "较集中",
+                "SumLishold": "56.08",
+                "SumCirLishold": "2.269"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ChangeDate": "2019-11-06",
+                "TotalSh": "5.75万",
+                "TotalShChart": "57502",
+                "ChangeWithLastTermSh": "155310.81%",
+                "AvgShare": "1124",
+                "ChangeWithLastTermShare": "--",
+                "StockPrice": "17.86",
+                "StockConvergenceRate": "非常分散",
+                "SumLishold": "56.08",
+                "SumCirLishold": "--"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ChangeDate": "2017-06-30",
+                "TotalSh": "24",
+                "TotalShChart": "24",
+                "ChangeWithLastTermSh": "140.00%",
+                "AvgShare": "652.7万",
+                "ChangeWithLastTermShare": "402.58%",
+                "StockPrice": "--",
+                "StockConvergenceRate": "非常集中",
+                "SumLishold": "80.12",
+                "SumCirLishold": "--"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ChangeDate": "2017-04-24",
+                "TotalSh": "10",
+                "TotalShChart": "10",
+                "ChangeWithLastTermSh": "11.11%",
+                "AvgShare": "129.9万",
+                "ChangeWithLastTermShare": "--",
+                "StockPrice": "--",
+                "StockConvergenceRate": "非常集中",
+                "SumLishold": "--",
+                "SumCirLishold": "--"
+            }
+        ],
+        "GuDongTongJi": {
+            "SecurityCode": "688299.SH",
+            "ReportDate": "",
+            "ActualController": "金亚东",
+            "ActualControllerRate": "16.06%",
+            "ShareholderController": "金亚东",
+            "ShareholderControllerRate": "16.06%",
+            "ShareHolder": "合计持股",
+            "ShareHolderRate": "24.14%",
+            "CirShareHolder": "QFII新进",
+            "CirShareHolderRate": "1.42%",
+            "OrgHolderNum": "10",
+            "OrgHolderRate": "9.78%",
+            "OrgHolderNumPre": "39",
+            "OrgHolderRatePre": "5.12%"
+        },
+        "ZhuYingGouChengList": [
+            {
+                "SecurityCode": "688299.SH",
+                "ReportType": "1",
+                "ReportDate": "2019-12-31",
+                "MainForm": "特种功能膜",
+                "MainIncome": "8.969亿",
+                "MainIncomeRatio": "98.53%",
+                "MainIncomeRatioChart": "98.532515503757",
+                "Flag": "0"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportType": "1",
+                "ReportDate": "2019-12-31",
+                "MainForm": "其他(补充)",
+                "MainIncome": "1336万",
+                "MainIncomeRatio": "1.47%",
+                "MainIncomeRatioChart": "1.46748449624301",
+                "Flag": "0"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportType": "2",
+                "ReportDate": "2019-12-31",
+                "MainForm": "内销",
+                "MainIncome": "6.294亿",
+                "MainIncomeRatio": "69.15%",
+                "MainIncomeRatioChart": "69.1468298028907",
+                "Flag": "0"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportType": "2",
+                "ReportDate": "2019-12-31",
+                "MainForm": "外销",
+                "MainIncome": "2.675亿",
+                "MainIncomeRatio": "29.39%",
+                "MainIncomeRatioChart": "29.3856857008663",
+                "Flag": "0"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportType": "2",
+                "ReportDate": "2019-12-31",
+                "MainForm": "其他(补充)",
+                "MainIncome": "1336万",
+                "MainIncomeRatio": "1.47%",
+                "MainIncomeRatioChart": "1.46748449624301",
+                "Flag": "0"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportType": "3",
+                "ReportDate": "2019-12-31",
+                "MainForm": "反射膜",
+                "MainIncome": "6.584亿",
+                "MainIncomeRatio": "72.34%",
+                "MainIncomeRatioChart": "72.335630011989",
+                "Flag": "0"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportType": "3",
+                "ReportDate": "2019-12-31",
+                "MainForm": "光学基膜",
+                "MainIncome": "1.835亿",
+                "MainIncomeRatio": "20.16%",
+                "MainIncomeRatioChart": "20.1627884697268",
+                "Flag": "0"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportType": "3",
+                "ReportDate": "2019-12-31",
+                "MainForm": "其他(补充)",
+                "MainIncome": "1336万",
+                "MainIncomeRatio": "1.47%",
+                "MainIncomeRatioChart": "1.46748449625913",
+                "Flag": "0"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportType": "3",
+                "ReportDate": "2019-12-31",
+                "MainForm": "其他",
+                "MainIncome": "5493万",
+                "MainIncomeRatio": "6.03%",
+                "MainIncomeRatioChart": "6.03409702202509",
+                "Flag": "0"
+            }
+        ],
+        "FenHongSongZhuanList": [
+            {
+                "SecurityCode": "688299.SH",
+                "NoticeDate": "2020-05-22",
+                "AssignDscrpt": "10派1.6元",
+                "ExDividendDate": "2020-05-28",
+                "RightRegDate": "2020-05-27"
+            }
+        ],
+        "JingliRunUnit": "万",
+        "YingYeShouRuUnit": "亿",
+        "DanJiCaiWuList": [
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2020-09-30",
+                "NetProfit": "5812万",
+                "NetProfitChart": "5812.48",
+                "EPS": "0.21",
+                "EPSChart": "0.21",
+                "TotalIncome": "3.2亿",
+                "TotalIncomeChart": "3.20",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2020-06-30",
+                "NetProfit": "4185万",
+                "NetProfitChart": "4185.07",
+                "EPS": "0.15",
+                "EPSChart": "0.15",
+                "TotalIncome": "2.416亿",
+                "TotalIncomeChart": "2.42",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2020-03-31",
+                "NetProfit": "3519万",
+                "NetProfitChart": "3518.81",
+                "EPS": "0.12",
+                "EPSChart": "0.12",
+                "TotalIncome": "1.744亿",
+                "TotalIncomeChart": "1.74",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2019-12-31",
+                "NetProfit": "4544万",
+                "NetProfitChart": "4544.18",
+                "EPS": "0.18",
+                "EPSChart": "0.18",
+                "TotalIncome": "2.788亿",
+                "TotalIncomeChart": "2.79",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2019-09-30",
+                "NetProfit": "4060万",
+                "NetProfitChart": "4060.46",
+                "EPS": "0.19",
+                "EPSChart": "0.19",
+                "TotalIncome": "2.561亿",
+                "TotalIncomeChart": "2.56",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2019-06-30",
+                "NetProfit": "4080万",
+                "NetProfitChart": "4079.63",
+                "EPS": "0.19",
+                "EPSChart": "0.19",
+                "TotalIncome": "2.278亿",
+                "TotalIncomeChart": "2.28",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2019-03-31",
+                "NetProfit": "1623万",
+                "NetProfitChart": "1623.43",
+                "EPS": "0.08",
+                "EPSChart": "0.08",
+                "TotalIncome": "1.476亿",
+                "TotalIncomeChart": "1.48",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2018-12-31",
+                "NetProfit": "3774万",
+                "NetProfitChart": "3774.01",
+                "EPS": "0.18",
+                "EPSChart": "0.18",
+                "TotalIncome": "2.527亿",
+                "TotalIncomeChart": "2.53",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2018-09-30",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2018-06-30",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2018-03-31",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2017-12-31",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2017-09-30",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2017-06-30",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2017-03-31",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2016-12-31",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2016-09-30",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2016-06-30",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2016-03-31",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            },
+            {
+                "SecurityCode": "688299.SH",
+                "ReportDate": "2015-12-31",
+                "NetProfit": "--",
+                "NetProfitChart": "",
+                "EPS": "--",
+                "EPSChart": "",
+                "TotalIncome": "--",
+                "TotalIncomeChart": "",
+                "Year": "2021"
+            }
+        ],
+        "GuQuanZhiYaTuJieList": [
+            {
+                "TradeDate": "2021-01-29",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2021-01-22",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2021-01-15",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2021-01-08",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-12-31",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-12-25",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-12-18",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-12-11",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-12-04",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-11-27",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-11-20",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-11-13",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-11-06",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-10-30",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-10-23",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-10-16",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-10-09",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-09-30",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-09-25",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-09-18",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-09-11",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-09-04",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-08-28",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-08-21",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-08-14",
+                "AmtShareRatio": "0.91"
+            },
+            {
+                "TradeDate": "2020-08-07",
+                "AmtShareRatio": "0.91"
+            }
+        ],
+        "GuQuanZhiYaTongJiList": null,
+        "ShangYuQingKuang": {
+            "TuJieDataList": [
+                {
+                    "BaoGaoQi": "2020",
+                    "ShangYuZhi": "",
+                    "ShangYuZhiText": null,
+                    "ShangYuZhiUnit": null,
+                    "JingZiChanJiaZong": null,
+                    "ShangYuJingZiChan": "--"
+                },
+                {
+                    "BaoGaoQi": "2019",
+                    "ShangYuZhi": "",
+                    "ShangYuZhiText": null,
+                    "ShangYuZhiUnit": null,
+                    "JingZiChanJiaZong": null,
+                    "ShangYuJingZiChan": "--"
+                },
+                {
+                    "BaoGaoQi": "2018",
+                    "ShangYuZhi": "",
+                    "ShangYuZhiText": null,
+                    "ShangYuZhiUnit": null,
+                    "JingZiChanJiaZong": null,
+                    "ShangYuJingZiChan": "--"
+                },
+                {
+                    "BaoGaoQi": "2017",
+                    "ShangYuZhi": "",
+                    "ShangYuZhiText": null,
+                    "ShangYuZhiUnit": null,
+                    "JingZiChanJiaZong": null,
+                    "ShangYuJingZiChan": "--"
+                },
+                {
+                    "BaoGaoQi": "2016",
+                    "ShangYuZhi": "",
+                    "ShangYuZhiText": null,
+                    "ShangYuZhiUnit": null,
+                    "JingZiChanJiaZong": null,
+                    "ShangYuJingZiChan": "--"
+                }
+            ],
+            "Data": {
+                "Code": "688299.SH",
+                "BaoGaoQi": "2020三季报",
+                "BaoGaoQiLeiXing": "Q9",
+                "ShangYu": "--",
+                "ShangYuTongBi": "--",
+                "ShangYuJingZiChan": "--",
+                "ShangYuJingZiChanTongBi": "--",
+                "GuiMuJingLiRun": "1.35亿",
+                "GuiMuJingLiRunTongBi": "38.44%",
+                "ShiFouXianShi": null
+            }
+        },
+        "YanFaTouRuList": [
+            {
+                "BaoGaoQi": "2019/09/30",
+                "YanFaTouRu": "25043746.83",
+                "FeiYongHuaJinE": "25043746.83",
+                "ZiBenHuaJinE": "",
+                "YanFaTouRuZhanYingShouBi": "3.96582379406108"
+            },
+            {
+                "BaoGaoQi": "2019/12/31",
+                "YanFaTouRu": "38146100",
+                "FeiYongHuaJinE": "38146100",
+                "ZiBenHuaJinE": "0",
+                "YanFaTouRuZhanYingShouBi": "4.19067693167089"
+            },
+            {
+                "BaoGaoQi": "2020/03/31",
+                "YanFaTouRu": "9453404.99",
+                "FeiYongHuaJinE": "9453404.99",
+                "ZiBenHuaJinE": "",
+                "YanFaTouRuZhanYingShouBi": "5.42153737567693"
+            },
+            {
+                "BaoGaoQi": "2020/06/30",
+                "YanFaTouRu": "19318700",
+                "FeiYongHuaJinE": "19318700",
+                "ZiBenHuaJinE": "0",
+                "YanFaTouRuZhanYingShouBi": "4.64402828949837"
+            },
+            {
+                "BaoGaoQi": "2020/09/30",
+                "YanFaTouRu": "34484907.35",
+                "FeiYongHuaJinE": "34484907.35",
+                "ZiBenHuaJinE": "",
+                "YanFaTouRuZhanYingShouBi": "4.68555483998231"
+            }
+        ]
+    },
+    "Status": 0,
+    "Message": null,
+    "OtherInfo": {}
+}
