@@ -47,7 +47,7 @@ def _topic_filter(t):
         "标准普尔",
         "MSCI中国",
         "深股通",
-        "AH股",
+        # "AH股",
         "创业板综",
         "50",
         "100",
@@ -83,12 +83,13 @@ def store_app_topics(mongo_col, stock, topic_list):
 if __name__ == "__main__":
     from eastmoney.stock import db
 
-    stock_cols = db.Stock.find({"market": "kcb"})
+    sess = requests.Session()
+    stock_cols = db.Stock.find(projection=["market", "code"])
     for stock in stock_cols:
         market_code = {
             "sh": "01",
             "kcb": "01",
             "sz": "02",
         }[stock["market"]]
-        topic = get_app_topics(requests.Session(), stock["code"], market_code)
+        topic = get_app_topics(sess, stock["code"], market_code)
         store_app_topics(db.Stock, stock, topic["Result"]["SuoShuBanKuaiList"])

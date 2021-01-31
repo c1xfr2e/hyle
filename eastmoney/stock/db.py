@@ -5,7 +5,7 @@ import pymongo
 
 
 URI = "mongodb://localhost:27017"
-DB = "Athena"
+DB = "hyle"
 
 cli = pymongo.MongoClient(URI)[DB]
 

@@ -9,8 +9,8 @@
 """
 
 
-def get_stock_topics(session, stock_code):
-    stock_code = "{}{}".format("SH" if stock_code.startswith("6") else "SZ", stock_code)
+def get_web_topics(session, stock_code, market):
+    stock_code = "{}{}".format(market, stock_code)
     url = "http://f10.eastmoney.com/CoreConception/CoreConceptionAjax"
     headers = {
         "Accept": "*/*",
@@ -27,7 +27,34 @@ def get_stock_topics(session, stock_code):
     return data["hxtc"]
 
 
-if __name__ == "__main__":
-    import requests
+def _filter_topics(topics):
+    ITEMS_TO_KEEP = 4
+    return [
+        {
+            "title": t["gjc"],
+            "content": t["ydnr"],
+        }
+        for t in topics[0:ITEMS_TO_KEEP]
+    ]
 
-    print(get_stock_topics(requests.Session(), "300058"))
+
+if __name__ == "__main__":
+    import pymongo
+    import requests
+    from eastmoney.stock import db
+
+    sess = requests.Session()
+
+    op_list = []
+    stock_cols = db.Stock.find(projection=["market", "code"])
+    for stock in stock_cols:
+        market = "sh" if stock["market"] == "kcb" else stock["market"]
+        topics = _filter_topics(get_web_topics(sess, stock["code"], market))
+        op_list.append(
+            pymongo.UpdateOne(
+                {"_id": stock["_id"]},
+                {"$set": {"topic_detail": topics}},
+            )
+        )
+
+    db.Stock.bulk_write(op_list)
