@@ -45,16 +45,16 @@ if __name__ == "__main__":
 
     sess = requests.Session()
 
-    op_list = []
+    write_op_list = []
     stock_cols = db.Stock.find(projection=["market", "code"])
     for stock in stock_cols:
         market = "sh" if stock["market"] == "kcb" else stock["market"]
-        topics = _filter_topics(get_web_topics(sess, stock["code"], market))
-        op_list.append(
+        topics_list = _filter_topics(get_web_topics(sess, stock["code"], market))
+        write_op_list.append(
             pymongo.UpdateOne(
                 {"_id": stock["_id"]},
-                {"$set": {"topic_detail": topics}},
+                {"$set": {"topic_detail": topics_list}},
             )
         )
 
-    db.Stock.bulk_write(op_list)
+    db.Stock.bulk_write(write_op_list)
