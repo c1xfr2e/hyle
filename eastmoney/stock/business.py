@@ -7,7 +7,11 @@
     返回数据样例: samples/business.json
 """
 
+import logging
+import pymongo
+import requests
 
+from eastmoney.stock import db
 from util.string import str_to_float, str_to_percent
 
 
@@ -29,8 +33,10 @@ def get_business(session, stock_code, market):
 
 
 def _str_to_float(s):
-    if "-" in s:
+    if s == "-" or s == "--":
         return 0.0
+    if s[-2:] == u"万亿":
+        return float(s[0:-2]) * (10 ** 12)
     return str_to_float(s)
 
 
@@ -70,23 +76,44 @@ def _filter_business(business):
     return business_list
 
 
-if __name__ == "__main__":
-    import pymongo
-    import requests
-    from eastmoney.stock import db
+def _find_filter():
+    return {
+        # "business": {"$exists": 0},
+    }
 
+
+def get_and_store_business():
     sess = requests.Session()
 
     write_op_list = []
-    stock_cols = db.Stock.find(projection=["market", "code"])
+    stock_cols = db.Stock.find(
+        filter=_find_filter(),
+        projection=["market", "code"],
+    )
     for stock in stock_cols:
         market = "sh" if stock["market"] == "kcb" else stock["market"]
-        business_list = _filter_business(get_business(sess, stock["code"], market))
-        write_op_list.append(
-            pymongo.UpdateOne(
-                {"_id": stock["_id"]},
-                {"$set": {"business": business_list}},
+        try:
+            business_list = _filter_business(get_business(sess, stock["code"], market))
+            write_op_list.append(
+                pymongo.UpdateOne(
+                    {"_id": stock["_id"]},
+                    {"$set": {"business": business_list}},
+                )
             )
-        )
+        except Exception as e:
+            logging.info(stock)
+            logging.exception(e)
 
     db.Stock.bulk_write(write_op_list)
+
+
+if __name__ == "__main__":
+    get_and_store_business()
+
+    # stock = {
+    #     "_id": "600028",
+    #     "market": "sh",
+    #     "code": "600028",
+    # }
+    # business_list = _filter_business(get_business(requests.Session(), stock["code"], stock["market"]))
+    # print(business_list)

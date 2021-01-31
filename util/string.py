@@ -6,6 +6,7 @@ from decimal import Decimal
 
 CN_MONEY_UNIT = {
     u"元": 1,
+    u"千": 1000,
     u"万": 10 ** 4,
     u"亿": 10 ** 8,
 }
