@@ -88,6 +88,7 @@ def _get_and_store(mongo_col, stock_codes):
     sess = requests.Session()
     for code in stock_codes:
         p = _try_get(sess, code)
+        # 保存失败的 stock code 为了 retry
         if not p:
             failed_stock_codes.append(code)
             continue
