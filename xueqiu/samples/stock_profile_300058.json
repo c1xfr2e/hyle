@@ -1,0 +1,65 @@
+{
+    "pledge_ratio": 19.45, // 质押率
+    "goodwill_in_net_assets": 52.857043591850875, // 商誉/净资产
+    "market_capital": 16141925164.0, // 总市值
+    "float_market_capital": 14908918650.0, // 流通市值
+    "pb": 1.761, // 市净率
+    "pe_lyr": 22.721, // 市盈率(静)
+    "pe_ttm": 23.041, // 市盈率(TTM)
+    "pe_forecast": 19.586, // 市盈率(动)
+    "navps": 3.68, // 美股净资产
+    "eps": 0.28, // 每股收益
+    "dividend_yield": 0.0, // 股息率
+    "total_shares": 2491037834, // 总股本
+    "float_shares": 2300759051, // 流通股本
+    "amount": 308202312.3,
+    "volume": 47953229,
+    "volume_ratio": 0.61,
+    "turnover_rate": 2.08,
+    "low52w": 5.23,
+    "high52w": 9.91,
+    "last_close": 6.42,
+    "avg_price": 6.43,
+    "percent": 0.93,
+    "current_ext": 6.42,
+    "symbol": "SZ300058",
+    "volume_ext": 1000,
+    "delayed": 0,
+    "type": 11,
+    "tick_size": 0.01,
+    "limit_down": 5.14,
+    "no_profit": "N",
+    "high": 6.55,
+    "timestamp_ext": 1612164843000,
+    "lot_size": 100,
+    "lock_set": "None",
+    "weighted_voting_rights": "N",
+    "chg": 0.06,
+    "profit_four": 700570994.22,
+    "profit_forecast": 824163219.0,
+    "name": "蓝色光标",
+    "exchange": "SZ",
+    "status": 1,
+    "is_vie_desc": "否",
+    "security_status": "None",
+    "code": "300058",
+    "weighted_voting_rights_desc": "无差异",
+    "amplitude": 3.74, // 振幅
+    "current": 6.48,
+    "is_vie": "N",
+    "current_year_percent": 8.0,
+    "issue_date": 1267113600000,
+    "sub_type": "3",
+    "low": 6.31,
+    "is_registration_desc": "否",
+    "no_profit_desc": "已盈利",
+    "dividend": 0.0,
+    "currency": "CNY",
+    "profit": 710446746.52,
+    "timestamp": 1612164843000,
+    "traded_amount_ext": 6480.0,
+    "is_registration": "N",
+    "limit_up": 7.7,
+    "time": 1612164843000,
+    "open": 6.41
+}

@@ -1,0 +1,733 @@
+{
+    "data": {
+        "quote_name": "爱朋医疗",
+        "currency_name": "人民币",
+        "org_type": 1,
+        "last_report_name": "2019中报",
+        "currency": "CNY",
+        "list": [
+            {
+                "report_date": 1561824000000,
+                "report_name": "2019中报",
+                "total_revenue": [
+                    1.6927153203E8, // 营业收入
+                    0.2856604722466435
+                ],
+                "operating_income_yoy": [
+                    28.566, // 营业收入同比增长(百分比)
+                    null
+                ],
+                "net_profit_atsopc": [
+                    4.121278906E7, // 净利润
+                    0.2380937526435013
+                ],
+                "net_profit_atsopc_yoy": [
+                    23.8094, // 净利润同比增长(百分比)
+                    null
+                ],
+                "net_profit_after_nrgal_atsolc": [
+                    3.783976717E7, // 扣非净利润
+                    0.2011118216488124
+                ],
+                "np_atsopc_nrgal_yoy": [
+                    20.1112, // 扣非净利润同比增长(百分比)
+                    null
+                ],
+                "avg_roe": [
+                    6.7, // 净资产收益率
+                    -0.41941074523396876
+                ],
+                "basic_eps": [
+                    0.51, // 每股收益
+                    -0.07272727272727278
+                ],
+                "np_per_share": [
+                    7.5959, // 每股净资产
+                    0.5071230158730159
+                ],
+                "capital_reserve": [
+                    4.643, // 每股资本公积金
+                    1.1247483067911404
+                ],
+                "undistri_profit_ps": [
+                    1.7517, // 每股未分配利润
+                    0.04106739569713535
+                ],
+                "operate_cash_flow_ps": [
+                    0.1963,
+                    -0.6556140350877192
+                ],
+                "net_interest_of_total_assets": [
+                    6.076,
+                    -0.3724825976493918
+                ],
+                "net_selling_rate": [
+                    24.5498,
+                    -0.04248962526131852
+                ],
+                "gross_selling_rate": [
+                    73.4867,
+                    -0.022009435657202227
+                ],
+                "ore_dlt": [
+                    0.06714906572109541,
+                    -0.38448321801639773
+                ],
+                "rop": [
+                    91.0187,
+                    -0.14683832627198082
+                ],
+                "asset_liab_ratio": [
+                    8.8353,
+                    -0.36781888822902276
+                ],
+                "current_ratio": [
+                    8.3876,
+                    0.6636781973976518
+                ],
+                "quick_ratio": [
+                    2.5546,
+                    -0.42737380077109294
+                ],
+                "equity_multiplier": [
+                    1.0969,
+                    -0.0564301075268818
+                ],
+                "equity_ratio": [
+                    0.0979,
+                    -0.41271745650869823
+                ],
+                "holder_equity": [
+                    91.1647,
+                    0.059757672559201336
+                ],
+                "ncf_from_oa_to_total_liab": [
+                    0.264,
+                    -0.6080178173719376
+                ],
+                "inventory_turnover_days": [
+                    104.1667,
+                    -0.22540487764251493
+                ],
+                "receivable_turnover_days": [
+                    53.4871,
+                    null
+                ],
+                "accounts_payable_turnover_days": [
+                    113.0653,
+                    null
+                ],
+                "cash_cycle": [
+                    44.5885,
+                    -0.36417046337689735
+                ],
+                "operating_cycle": [
+                    157.6538,
+                    0.17233112406481596
+                ],
+                "total_capital_turnover": [
+                    0.2475,
+                    -0.3445444915254237
+                ],
+                "inventory_turnover": [
+                    1.728,
+                    0.2909973851326111
+                ],
+                "account_receivable_turnover": [
+                    3.3653,
+                    null
+                ],
+                "accounts_payable_turnover": [
+                    1.592,
+                    null
+                ],
+                "current_asset_turnover_rate": [
+                    0.3386,
+                    -0.3858153455468892
+                ],
+                "fixed_asset_turnover_ratio": [
+                    4.6846,
+                    0.3083647535260438
+                ]
+            },
+            {
+                "report_date": 1553961600000,
+                "report_name": "2019一季报",
+                "avg_roe": [
+                    2.49,
+                    -0.4168618266978922
+                ],
+                "np_per_share": [
+                    7.6746,
+                    null
+                ],
+                "operate_cash_flow_ps": [
+                    -0.1909,
+                    0.11824480369515017
+                ],
+                "basic_eps": [
+                    0.19,
+                    -0.050000000000000044
+                ],
+                "capital_reserve": [
+                    4.643,
+                    null
+                ],
+                "undistri_profit_ps": [
+                    1.8303,
+                    null
+                ],
+                "net_interest_of_total_assets": [
+                    2.2435,
+                    null
+                ],
+                "net_selling_rate": [
+                    22.0176,
+                    0.004159369527145387
+                ],
+                "gross_selling_rate": [
+                    75.4873,
+                    -0.01940476298727861
+                ],
+                "total_revenue": [
+                    6.965509277E7,
+                    0.28379274399250604
+                ],
+                "operating_income_yoy": [
+                    28.3793,
+                    null
+                ],
+                "net_profit_atsopc": [
+                    1.525087336E7,
+                    0.28722034614575176
+                ],
+                "net_profit_atsopc_yoy": [
+                    28.722,
+                    null
+                ],
+                "net_profit_after_nrgal_atsolc": [
+                    1.389913035E7,
+                    0.2134798452172997
+                ],
+                "np_atsopc_nrgal_yoy": [
+                    21.348,
+                    null
+                ],
+                "ore_dlt": [
+                    0.024593865880605057,
+                    null
+                ],
+                "rop": [
+                    79.7273,
+                    null
+                ],
+                "asset_liab_ratio": [
+                    7.438,
+                    null
+                ],
+                "current_ratio": [
+                    10.5391,
+                    null
+                ],
+                "quick_ratio": [
+                    2.9195,
+                    null
+                ],
+                "equity_multiplier": [
+                    1.0804,
+                    null
+                ],
+                "equity_ratio": [
+                    0.0815,
+                    null
+                ],
+                "holder_equity": [
+                    92.562,
+                    null
+                ],
+                "ncf_from_oa_to_total_liab": [
+                    -0.3053,
+                    null
+                ],
+                "inventory_turnover_days": [
+                    135.4198,
+                    null
+                ],
+                "receivable_turnover_days": [
+                    59.5396,
+                    null
+                ],
+                "accounts_payable_turnover_days": [
+                    null,
+                    null
+                ],
+                "cash_cycle": [
+                    57.0706,
+                    null
+                ],
+                "operating_cycle": [
+                    194.9594,
+                    null
+                ],
+                "total_capital_turnover": [
+                    0.1019,
+                    null
+                ],
+                "inventory_turnover": [
+                    0.6646,
+                    null
+                ],
+                "account_receivable_turnover": [
+                    1.5116,
+                    null
+                ],
+                "accounts_payable_turnover": [
+                    null,
+                    null
+                ],
+                "current_asset_turnover_rate": [
+                    0.1363,
+                    null
+                ],
+                "fixed_asset_turnover_ratio": [
+                    1.9368,
+                    null
+                ]
+            },
+            {
+                "report_date": 1546185600000,
+                "report_name": "2018年报",
+                "avg_roe": [
+                    22.84,
+                    -0.03261329944938584
+                ],
+                "np_per_share": [
+                    7.4859,
+                    0.6672383073496658
+                ],
+                "operate_cash_flow_ps": [
+                    0.9669,
+                    -0.12891891891891902
+                ],
+                "basic_eps": [
+                    1.16,
+                    0.2083333333333333
+                ],
+                "capital_reserve": [
+                    4.643,
+                    1.1247483067911404
+                ],
+                "undistri_profit_ps": [
+                    1.6416,
+                    0.4485131915644578
+                ],
+                "net_interest_of_total_assets": [
+                    13.9208,
+                    -0.2741493122542834
+                ],
+                "net_selling_rate": [
+                    23.8498,
+                    -0.02171924542542248
+                ],
+                "gross_selling_rate": [
+                    76.501,
+                    0.023057953803853743
+                ],
+                "total_revenue": [
+                    2.9803381231E8,
+                    0.20699423057949587
+                ],
+                "operating_income_yoy": [
+                    20.6994,
+                    -0.15576745817461024
+                ],
+                "net_profit_atsopc": [
+                    7.008979868E7,
+                    0.21008228964237458
+                ],
+                "net_profit_atsopc_yoy": [
+                    21.0082,
+                    -0.01923875949449832
+                ],
+                "net_profit_after_nrgal_atsolc": [
+                    6.690934989E7,
+                    0.204967417001585
+                ],
+                "np_atsopc_nrgal_yoy": [
+                    20.4967,
+                    -0.061153913099240585
+                ],
+                "ore_dlt": [
+                    0.11587811333565004,
+                    -0.45615907444613474
+                ],
+                "rop": [
+                    101.225,
+                    -0.011252527423151694
+                ],
+                "asset_liab_ratio": [
+                    10.838,
+                    -0.3295391277451284
+                ],
+                "current_ratio": [
+                    7.199,
+                    0.63209322360516
+                ],
+                "quick_ratio": [
+                    6.7814,
+                    0.7327780049059688
+                ],
+                "equity_multiplier": [
+                    1.1216,
+                    -0.05969148222669362
+                ],
+                "equity_ratio": [
+                    0.1233,
+                    -0.3779011099899091
+                ],
+                "holder_equity": [
+                    89.162,
+                    0.06354148028866241
+                ],
+                "ncf_from_oa_to_total_liab": [
+                    1.0478,
+                    -0.15846116777768854
+                ],
+                "inventory_turnover_days": [
+                    127.7955,
+                    -0.021512176783295516
+                ],
+                "receivable_turnover_days": [
+                    50.7235,
+                    null
+                ],
+                "accounts_payable_turnover_days": [
+                    149.4892,
+                    null
+                ],
+                "cash_cycle": [
+                    91.7406,
+                    -0.12238674041605521
+                ],
+                "operating_cycle": [
+                    178.519,
+                    0.36686086531077283
+                ],
+                "total_capital_turnover": [
+                    0.5837,
+                    -0.25803991356298456
+                ],
+                "inventory_turnover": [
+                    2.817,
+                    0.021985198084457983
+                ],
+                "account_receivable_turnover": [
+                    7.0973,
+                    null
+                ],
+                "accounts_payable_turnover": [
+                    2.4082,
+                    null
+                ],
+                "current_asset_turnover_rate": [
+                    0.7923,
+                    -0.3011995060857294
+                ],
+                "fixed_asset_turnover_ratio": [
+                    8.1059,
+                    0.2581526378692163
+                ]
+            },
+            {
+                "report_date": 1538236800000,
+                "report_name": "2018三季报",
+                "avg_roe": [
+                    16.71,
+                    null
+                ],
+                "np_per_share": [
+                    5.3039,
+                    null
+                ],
+                "operate_cash_flow_ps": [
+                    0.5414,
+                    null
+                ],
+                "basic_eps": [
+                    0.82,
+                    0.5185185185185184
+                ],
+                "capital_reserve": [
+                    2.1852,
+                    null
+                ],
+                "undistri_profit_ps": [
+                    1.9515,
+                    null
+                ],
+                "net_interest_of_total_assets": [
+                    14.2596,
+                    null
+                ],
+                "net_selling_rate": [
+                    25.0664,
+                    0.17202812897433986
+                ],
+                "gross_selling_rate": [
+                    75.7786,
+                    -0.018387758247936144
+                ],
+                "total_revenue": [
+                    2.0170212053E8,
+                    0.2613613611139787
+                ],
+                "operating_income_yoy": [
+                    26.1361,
+                    null
+                ],
+                "net_profit_atsopc": [
+                    4.957753135E7,
+                    0.5101683718649723
+                ],
+                "net_profit_atsopc_yoy": [
+                    51.0168,
+                    null
+                ],
+                "net_profit_after_nrgal_atsolc": [
+                    4.667504888E7,
+                    0.48150301791450306
+                ],
+                "np_atsopc_nrgal_yoy": [
+                    48.1503,
+                    null
+                ],
+                "ore_dlt": [
+                    0.1542474025949165,
+                    null
+                ],
+                "rop": [
+                    100.839,
+                    null
+                ],
+                "asset_liab_ratio": [
+                    12.2194,
+                    null
+                ],
+                "current_ratio": [
+                    5.614,
+                    null
+                ],
+                "quick_ratio": [
+                    4.9169,
+                    null
+                ],
+                "equity_multiplier": [
+                    1.1392,
+                    null
+                ],
+                "equity_ratio": [
+                    0.1429,
+                    null
+                ],
+                "holder_equity": [
+                    87.7806,
+                    null
+                ],
+                "ncf_from_oa_to_total_liab": [
+                    0.7143,
+                    null
+                ],
+                "inventory_turnover_days": [
+                    142.0978,
+                    null
+                ],
+                "receivable_turnover_days": [
+                    null,
+                    null
+                ],
+                "accounts_payable_turnover_days": [
+                    null,
+                    null
+                ],
+                "cash_cycle": [
+                    92.5001,
+                    null
+                ],
+                "operating_cycle": [
+                    142.0978,
+                    null
+                ],
+                "total_capital_turnover": [
+                    0.5689,
+                    null
+                ],
+                "inventory_turnover": [
+                    1.9001,
+                    null
+                ],
+                "account_receivable_turnover": [
+                    null,
+                    null
+                ],
+                "accounts_payable_turnover": [
+                    null,
+                    null
+                ],
+                "current_asset_turnover_rate": [
+                    0.8448,
+                    null
+                ],
+                "fixed_asset_turnover_ratio": [
+                    5.5505,
+                    null
+                ]
+            },
+            {
+                "report_date": 1530288000000,
+                "report_name": "2018中报",
+                "avg_roe": [
+                    11.54,
+                    null
+                ],
+                "np_per_share": [
+                    5.04,
+                    null
+                ],
+                "operate_cash_flow_ps": [
+                    0.57,
+                    null
+                ],
+                "basic_eps": [
+                    0.55,
+                    null
+                ],
+                "capital_reserve": [
+                    2.1852,
+                    null
+                ],
+                "undistri_profit_ps": [
+                    1.6826,
+                    null
+                ],
+                "net_interest_of_total_assets": [
+                    9.6826,
+                    null
+                ],
+                "net_selling_rate": [
+                    25.6392,
+                    null
+                ],
+                "gross_selling_rate": [
+                    75.1405,
+                    null
+                ],
+                "total_revenue": [
+                    1.3166114669E8,
+                    null
+                ],
+                "operating_income_yoy": [
+                    null,
+                    null
+                ],
+                "net_profit_atsopc": [
+                    3.328729264E7,
+                    null
+                ],
+                "net_profit_atsopc_yoy": [
+                    null,
+                    null
+                ],
+                "net_profit_after_nrgal_atsolc": [
+                    3.150395033E7,
+                    null
+                ],
+                "np_atsopc_nrgal_yoy": [
+                    null,
+                    null
+                ],
+                "ore_dlt": [
+                    0.10909380164208797,
+                    null
+                ],
+                "rop": [
+                    106.684,
+                    null
+                ],
+                "asset_liab_ratio": [
+                    13.9759,
+                    null
+                ],
+                "current_ratio": [
+                    5.0416,
+                    null
+                ],
+                "quick_ratio": [
+                    4.4612,
+                    null
+                ],
+                "equity_multiplier": [
+                    1.1625,
+                    null
+                ],
+                "equity_ratio": [
+                    0.1667,
+                    null
+                ],
+                "holder_equity": [
+                    86.0241,
+                    null
+                ],
+                "ncf_from_oa_to_total_liab": [
+                    0.6735,
+                    null
+                ],
+                "inventory_turnover_days": [
+                    134.4789,
+                    null
+                ],
+                "receivable_turnover_days": [
+                    null,
+                    null
+                ],
+                "accounts_payable_turnover_days": [
+                    null,
+                    null
+                ],
+                "cash_cycle": [
+                    70.1265,
+                    null
+                ],
+                "operating_cycle": [
+                    134.4789,
+                    null
+                ],
+                "total_capital_turnover": [
+                    0.3776,
+                    null
+                ],
+                "inventory_turnover": [
+                    1.3385,
+                    null
+                ],
+                "account_receivable_turnover": [
+                    null,
+                    null
+                ],
+                "accounts_payable_turnover": [
+                    null,
+                    null
+                ],
+                "current_asset_turnover_rate": [
+                    0.5513,
+                    null
+                ],
+                "fixed_asset_turnover_ratio": [
+                    3.5805,
+                    null
+                ]
+            }
+        ]
+    },
+    "error_code": 0,
+    "error_description": ""
+}

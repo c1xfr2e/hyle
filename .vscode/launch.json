@@ -34,6 +34,18 @@
       "type": "python",
       "request": "launch",
       "module": "shse.${fileBasenameNoExtension}"
-    }
+    },
+    {
+      "name": "xueqiu",
+      "type": "python",
+      "request": "launch",
+      "module": "xueqiu.${fileBasenameNoExtension}"
+    },
+    {
+      "name": "Lebenswelt",
+      "type": "python",
+      "request": "launch",
+      "module": "Lebenswelt.${fileBasenameNoExtension}"
+    },
   ]
 }
