@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 
 
 def _to_float(text):
-    if not text or text == "-":
+    if not text or text in ["-", "--", "---"]:
         return 0.0
     return float(text)
 
