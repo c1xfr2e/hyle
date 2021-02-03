@@ -42,10 +42,11 @@ def _parse_tr(tr):
 
 
 def get_fund_list(session, gsid, fund_type):
-    url = "http://fund.eastmoney.com/FundCompany/home/KFSFundNet"
+    url = "http://fund.eastmoney.com/Company/home/KFSFundNet"
     headers = {
+        "Host": "fund.eastmoney.com",
         "Accept": "text/html, */*; q=0.01",
-        "Referer": "http://fund.eastmoney.com/FundCompany/{gsid}.html".format(gsid=gsid),
+        "Referer": "http://fund.eastmoney.com/Company/{gsid}.html".format(gsid=gsid),
         "X-Requested-With": "XMLHttpRequest",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) Chrome/87.0.4280.141 Safari/537.36",
     }
@@ -66,6 +67,7 @@ def get_fund_list(session, gsid, fund_type):
         f["type"] = {"001": "stock", "002": "hybrid"}.get(fund_type, "")
         funds.append(f)
     funds.sort(reverse=True, key=lambda x: x["size"])
+
     return funds
 
 
@@ -90,13 +92,13 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(add_help=True)
-    parser.add_argument("-t", "--type", help="基金类型: 001(股票型) 002(混合型)", type=str, default="001")
+    parser.add_argument("-t", "--type", help="基金类型: 001(股票型) 002(混合型)", type=str, default="002")
     args = parser.parse_args()
 
     import requests
     from eastmoney.fund import db
 
-    companies = db.FundCompany.find({})
+    companies = db.FundCompany.find()
     sess = requests.Session()
     for co in companies:
         funds = get_fund_list(sess, co["gsid"], args.type)

@@ -7,7 +7,7 @@
 
 import pymongo
 
-from eastmoney.fund import db
+from Lebenswelt import db
 
 
 REPORT_DATE = "2020-12-31"
@@ -46,6 +46,7 @@ def _sort_position_change_to_list(co_position_change):
 
 
 def obtain_company_position_change(report_date):
+
     co_position_change_list = []
     companies = db.FundCompany.find({})
     for co in companies:

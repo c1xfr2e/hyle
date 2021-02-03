@@ -1,10 +1,9 @@
-GET /FundCompany/home/KFSFundNet?gsid=80000251&fundType=001 HTTP/1.1
+GET /Company/home/KFSFundNet?gsid=80050229&fundType=002 HTTP/1.1
 Host: fund.eastmoney.com
 Connection: keep-alive
-Cache-Control: max-age=0
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept: text/html, */*; q=0.01
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36
+X-Requested-With: XMLHttpRequest
+Referer: http://fund.eastmoney.com/Company/80050229.html
 Accept-Encoding: gzip, deflate
 Accept-Language: en,zh-CN;q=0.9,zh;q=0.8
-Cookie: em_hq_fls=js; qgqp_b_id=c203e2e6893a7ed2f20c7aa6d2a6fbda; waptgshowtime=2021120; cowCookie=true; intellpositionL=1052.8px; intellpositionT=2658px; HAList=a-sh-601615-%u660E%u9633%u667A%u80FD%2Ca-sz-300059-%u4E1C%u65B9%u8D22%u5BCC%2Cd-hk-01810%2Ca-sz-300658-%u5EF6%u6C5F%u80A1%u4EFD%2Ca-sz-002335-%u79D1%u534E%u6052%u76DB; searchbar_code=340007; st_si=88234428066387; st_asi=delete; ASP.NET_SessionId=psjmaiiamuwd1y3hdchbliza; EMFUND0=01-22%2000%3A59%3A39@%23%24%u5929%u5F18%u4E2D%u8BC1%u79D1%u6280100%u6307%u6570%u589E%u5F3AA@%23%24010202; EMFUND1=01-22%2001%3A01%3A02@%23%24%u5929%u5F18%u6587%u5316%u65B0%u5174%u4EA7%u4E1A@%23%24164205; EMFUND2=01-22%2001%3A10%3A31@%23%24%u5174%u5168%u793E%u4F1A%u8D23%u4EFB%u6DF7%u5408@%23%24340007; EMFUND3=01-22%2001%3A14%3A31@%23%24%u5174%u5168%u5408%u6DA6%u6DF7%u5408@%23%24163406; EMFUND4=01-22%2010%3A58%3A16@%23%24%u666F%u987A%u957F%u57CE%u4F18%u8D28%u6210%u957F%u80A1%u7968@%23%24000411; EMFUND5=01-22%2011%3A14%3A32@%23%24%u6613%u65B9%u8FBE%u4E2D%u5C0F%u76D8%u6DF7%u5408@%23%24110011; EMFUND6=01-22%2011%3A17%3A27@%23%24%u6613%u65B9%u8FBE%u79D1%u6280%u521B%u65B0%u6DF7%u5408@%23%24007346; EMFUND7=01-22%2011%3A19%3A27@%23%24%u6613%u65B9%u8FBE%u84DD%u7B79%u7CBE%u9009%u6DF7%u5408@%23%24005827; EMFUND8=01-22%2011%3A28%3A17@%23%24%u6613%u65B9%u8FBE%u521B%u4E1A%u677FETF%u8054%u63A5A@%23%24110026; EMFUND9=01-22 11:33:48@#$%u6613%u65B9%u8FBE%u91D1%u878D%u884C%u4E1A%u80A1%u7968@%23%24008283; st_pvi=89047958777754; st_sp=2020-07-15%2021%3A40%3A31; st_inirUrl=https%3A%2F%2Fwww.baidu.com%2Flink; st_sn=35; st_psi=20210122121301366-0-4797957058

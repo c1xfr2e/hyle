@@ -8,7 +8,7 @@
 import pymongo
 from enum import Enum
 
-from eastmoney.fund import db
+from Lebenswelt import db
 
 
 REPORT_DATE = "2020-12-31"
@@ -39,7 +39,9 @@ def diff_position(new_position, old_position):
                 "code": pos["code"],
                 "volume": pos["value"],
                 "value": pos["value"],
-                "percent": pos["percent"],
+                "percent_new": pos["percent"],
+                "percent_old": 0.0,
+                "percent_change": pos["percent"],
             }
         )
 
@@ -52,7 +54,9 @@ def diff_position(new_position, old_position):
                 "code": pos["code"],
                 "volume": pos["value"],
                 "value": pos["value"],
-                "percent": pos["percent"],
+                "percent_new": 0.0,
+                "percent_old": pos["percent"],
+                "percent_change": -pos["percent"],
             }
         )
 
@@ -68,7 +72,9 @@ def diff_position(new_position, old_position):
                 "code": pnew["code"],
                 "volume": abs(round(volume_change / 10000, 2)),
                 "value": abs(round(pnew["value"] - pold["value"], 2)),
-                "percent": abs(round(pnew["percent"] - pold["percent"], 2)),
+                "percent_new": pnew["percent"],
+                "percent_old": pold["percent"],
+                "percent_change": round(pnew["percent"] - pold["percent"], 2),
             }
         )
 
@@ -78,7 +84,7 @@ def diff_position(new_position, old_position):
         "dec": 100,
         "clear": 0,
     }
-    change_list.sort(key=lambda x: type_sort_keys[x["type"]] + x["percent"], reverse=True)
+    change_list.sort(key=lambda x: type_sort_keys[x["type"]] + abs(x["percent_change"]), reverse=True)
 
     return change_list
 
