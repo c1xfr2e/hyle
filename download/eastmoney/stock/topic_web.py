@@ -41,7 +41,7 @@ def _filter_topics(topics):
 if __name__ == "__main__":
     import pymongo
     import requests
-    from eastmoney.stock import db
+    from download.eastmoney.stock import db
 
     sess = requests.Session()
 

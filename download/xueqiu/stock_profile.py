@@ -14,8 +14,8 @@ import requests
 import time
 from datetime import datetime
 
-from xueqiu import db
-from xueqiu.cookie import get_cookies
+from download.xueqiu import db
+from download.xueqiu.cookie import get_cookies
 
 
 def get_stock_profile(session, stock_code):

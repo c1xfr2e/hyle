@@ -112,7 +112,7 @@ def store_stock_list(mongo_col, stock_list, market):
 
 
 if __name__ == "__main__":
-    from shse import db
+    from download.shse import db
 
     STOCK_TYPE_MAIN = 1
     STOCK_TYPE_KCB = 8

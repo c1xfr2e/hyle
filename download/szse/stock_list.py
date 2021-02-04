@@ -91,7 +91,7 @@ def store_stock_list(mongo_col, stock_list):
 
 
 if __name__ == "__main__":
-    from szse import db
+    from download.szse import db
 
     stock_list = get_stock_list()
     store_stock_list(db.Stock, stock_list)

@@ -4,7 +4,7 @@
 import jinja2
 import os
 
-from Lebenswelt import db
+from phainomena import db
 
 
 REPORT_DATE = "2020-12-31"

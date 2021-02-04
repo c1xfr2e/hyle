@@ -1,0 +1,9 @@
+GET /Data/FundRankScale.aspx?_=1611153135475 HTTP/1.1
+Host: fund.eastmoney.com
+Connection: keep-alive
+Accept: text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+X-Requested-With: XMLHttpRequest
+Referer: http://fund.eastmoney.com/company/default.html
+Accept-Encoding: gzip, deflate
+Accept-Language: en,zh-CN;q=0.9,zh;q=0.8

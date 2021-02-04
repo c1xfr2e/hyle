@@ -12,40 +12,40 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "eastmoney.fund",
+      "name": "download.eastmoney.fund",
       "type": "python",
       "request": "launch",
-      "module": "eastmoney.fund.${fileBasenameNoExtension}"
+      "module": "download.eastmoney.fund.${fileBasenameNoExtension}"
     },
     {
-      "name": "eastmoney.stock",
+      "name": "download.eastmoney.stock",
       "type": "python",
       "request": "launch",
-      "module": "eastmoney.stock.${fileBasenameNoExtension}"
+      "module": "download.eastmoney.stock.${fileBasenameNoExtension}"
     },
     {
-      "name": "szse",
+      "name": "download.szse",
       "type": "python",
       "request": "launch",
       "module": "szse.${fileBasenameNoExtension}"
     },
     {
-      "name": "shse",
+      "name": "download.shse",
       "type": "python",
       "request": "launch",
       "module": "shse.${fileBasenameNoExtension}"
     },
     {
-      "name": "xueqiu",
+      "name": "download.xueqiu",
       "type": "python",
       "request": "launch",
       "module": "xueqiu.${fileBasenameNoExtension}"
     },
     {
-      "name": "Lebenswelt",
+      "name": "phainomena",
       "type": "python",
       "request": "launch",
-      "module": "Lebenswelt.${fileBasenameNoExtension}"
+      "module": "phainomena.${fileBasenameNoExtension}"
     },
   ]
 }

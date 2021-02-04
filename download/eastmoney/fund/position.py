@@ -99,7 +99,7 @@ def store_fund_position_list(mongo_col, position_list):
 
 if __name__ == "__main__":
     import requests
-    from eastmoney.fund import db
+    from download.eastmoney.fund import db
 
     sess = requests.Session()
 

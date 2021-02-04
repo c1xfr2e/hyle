@@ -1,5 +1,5 @@
 import pymongo
-from eastmoney.stock import db
+from download.eastmoney.stock import db
 
 
 def match_keywords(product_list, industry_list):

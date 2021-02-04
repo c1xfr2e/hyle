@@ -96,7 +96,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     import requests
-    from eastmoney.fund import db
+    from download.eastmoney.fund import db
 
     companies = db.FundCompany.find()
     sess = requests.Session()

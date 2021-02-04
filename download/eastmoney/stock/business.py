@@ -11,7 +11,7 @@ import logging
 import pymongo
 import requests
 
-from eastmoney.stock import db
+from download.eastmoney.stock import db
 from util.string import str_to_float, str_to_percent
 
 

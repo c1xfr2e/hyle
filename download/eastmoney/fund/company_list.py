@@ -60,7 +60,7 @@ def store_company_list(mongo_col, co_list):
 
 if __name__ == "__main__":
     import requests
-    from eastmoney.fund import db
+    from download.eastmoney.fund import db
 
     fund_co_list = get_company_list(requests.Session())
     store_company_list(db.FundCompany, fund_co_list[0:50])
