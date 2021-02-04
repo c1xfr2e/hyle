@@ -7,7 +7,7 @@
 
 import pymongo
 
-from Lebenswelt import db
+from phainomena import db
 
 
 REPORT_DATE = "2020-12-31"

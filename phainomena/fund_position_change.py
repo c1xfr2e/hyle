@@ -8,7 +8,7 @@
 import pymongo
 from enum import Enum
 
-from Lebenswelt import db
+from phainomena import db
 
 
 REPORT_DATE = "2020-12-31"
