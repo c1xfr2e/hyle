@@ -15,7 +15,7 @@ from datetime import date, datetime
 from enum import Enum
 from typing import List
 
-from .util import parse_percent, str_to_int
+from util import to_percent
 
 
 # 机构类型
@@ -62,7 +62,7 @@ def get_institution_positions(stock_code, date) -> List[InstitutionPosition]:
             type=r["jglx"],
             number=0 if r["ccjs"] == "--" else int(r["ccjs"]),
             amount=0 if r["ccgs"] == "--" else int(r["ccgs"]),
-            proportion=0 if r["zltgbl"] == "--" else parse_percent(r["zltgbl"]),
+            proportion=0 if r["zltgbl"] == "--" else to_percent(r["zltgbl"]),
         )
         for r in data
     ]

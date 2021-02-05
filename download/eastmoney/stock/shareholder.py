@@ -16,7 +16,7 @@ import requests
 from collections import namedtuple
 from pprint import pprint
 
-from .util import parse_percent, str_to_int
+from util import to_percent, cn_to_int
 
 # 十大股东， 十大流通股东 和 实际控制人
 Shareholder = namedtuple(
@@ -92,9 +92,9 @@ def shareholder_research(stock_code):
                 dict(
                     name=i["gdmc"],
                     amount=int(i["cgs"].replace(",", "").strip()),
-                    proportion=parse_percent(i["zltgbcgbl"]),
+                    proportion=to_percent(i["zltgbcgbl"]),
                     change=i["zj"],
-                    change_percent=parse_percent(i["bdbl"]),
+                    change_percent=to_percent(i["bdbl"]),
                 )
                 for i in sdgd["sdgd"]
             ]
@@ -107,9 +107,9 @@ def shareholder_research(stock_code):
                 dict(
                     name=i["gdmc"],
                     amount=int(i["cgs"].replace(",", "").strip()),
-                    proportion=parse_percent(i["zltgbcgbl"]),
+                    proportion=to_percent(i["zltgbcgbl"]),
                     change=i["zj"],
-                    change_percent=parse_percent(i["bdbl"]),
+                    change_percent=to_percent(i["bdbl"]),
                 )
                 for i in sdltgd["sdltgd"]
             ]
@@ -126,8 +126,8 @@ def shareholder_research(stock_code):
                         name=i["jjmc"],
                         amount=int(float(i["cgs"].replace(",", "").strip())),
                         value=int(float(i["cgsz"].replace(",", "").strip())),
-                        proportion=parse_percent(i["zltb"]),
-                        net=parse_percent(i["zjzb"]),
+                        proportion=to_percent(i["zltb"]),
+                        net=to_percent(i["zjzb"]),
                     )
                     for i in jjcg["jjcg"]
                 ]
@@ -139,8 +139,8 @@ def shareholder_research(stock_code):
             dict(
                 date=i["jjsj"],
                 type=i["gplx"],
-                amount=str_to_int(i["jjsl"]),
-                proportion=parse_percent(i["jjgzzgbbl"]),
+                amount=cn_to_int(i["jjsl"]),
+                proportion=to_percent(i["jjgzzgbbl"]),
             )
             for i in data.get("xsjj", [])
         ]
@@ -148,7 +148,7 @@ def shareholder_research(stock_code):
     # 实际控制人
     result["controller"] = dict(
         name=data["kggx"]["sjkzr"],
-        proportion=parse_percent(data["kggx"]["cgbl"]),
+        proportion=to_percent(data["kggx"]["cgbl"]),
     )
 
     # 主力持仓日期列表

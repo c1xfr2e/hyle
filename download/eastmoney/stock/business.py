@@ -12,7 +12,7 @@ import pymongo
 import requests
 
 from download.eastmoney.stock import db
-from util.string import str_to_float, str_to_percent
+from util.strconv import cn_to_float, to_percent
 
 
 def get_business(session, stock_code, market):
@@ -33,12 +33,10 @@ def get_business(session, stock_code, market):
     return data["zygcfx"][0:2]
 
 
-def _str_to_float(s):
+def _text_to_float(s):
     if s == "-" or s == "--":
         return 0.0
-    if s[-2:] == u"万亿":
-        return float(s[0:-2]) * (10 ** 12)
-    return str_to_float(s)
+    return cn_to_float(s)
 
 
 def _filter_business(business):
@@ -48,22 +46,22 @@ def _filter_business(business):
         by_industry = [
             {
                 "name": hy["zygc"],
-                "income": _str_to_float(hy["zysr"]),
-                "income_percent": str_to_percent(hy["srbl"]),
-                "profit": _str_to_float(hy["zylr"]),
-                "profit_percent": str_to_percent(hy["lrbl"]),
-                "gross_profit_rate": str_to_percent(hy["mll"]),
+                "income": _text_to_float(hy["zysr"]),
+                "income_percent": to_percent(hy["srbl"]),
+                "profit": _text_to_float(hy["zylr"]),
+                "profit_percent": to_percent(hy["lrbl"]),
+                "gross_profit_rate": to_percent(hy["mll"]),
             }
             for hy in b.get("hy", [])
         ]
         by_product = [
             {
                 "name": cp["zygc"],
-                "income": _str_to_float(cp["zysr"]),
-                "income_percent": str_to_percent(cp["srbl"]),
-                "profit": _str_to_float(cp["zylr"]),
-                "profit_percent": str_to_percent(cp["lrbl"]),
-                "gross_profit_rate": str_to_percent(cp["mll"]),
+                "income": _text_to_float(cp["zysr"]),
+                "income_percent": to_percent(cp["srbl"]),
+                "profit": _text_to_float(cp["zylr"]),
+                "profit_percent": to_percent(cp["lrbl"]),
+                "gross_profit_rate": to_percent(cp["mll"]),
             }
             for cp in b.get("cp", [])
         ]
