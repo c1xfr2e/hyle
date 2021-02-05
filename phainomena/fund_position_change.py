@@ -21,7 +21,7 @@ class PositionChange(Enum):
     Clear = "clear"  # 清仓
 
 
-def diff_position(new_position, old_position):
+def diff_stock_position(new_position, old_position):
     new = {p["code"]: p for p in new_position}
     old = {p["code"]: p for p in old_position}
     new_stock_codes = set(new) - set(old)
@@ -37,7 +37,7 @@ def diff_position(new_position, old_position):
                 "type": "open",
                 "name": pos["name"],
                 "code": pos["code"],
-                "volume": pos["value"],
+                "volume": pos["volume"],
                 "value": pos["value"],
                 "percent_new": pos["percent"],
                 "percent_old": 0.0,
@@ -52,7 +52,7 @@ def diff_position(new_position, old_position):
                 "type": "clear",
                 "name": pos["name"],
                 "code": pos["code"],
-                "volume": pos["value"],
+                "volume": pos["volume"],
                 "value": pos["value"],
                 "percent_new": 0.0,
                 "percent_old": pos["percent"],
@@ -112,7 +112,7 @@ if __name__ == "__main__":
     position_change_list = []
     for f in funds:
         position = f["position"]
-        change = diff_position(position[0]["position"], position[1]["position"])
+        change = diff_stock_position(position[0]["stock"], position[1]["stock"])
         f["position_change"] = change
 
     store_position_change_list(db.Fund, funds)

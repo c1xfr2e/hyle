@@ -47,7 +47,7 @@ def _parse_tr(tr):
     )
 
 
-def get_fund_position_list(session, fund_code):
+def get_fund_stock_position(session, fund_code):
     url = "http://fundf10.eastmoney.com/FundArchivesDatas.aspx"
     headers = {
         "Host": "fundf10.eastmoney.com",
@@ -64,35 +64,35 @@ def get_fund_position_list(session, fund_code):
     }
     resp = session.get(url, headers=headers, params=params)
 
-    position_list = []
+    stock_position_list = []
     html = BeautifulSoup(resp.content, features="html.parser")
     divs = html.find_all("div", "box")
     for div in divs:
-        position = []
+        stock_position = []
         date = div.find("font").text
         trs = div.find("tbody")("tr")
         for tr in trs:
-            r = _parse_tr(tr)
-            if not r:
+            tr_data = _parse_tr(tr)
+            if not tr_data:
                 continue
-            position.append(r)
-        position_list.append(
+            stock_position.append(tr_data)
+        stock_position_list.append(
             dict(
                 date=date,
-                position=position,
+                stock=stock_position,
             )
         )
 
-    return position_list
+    return stock_position_list
 
 
-def store_fund_position_list(mongo_col, position_list):
+def store_fund_stock_position_list(mongo_col, stock_position_list):
     ops = [
         pymongo.UpdateOne(
-            {"_id": position["fund_id"]},
-            {"$set": {"position": position["position"]}},
+            {"_id": sp["fund_id"]},
+            {"$set": {"position": sp["position"]}},
         )
-        for position in position_list
+        for sp in stock_position_list
     ]
     mongo_col.bulk_write(ops)
 
@@ -107,9 +107,9 @@ if __name__ == "__main__":
     position_list = [
         {
             "fund_id": f["_id"],
-            "position": get_fund_position_list(sess, f["_id"]),
+            "position": get_fund_stock_position(sess, f["_id"]),
         }
         for f in funds
     ]
 
-    store_fund_position_list(db.Fund, position_list)
+    store_fund_stock_position_list(db.Fund, position_list)
