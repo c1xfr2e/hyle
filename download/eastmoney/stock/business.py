@@ -19,6 +19,7 @@ def get_business(session, stock_code, market):
     code = "{}{}".format(market, stock_code)
     url = "http://f10.eastmoney.com/BusinessAnalysis/BusinessAnalysisAjax?code={}".format(code)
     headers = {
+        "Connection": "keep-alive",
         "Accept": "*/*",
         "Referer": "http://f10.eastmoney.com/f10_v2/BusinessAnalysis.aspx?code={}".format(code),
         "X-Requested-With": "XMLHttpRequest",

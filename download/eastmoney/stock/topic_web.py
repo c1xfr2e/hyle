@@ -13,6 +13,7 @@ def get_web_topics(session, stock_code, market):
     stock_code = "{}{}".format(market, stock_code)
     url = "http://f10.eastmoney.com/CoreConception/CoreConceptionAjax"
     headers = {
+        "Connection": "keep-alive",
         "Accept": "*/*",
         "Referer": "http://f10.eastmoney.com/CoreConception/Index?type=web&stock_code={}".format(stock_code),
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) Chrome/76.0.3809.100 Safari/537.36",
