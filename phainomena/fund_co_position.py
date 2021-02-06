@@ -96,7 +96,7 @@ def group_fund_position_of_company(fund_list):
 
 
 def _get_write_op(company, result_dict_by_date):
-    list_by_date = [
+    stock_position_list_by_date = [
         {
             "date": date,
             "stock_position": result_dict_by_date[date],
@@ -111,7 +111,7 @@ def _get_write_op(company, result_dict_by_date):
             "$set": {
                 "co_name": company["name"],
                 "co_size": company["size"],
-                "list_by_date": list_by_date,
+                "list_by_date": stock_position_list_by_date,
             }
         },
         upsert=True,
