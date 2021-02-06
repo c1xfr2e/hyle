@@ -47,5 +47,11 @@
       "request": "launch",
       "module": "phainomena.${fileBasenameNoExtension}"
     },
+    {
+      "name": "util",
+      "type": "python",
+      "request": "launch",
+      "module": "util.${fileBasenameNoExtension}"
+    },
   ]
 }

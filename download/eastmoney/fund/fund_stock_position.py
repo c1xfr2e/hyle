@@ -2,7 +2,10 @@
 # coding: utf-8
 
 """
-    获取基金持仓情况
+    获取基金股票持仓
+
+    数据来源：
+
 """
 
 import pymongo
@@ -86,15 +89,27 @@ def get_fund_stock_position(session, fund_code):
     return stock_position_list
 
 
+def set_position_volume_in_float(stock_profile_dict, fund_position_list):
+    for fp in fund_position_list:
+        if not fp["position"]:
+            continue
+        most_recent = fp["position"][0]
+        for p in most_recent["stock"]:
+            if p["code"] not in stock_profile_dict:
+                continue
+            p["volume_in_float"] = round(p["volume"] * 10000 * 100 / stock_profile_dict[p["code"]]["float_shares"], 3)
+
+
 def store_fund_stock_position_list(mongo_col, stock_position_list):
-    ops = [
-        pymongo.UpdateOne(
-            {"_id": sp["fund_id"]},
-            {"$set": {"position": sp["position"]}},
+    op_list = []
+    for sp in stock_position_list:
+        op_list.append(
+            pymongo.UpdateOne(
+                {"_id": sp["fund_id"]},
+                {"$set": {"position": sp["position"]}},
+            )
         )
-        for sp in stock_position_list
-    ]
-    mongo_col.bulk_write(ops)
+    mongo_col.bulk_write(op_list)
 
 
 if __name__ == "__main__":
@@ -104,12 +119,15 @@ if __name__ == "__main__":
     sess = requests.Session()
 
     funds = db.Fund.find(projection=["_id"])
-    position_list = [
+    fund_position_list = [
         {
             "fund_id": f["_id"],
             "position": get_fund_stock_position(sess, f["_id"]),
         }
-        for f in funds
+        for f in funds[0:1]
     ]
 
-    store_fund_stock_position_list(db.Fund, position_list)
+    stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
+    set_position_volume_in_float(stock_profiles, fund_position_list)
+
+    store_fund_stock_position_list(db.Fund, fund_position_list)
