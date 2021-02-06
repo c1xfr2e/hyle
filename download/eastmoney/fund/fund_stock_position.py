@@ -118,13 +118,13 @@ if __name__ == "__main__":
 
     sess = requests.Session()
 
-    funds = db.Fund.find(projection=["_id"])
+    funds = db.Fund.find({"position.0": {"$exists": 0}}, projection=["_id"])
     fund_position_list = [
         {
             "fund_id": f["_id"],
             "position": get_fund_stock_position(sess, f["_id"]),
         }
-        for f in funds[0:1]
+        for f in funds
     ]
 
     stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
