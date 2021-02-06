@@ -11,6 +11,6 @@ cli = pymongo.MongoClient(URI)[DB]
 
 FundCompany = cli["fund_company"]
 Fund = cli["fund"]
-CompanyPositionChange = cli["company_position_change"]
-
 Stock = cli["stock"]
+
+FundCompanyPosition = cli["fund_company_position"]
