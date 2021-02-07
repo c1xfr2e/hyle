@@ -42,6 +42,7 @@ def diff_stock_position(new_position, old_position):
                 "percent_new": pos["percent"],
                 "percent_old": 0.0,
                 "percent_change": pos["percent"],
+                "volume_in_float": pos.get("volume_in_float", 0.0),
             }
         )
 
@@ -57,6 +58,7 @@ def diff_stock_position(new_position, old_position):
                 "percent_new": 0.0,
                 "percent_old": pos["percent"],
                 "percent_change": -pos["percent"],
+                "volume_in_float": pos.get("volume_in_float", 0.0),
             }
         )
 
@@ -75,6 +77,7 @@ def diff_stock_position(new_position, old_position):
                 "percent_new": pnew["percent"],
                 "percent_old": pold["percent"],
                 "percent_change": round(pnew["percent"] - pold["percent"], 2),
+                "volume_in_float": pnew.get("volume_in_float", 0.0),
             }
         )
 

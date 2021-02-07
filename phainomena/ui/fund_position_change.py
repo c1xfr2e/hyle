@@ -15,17 +15,17 @@ TEMPLATE = """
 {% for fund in fund_list %}
 ### {{fund.name}} {{fund.code}} <span style="color:dodgerblue">{{fund.size}}亿</span>
 
-| 操作 |股票 | 代码 | 股数（万） | 市值（万）| 净值比 | 净值比变动 |
+| 操作 |股票 | 代码 | 占流通比 | 净值比 | 净值比变动 |
 |:------|:------ |:------|:------|:------|:------|:------|
 {% for pc in fund.display_position_change %}
-| <span style="color:{{pc.color}}">{{pc.operation}}</span> | {{pc.name}} | {{pc.code}} | {{pc.volume}} | {{pc.value}} | {{pc.percent_new}}%| {{pc.percent_change}}% |
+| <span style="color:{{pc.color}}">{{pc.operation}}</span> | {{pc.name}} | {{pc.code}} | {{pc.volume_in_float}} | {{pc.percent_new}}%| {{pc.percent_change}}% |
 {% endfor %}
 
 {% endfor %}
 """
 
 
-def _exclude(fund):
+def _exclude_fund(fund):
     if not f.get("position_change"):
         return True
     names = ["上证50", "沪深300", "中证500", "300ETF", "500ETF"]
@@ -41,31 +41,26 @@ def _fund_filter():
     }
 
 
-if __name__ == "__main__":
-    # fund = db.Fund.find_one({"_id": "164205"})
-    # for pc in fund["position_change"]:
-    #     pc["operation"] = {
-    #         "open": "新进",
-    #         "inc": "加仓",
-    #         "dec": "减仓",
-    #         "clear": "退出",
-    #     }[pc["type"]]
-    # tpl = jinja2.Template(TEMPLATE, trim_blocks=True)
-    # text = tpl.render(
-    #     fund=fund,
-    #     report_date="2020-12-31",
-    #     position_changes=fund["position_change"],
-    # )
-    # print(text, end="")
+# TODO: UI feature
+def _exclude_position_change(pc):
+    if pc["type"] != "open":
+        return True
+    if pc["volume_in_float"] > 0.05:
+        return False
+    if pc["percent_new"] < 1.0 and pc["percent_old"] < 1.0:
+        return True
+    return False
 
+
+if __name__ == "__main__":
     col_funds = db.Fund.find(filter=_fund_filter())
     fund_list = []
     for f in col_funds:
-        if _exclude(f):
+        if _exclude_fund(f):
             continue
         display_position_change = []
         for pc in f["position_change"]:
-            if pc["percent_new"] < 1.0 and pc["percent_old"] < 1.0:
+            if _exclude_position_change(pc):
                 continue
             pc["operation"] = {"open": "新进", "inc": "加仓", "dec": "减仓", "clear": "退出"}[pc["type"]]
             pc["color"] = {
@@ -75,6 +70,9 @@ if __name__ == "__main__":
                 "clear": "green",
             }[pc["type"]]
             display_position_change.append(pc)
+        if not display_position_change:
+            continue
+        display_position_change.sort(key=lambda x: x["volume_in_float"], reverse=True)
         f["display_position_change"] = display_position_change
         fund_list.append(f)
 
