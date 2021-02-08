@@ -12,61 +12,60 @@ from phainomena import db
 
 REPORT_DATE = "2020-12-31"
 
-
-def _group_position_change(group, item):
-    g = group.get(item["code"])
-    if not g:
-        group[item["code"]] = item
-        return
-    g["volume"] += item["volume"]
-    g["net_ratio"] += item["net_ratio"]
-
-
-def _group_co_position_changes(position_changes):
-    co_new = {}
-    co_delete = {}
-    for r in position_changes:
-        for n in r.get("new", []):
-            _group_position_change(co_new, n)
-        for d in r.get("delete", []):
-            _group_position_change(co_delete, d)
-    return {
-        "new": co_new,
-        "delete": co_delete,
-    }
+fund_position_change = {
+    "enter": [
+        {
+            "name": "金螳螂",
+            "code": "002081",
+            "volume": 10000,
+            "value": 1000025,
+            "volume_in_float": 0.25,
+            "total_percent": 6.6,
+            "fund_count": 5,
+        }
+    ],
+    "exit": [],
+}
 
 
-def _sort_position_change_to_list(co_position_change):
-    new_list = [i for i in co_position_change["new"].values()]
-    new_list.sort(key=lambda x: x["net_ratio"], reverse=True)
-    co_position_change["new"] = new_list
-    delete_list = [i for i in co_position_change["delete"].values()]
-    delete_list.sort(key=lambda x: x["net_ratio"])
-    co_position_change["delete"] = delete_list
+def diff_co_stock_position_change(new, old, co_stock_position):
+    enter_stock_codes = set(new) - set(old)
+    # exit_stock_codes = set(old) - set(new)
+
+    enter_list, exit_list = [], []
+
+    for code in enter_stock_codes:
+        volume, value, volume_in_float = 0.0, 0.0, 0.0
+        fund_stock_position = co_stock_position[code]
+        for fsp in fund_stock_position:
+            sp = fsp["position"]
+            volume += sp["volume"]
+            value + sp["value"]
+            volume_in_float += sp["volume_in_float"]
+        enter_list.append(
+            {
+                "code": code,
+                "name": fund_stock_position[0]["position"]["name"],
+                "volume": volume,
+                "value": value,
+                "volume_in_float": volume_in_float,
+                "total_percent": None,
+                "fund_count": len(fsp),
+            }
+        )
+
+    return enter_list, exit_list
 
 
 def obtain_company_position_change(report_date):
-
     co_position_change_list = []
-    companies = db.FundCompany.find({})
-    for co in companies:
-        position_changes = db.PositionUpdate.find(
-            filter={
-                "co_id": co["_id"],
-                "date": report_date,
-            }
-        )
-        if not position_changes:
+    co_position_col = db.FundCompanyPosition.find().sort({"size": -1})
+    for cop in co_position_col:
+        list_by_date = cop["list_by_date"]
+        if len(list_by_date) < 2:
             continue
-
-        co_position_change = _group_co_position_changes(position_changes)
-        _sort_position_change_to_list(co_position_change)
-
-        co_position_change["co_id"] = co["_id"]
-        co_position_change["co_name"] = co["name"]
-        co_position_change["date"] = report_date
-
-        co_position_change_list.append(co_position_change)
+        change = diff_co_stock_position_change(list_by_date[0], list_by_date[1])
+        co_position_change_list.append(change)
 
     return co_position_change_list
 
