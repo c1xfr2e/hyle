@@ -21,9 +21,9 @@ class PositionChange(Enum):
     Exit = "exit"  # 清仓
 
 
-def diff_stock_position(new_stock_position, old_stock_position):
-    new_dict = {sp["code"]: sp for sp in new_stock_position}
-    old_dict = {sp["code"]: sp for sp in old_stock_position}
+def diff_position(new_position, old_position):
+    new_dict = {p["code"]: p for p in new_position}
+    old_dict = {p["code"]: p for p in old_position}
 
     enter_stock_codes = set(new_dict) - set(old_dict)
     exit_stock_codes = set(old_dict) - set(new_dict)
@@ -91,7 +91,7 @@ def _write_op(fund, enter_list, inc_dec_list, exit_list):
         {"_id": fund["_id"]},
         {
             "$set": {
-                "date": fund["position"][0]["date"],
+                "date": fund["position_by_date"][0]["date"],
                 "name": fund["name"],
                 "size": fund["size"],
                 "manager": fund["manager"],
@@ -107,15 +107,17 @@ def _write_op(fund, enter_list, inc_dec_list, exit_list):
 if __name__ == "__main__":
     funds = db.Fund.find(
         {
-            "$where": "this.position.length>1",
-            "position.0.date": REPORT_DATE,
+            "$where": "this.position_by_date.length>1",
+            "position_by_date.0.date": REPORT_DATE,
         }
     )
 
     write_op_list = []
     for f in funds:
-        position = f["position"]
-        enter, inc_dec, exit_ = diff_stock_position(position[0]["stock"], position[1]["stock"])
+        enter, inc_dec, exit_ = diff_position(
+            f["position_by_date"][0]["position"],
+            f["position_by_date"][1]["position"],
+        )
         write_op_list.append(_write_op(f, enter, inc_dec, exit_))
 
     db.FundPositionChange.bulk_write(write_op_list)

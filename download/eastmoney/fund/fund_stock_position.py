@@ -3,9 +3,6 @@
 
 """
     获取基金股票持仓
-
-    数据来源：
-
 """
 
 import pymongo
@@ -54,6 +51,7 @@ def get_fund_stock_position(session, fund_code):
     url = "http://fundf10.eastmoney.com/FundArchivesDatas.aspx"
     headers = {
         "Host": "fundf10.eastmoney.com",
+        "Connection": "keep-alive",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) Chrome/87.0.4280.141 Safari/537.36",
         "Accept": "*/*",
         "Referer": "http://fundf10.eastmoney.com/ccmx_001975.html",
@@ -67,37 +65,37 @@ def get_fund_stock_position(session, fund_code):
     }
     resp = session.get(url, headers=headers, params=params)
 
-    stock_position_list = []
+    position_by_date_list = []
     html = BeautifulSoup(resp.content, features="html.parser")
     divs = html.find_all("div", "box")
     for div in divs:
-        stock_position = []
+        position = []
         date = div.find("font").text
         trs = div.find("tbody")("tr")
         for tr in trs:
             tr_data = _parse_tr(tr)
             if not tr_data:
                 continue
-            stock_position.append(tr_data)
-        stock_position_list.append(
+            position.append(tr_data)
+        position_by_date_list.append(
             dict(
                 date=date,
-                stock=stock_position,
+                position=position,
             )
         )
 
-    return stock_position_list
+    return position_by_date_list
 
 
 def set_position_volume_in_float(stock_profile_dict, fund_position_list):
     for fp in fund_position_list:
-        if not fp["position"]:
+        if not fp["position_by_date"]:
             continue
-        most_recent = fp["position"][0]
-        for p in most_recent["stock"]:
-            if p["code"] not in stock_profile_dict:
+        most_recent = fp["position_by_date"][0]
+        for st in most_recent["position"]:
+            if st["code"] not in stock_profile_dict:
                 continue
-            p["volume_in_float"] = round(p["volume"] * 10000 * 100 / stock_profile_dict[p["code"]]["float_shares"], 3)
+            st["volume_in_float"] = round(st["volume"] * 10000 * 100 / stock_profile_dict[st["code"]]["float_shares"], 3)
 
 
 def store_fund_stock_position_list(mongo_col, stock_position_list):
@@ -106,7 +104,7 @@ def store_fund_stock_position_list(mongo_col, stock_position_list):
         op_list.append(
             pymongo.UpdateOne(
                 {"_id": sp["fund_id"]},
-                {"$set": {"position": sp["position"]}},
+                {"$set": {"position_by_date": sp["position_by_date"]}},
             )
         )
     mongo_col.bulk_write(op_list)
@@ -118,16 +116,16 @@ if __name__ == "__main__":
 
     sess = requests.Session()
 
-    funds = db.Fund.find({"position.0": {"$exists": 0}}, projection=["_id"])
-    fund_position_list = [
+    funds = list(db.Fund.find({"position_by_date.0": {"$exists": 0}}, projection=["_id"]))
+    position_by_date = [
         {
             "fund_id": f["_id"],
-            "position": get_fund_stock_position(sess, f["_id"]),
+            "position_by_date": get_fund_stock_position(sess, f["_id"]),
         }
         for f in funds
     ]
 
     stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
-    set_position_volume_in_float(stock_profiles, fund_position_list)
+    set_position_volume_in_float(stock_profiles, position_by_date)
 
-    store_fund_stock_position_list(db.Fund, fund_position_list)
+    store_fund_stock_position_list(db.Fund, position_by_date)
