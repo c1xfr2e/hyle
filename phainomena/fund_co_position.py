@@ -10,98 +10,69 @@ from phainomena import db
 
 
 SAMPLE = {
-    "2020-09-30": {
-        "000001": [
-            {
-                "fund": {
-                    "code": "004606",
-                    "manager": "胡迪",
-                    "name": "上投摩根优选多因子股票",
+    "date": "2020-09-30",
+    "position": [
+        {
+            "name": "金螳螂",
+            "code": "002081",
+            "volume": 10000,
+            "value": 1000025,
+            "volume_in_float": 0.25,
+            "total_percent": 6.6,
+            "funds": [
+                {
+                    "name": "广发中证工程基建指数",
+                    "code": "002001",
                 },
-                "position": {
-                    "code": "000001",
-                    "name": "平安银行",
-                    "percent": 3.77,
-                    "value": 76.91,
-                    "volume": 5.07,
+                {
+                    "name": "天弘文化新兴产业",
+                    "code": "001002",
                 },
-            },
-            {
-                "fund": {
-                    "code": "004738",
-                    "manager": "陈圆明",
-                    "name": "上投摩根安隆回报A",
-                },
-                "position": {
-                    "code": "000001",
-                    "name": "平安银行",
-                    "percent": 2.53,
-                    "value": 4864.41,
-                    "volume": 320.66,
-                },
-            },
-        ],
-        "000002": [
-            {
-                "fund": {
-                    "code": "004361",
-                    "manager": "聂曙光",
-                    "name": "上投摩根安通回报混合A",
-                },
-                "position": {
-                    "code": "000002",
-                    "name": "万科A",
-                    "percent": 0.73,
-                    "value": 487.27,
-                    "volume": 17.39,
-                },
-            },
-            {
-                "fund": {
-                    "code": "000887",
-                    "manager": "聂曙光",
-                    "name": "上投摩根稳进回报混合",
-                },
-                "position": {
-                    "code": "000002",
-                    "name": "万科A",
-                    "percent": 2.02,
-                    "value": 32.64,
-                    "volume": 1.16,
-                },
-            },
-        ],
-    }
+            ],
+        }
+    ],
 }
 
 
-def group_fund_position_of_company(fund_list):
-    result_dict_by_date = {}
-    for fund in fund_list:
-        for position in fund["position"]:
-            stock_position_map = result_dict_by_date.setdefault(position["date"], {})
-            for stock in position["stock"]:
-                stock_pos_list = stock_position_map.setdefault(stock["code"], [])
-                stock_pos_list.append(
-                    {
-                        "fund": {
-                            "code": fund["code"],
-                            "name": fund["name"],
-                            "manager": fund["manager"],
-                        },
-                        "position": stock,
-                    }
+def _add_position(cur, p, fund):
+    return {
+        "name": p["name"],
+        "code": p["code"],
+        "volume": cur.get("volume", 0) + p["volume"],
+        "value": cur.get("value", 0) + p["value"],
+        "volume_in_float": cur.get("volume_in_float", 0) + p.get("volume_in_float", 0),
+        "total_percent": cur.get("total_percent", 0) + p["percent"],
+        "funds": cur.get("funds", []) + [{"name": fund["name"], "code": fund["code"]}],
+    }
+
+
+def group_funds_position(funds_of_company):
+    position_by_date_dict = {}
+    for fund in funds_of_company:
+        for pos_date in fund["position_by_date"]:
+            stock_position_dict = position_by_date_dict.setdefault(pos_date["date"], {})
+            for pos in pos_date["position"]:
+                stock_position_dict[pos["code"]] = _add_position(
+                    stock_position_dict.setdefault(pos["code"], {}),
+                    pos,
+                    fund,
                 )
-    return result_dict_by_date
+    return position_by_date_dict
 
 
-def _get_write_op(company, result_dict_by_date):
+def _position_by_date_dict_to_list(position_by_date_dict):
+    list_ = list(position_by_date_dict.values())
+    list_.sort(key=lambda x: x["volume_in_float"] * 100000 + x["total_percent"], reverse=True)
+    return list_
+
+
+def _write_op(company, position_by_date_dict):
     stock_position_list_by_date = [
         {
             "date": date,
-            "stock_position": result_dict_by_date[date],
+            "position": _position_by_date_dict_to_list(position_by_date_dict[date]),
         }
-        for date in sorted(result_dict_by_date.keys(), reverse=True)
+        for date in sorted(position_by_date_dict.keys(), reverse=True)
     ]
     return pymongo.UpdateOne(
         {
@@ -111,7 +82,7 @@ def _get_write_op(company, result_dict_by_date):
             "$set": {
                 "co_name": company["name"],
                 "co_size": company["size"],
-                "list_by_date": stock_position_list_by_date,
+                "position_by_date": stock_position_list_by_date,
             }
         },
         upsert=True,
@@ -122,8 +93,8 @@ if __name__ == "__main__":
     write_op_list = []
     company_list = list(db.FundCompany.find())
     for co in company_list:
-        fund_list = list(db.Fund.find({"co_id": co["_id"]}))
-        result = group_fund_position_of_company(fund_list)
-        write_op_list.append(_get_write_op(co, result))
+        funds_of_company = list(db.Fund.find({"co_id": co["_id"]}))
+        position_by_date_dict = group_funds_position(funds_of_company)
+        write_op_list.append(_write_op(co, position_by_date_dict))
 
     db.FundCompanyPosition.bulk_write(write_op_list)
