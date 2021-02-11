@@ -66,11 +66,19 @@ def _position_by_date_dict_to_list(position_by_date_dict):
     return list_
 
 
+def _round_floats(position_list):
+    for p in position_list:
+        p["volume"] = round(p["volume"], 2)
+        p["value"] = round(p["value"], 2)
+        p["volume_in_float"] = round(p["volume_in_float"], 2)
+        p["total_percent"] = round(p["total_percent"], 2)
+
+
 def _write_op(company, position_by_date_dict):
     stock_position_list_by_date = [
         {
             "date": date,
-            "position": _position_by_date_dict_to_list(position_by_date_dict[date]),
+            "position": _round_floats(_position_by_date_dict_to_list(position_by_date_dict[date])),
         }
         for date in sorted(position_by_date_dict.keys(), reverse=True)
     ]
