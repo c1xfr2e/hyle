@@ -99,10 +99,8 @@ def _write_op(company, position_by_date_dict):
 
 if __name__ == "__main__":
     write_op_list = []
-    company_list = list(db.FundCompany.find())
-    for co in company_list:
+    for co in list(db.FundCompany.find()):
         funds_of_company = list(db.Fund.find({"co_id": co["_id"]}))
         position_by_date_dict = group_funds_position(funds_of_company)
         write_op_list.append(_write_op(co, position_by_date_dict))
-
     db.FundCompanyPosition.bulk_write(write_op_list)
