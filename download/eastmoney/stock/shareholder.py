@@ -2,14 +2,14 @@
 # coding: utf-8
 
 """
-调用 <东方财富> web 接口获取股票股东情况:
-    十大股东
-    十大流通股东
-    机构持股
-    限售解禁
+    调用 <东方财富> web 接口获取股票股东情况:
+        十大股东
+        十大流通股东
+        机构持股
+        限售解禁
 
-返回数据格式:
-    见 samples/shareholders.json
+    返回数据格式:
+        见 samples/shareholders.json
 """
 
 import requests
