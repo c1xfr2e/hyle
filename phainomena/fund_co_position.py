@@ -62,7 +62,10 @@ def group_funds_position(funds_of_company):
 
 def _position_by_date_dict_to_list(position_by_date_dict):
     list_ = list(position_by_date_dict.values())
-    list_.sort(key=lambda x: x["volume_in_float"] * 100000 + x["total_percent"], reverse=True)
+    list_.sort(
+        key=lambda x: x["volume_in_float"] * 100000 + x["total_percent"],
+        reverse=True,
+    )
     return list_
 
 
@@ -78,7 +81,9 @@ def _write_op(company, position_by_date_dict):
     stock_position_list_by_date = [
         {
             "date": date,
-            "position": _round_floats(_position_by_date_dict_to_list(position_by_date_dict[date])),
+            "position": _round_floats(
+                _position_by_date_dict_to_list(position_by_date_dict[date]),
+            ),
         }
         for date in sorted(position_by_date_dict.keys(), reverse=True)
     ]

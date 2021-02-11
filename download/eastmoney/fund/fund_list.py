@@ -41,17 +41,17 @@ def _parse_tr(tr):
     )
 
 
-def get_fund_list(session, gsid, fund_type):
+def get_fund_list(session, co_gsid, fund_type):
     url = "http://fund.eastmoney.com/Company/home/KFSFundNet"
     headers = {
         "Host": "fund.eastmoney.com",
         "Accept": "text/html, */*; q=0.01",
-        "Referer": "http://fund.eastmoney.com/Company/{gsid}.html".format(gsid=gsid),
+        "Referer": "http://fund.eastmoney.com/Company/{gsid}.html".format(gsid=co_gsid),
         "X-Requested-With": "XMLHttpRequest",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) Chrome/87.0.4280.141 Safari/537.36",
     }
     params = {
-        "gsid": gsid,
+        "gsid": co_gsid,
         "fundType": fund_type,
     }
     resp = session.get(url, headers=headers, params=params)
@@ -63,7 +63,7 @@ def get_fund_list(session, gsid, fund_type):
         f = _parse_tr(tr)
         if not f:
             continue
-        f["co_id"] = gsid
+        f["co_id"] = co_gsid
         f["type"] = {"001": "stock", "002": "hybrid"}.get(fund_type, "")
         funds.append(f)
     funds.sort(reverse=True, key=lambda x: x["size"])
