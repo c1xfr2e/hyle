@@ -31,8 +31,8 @@
       <thead>
         <tr class="w3-dark-grey">
           <th>股票</th>
-          <th id="total_percent" onclick="sortColumn('total_percent')">净值比</th>
           <th id="volume_in_float" onclick="sortColumn('volume_in_float')">流通比</th>
+          <th id="total_percent" onclick="sortColumn('total_percent')">净值比</th>
           <th id="fund_count" onclick="sortColumn('fund_count')">基金数量</th>
         </tr>
       </thead>

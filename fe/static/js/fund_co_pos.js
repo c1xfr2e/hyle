@@ -31,8 +31,8 @@ function loadTableData(positionData) {
   for (let p of positionData) {
     dataHTML += `<tr class="w3-hover-light-blue">
       <td><span style="display: inline-block; width: 80px;">${p.name}</span><span style="display: inline-block; color: gray;">${p.code}</span></td>
-      <td>${p.total_percent}%</td>
       <td>${p.volume_in_float}%</td>
+      <td>${p.total_percent}%</td>
       <td>${p.fund_count}</td>
     </tr>`
   }
