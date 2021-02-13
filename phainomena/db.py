@@ -16,3 +16,5 @@ Stock = cli["stock"]
 FundPositionChange = cli["fund_position_change"]
 FundCompanyPosition = cli["fund_company_position"]
 FundCompanyPositionChange = cli["fund_company_position_change"]
+
+StockFundPosition = cli["stock_fund_position"]
