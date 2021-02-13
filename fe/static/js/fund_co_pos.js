@@ -1,6 +1,6 @@
 
 function openFundCompany(evt, coid) {
-  fetch(`http://127.0.0.1:5000//fundco/${coid}/position`)
+  fetch(`/api/fundco/${coid}/position`)
     .then(response => response.json())
     .then(data => {
       positionData = data
@@ -29,12 +29,17 @@ function loadTableData(positionData) {
   let dataHTML = "";
 
   for (let p of positionData) {
+    let position_change = "";
+    if (p.enter_count > 0 || p.exit_count > 0) {
+      position_change = `新进: <span style="color:#d50000">${p.enter_count}</span> 退出: <span style="color:green">${p.exit_count}</span>`
+    }
     dataHTML += `<tr class="w3-hover-light-blue">
       <td><span style="display: inline-block; width: 80px;">${p.name}</span><span style="display: inline-block; color: gray;">${p.code}</span></td>
       <td>${p.volume_in_float}%</td>
       <td>${p.total_percent}%</td>
-      <td>${p.fund_count}</td>
-    </tr>`
+      <td>${p.funds.length}</td>
+      <td>${position_change}</td>
+    </tr>`;
   }
 
   tableBody.innerHTML = dataHTML
