@@ -4,14 +4,14 @@ window.onload = () => {
   document.getElementById("80041198").className += " w3-red";
 }
 
-let positionData;
+let positionTableData;
 
 function openFundCompany(evt, coid) {
   fetch(`/api/fundco/${coid}/position`)
     .then(response => response.json())
     .then(data => {
-      positionData = data
-      loadTableData(positionData)
+      positionTableData = data
+      loadTableData(positionTableData)
     });
   if (evt) {
     tablinks = document.getElementsByClassName("tablink");
@@ -43,8 +43,6 @@ function loadTableData(data) {
   tableBody.innerHTML = dataHTML
 }
 
-let sortDirection = true;
-
 let sortOptions = {
   volume_in_float: {
     direction: true,
@@ -69,11 +67,11 @@ function sortColumn(columnName) {
   op.direction = !op.direction
   op.sortFunc(op.direction)
 
-  loadTableData(positionData)
+  loadTableData(positionTableData)
 }
 
 function sortNumberColumn(col, dir) {
-  positionData = positionData.sort(
+  positionTableData = positionTableData.sort(
     (p1, p2) => {
       return dir ? p1[col] - p2[col] : p2[col] - p1[col]
     }
@@ -81,7 +79,7 @@ function sortNumberColumn(col, dir) {
 }
 
 function sortFundCount(dir) {
-  positionData = positionData.sort(
+  positionTableData = positionTableData.sort(
     (p1, p2) => {
       return dir? p1.funds.length - p2.funds.length : p2.funds.length - p1.funds.length
     }
@@ -89,7 +87,7 @@ function sortFundCount(dir) {
 }
 
 function sortPositionChange(dir) {
-  positionData = positionData.sort(
+  positionTableData = positionTableData.sort(
     (p1, p2) => {
       v1 = p1.enter_count * 1000 - p1.exit_count
       v2 = p2.enter_count * 1000 - p2.exit_count
