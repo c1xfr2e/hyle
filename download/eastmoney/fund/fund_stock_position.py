@@ -91,12 +91,12 @@ def set_position_volume_in_float(stock_profile_dict, fund_position_list):
     for fp in fund_position_list:
         if not fp["position_by_date"]:
             continue
-        most_recent = fp["position_by_date"][0]
-        for st in most_recent["position"]:
-            if st["code"] not in stock_profile_dict:
-                st["volume_in_float"] = 0.0
-                continue
-            st["volume_in_float"] = round(st["volume"] * 10000 * 100 / stock_profile_dict[st["code"]]["float_shares"], 3)
+        for position_by_date in fp["position_by_date"]:
+            for st in position_by_date["position"]:
+                if st["code"] not in stock_profile_dict:
+                    st["volume_in_float"] = 0.0
+                    continue
+                st["volume_in_float"] = round(st["volume"] * 10000 * 100 / stock_profile_dict[st["code"]]["float_shares"], 3)
 
 
 def store_fund_stock_position_list(mongo_col, stock_position_list):
@@ -106,6 +106,7 @@ def store_fund_stock_position_list(mongo_col, stock_position_list):
             pymongo.UpdateOne(
                 {"_id": sp["fund_id"]},
                 {"$set": {"position_by_date": sp["position_by_date"]}},
+                upsert=True,
             )
         )
     mongo_col.bulk_write(op_list)
@@ -114,17 +115,24 @@ def store_fund_stock_position_list(mongo_col, stock_position_list):
 if __name__ == "__main__":
     import requests
     from download.eastmoney.fund import db
+    from util.progress_bar import print_progress_bar
 
     sess = requests.Session()
 
-    funds = list(db.Fund.find({"position_by_date.0": {"$exists": 0}}, projection=["_id"]))
-    position_by_date = [
-        {
-            "fund_id": f["_id"],
-            "position_by_date": get_fund_stock_position(sess, f["_id"]),
-        }
-        for f in funds
-    ]
+    funds = list(db.Fund.find(projection=["_id"]))
+
+    progress_total = len(funds)
+    print_progress_bar(0, progress_total, length=40)
+
+    position_by_date = []
+    for i, f in enumerate(funds):
+        position_by_date.append(
+            {
+                "fund_id": f["_id"],
+                "position_by_date": get_fund_stock_position(sess, f["_id"]),
+            }
+        )
+        print_progress_bar(i + 1, progress_total, length=40)
 
     stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
     set_position_volume_in_float(stock_profiles, position_by_date)

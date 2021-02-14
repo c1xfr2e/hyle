@@ -45,6 +45,7 @@ def get_fund_list(session, co_gsid, fund_type):
     url = "http://fund.eastmoney.com/Company/home/KFSFundNet"
     headers = {
         "Host": "fund.eastmoney.com",
+        "Connection": "keep-alive",
         "Accept": "text/html, */*; q=0.01",
         "Referer": "http://fund.eastmoney.com/Company/{gsid}.html".format(gsid=co_gsid),
         "X-Requested-With": "XMLHttpRequest",
