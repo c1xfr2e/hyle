@@ -69,7 +69,7 @@ def _aggregate_fund_position(fund):
                 "fund_size": fund["size"],
                 "percent": p["percent"],
                 "volume": p["volume"],
-                "volume_in_float": p.get("volume_in_float", 0),
+                "volume_in_float": p["volume_in_float"],
             }
         )
 

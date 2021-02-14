@@ -94,6 +94,7 @@ def set_position_volume_in_float(stock_profile_dict, fund_position_list):
         most_recent = fp["position_by_date"][0]
         for st in most_recent["position"]:
             if st["code"] not in stock_profile_dict:
+                st["volume_in_float"] = 0.0
                 continue
             st["volume_in_float"] = round(st["volume"] * 10000 * 100 / stock_profile_dict[st["code"]]["float_shares"], 3)
 

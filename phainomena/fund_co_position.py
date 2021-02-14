@@ -40,7 +40,7 @@ def _add_position(cur, p, fund):
         "code": p["code"],
         "volume": cur.get("volume", 0) + p["volume"],
         "value": cur.get("value", 0) + p["value"],
-        "volume_in_float": cur.get("volume_in_float", 0) + p.get("volume_in_float", 0),
+        "volume_in_float": cur["volume_in_float"] + p["volume_in_float"],
         "total_percent": cur.get("total_percent", 0) + p["percent"],
         "funds": cur.get("funds", []) + [{"name": fund["name"], "code": fund["code"]}],
     }
@@ -73,7 +73,7 @@ def _round_floats(position_list):
     for p in position_list:
         p["volume"] = round(p["volume"], 2)
         p["value"] = round(p["value"], 2)
-        p["volume_in_float"] = round(p["volume_in_float"], 2)
+        p["volume_in_float"] = round(p["volume_in_float"], 3)
         p["total_percent"] = round(p["total_percent"], 2)
 
 
