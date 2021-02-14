@@ -40,9 +40,7 @@ def diff_position(new_position, old_position):
                 "volume": pos["volume"],
                 "value": pos["value"],
                 "volume_in_float": pos.get("volume_in_float", 0.0),
-                "percent_new": pos["percent"],
-                "percent_old": 0.0,
-                "percent_change": pos["percent"],
+                "percent": pos["percent"],
             }
         )
 
@@ -55,9 +53,7 @@ def diff_position(new_position, old_position):
                 "volume": pos["volume"],
                 "value": pos["value"],
                 "volume_in_float": pos.get("volume_in_float", 0.0),
-                "percent_new": 0.0,
-                "percent_old": pos["percent"],
-                "percent_change": -pos["percent"],
+                "percent": pos["percent"],
             }
         )
 
@@ -72,16 +68,16 @@ def diff_position(new_position, old_position):
                 "code": pnew["code"],
                 "volume": round(volume_change / 10000, 2),
                 "value": round(pnew["value"] - pold["value"], 2),
-                "volume_in_float": pnew.get("volume_in_float", 0.0),
+                "volume_in_float": round(pnew.get("volume_in_float", 0.0) - pold.get("volume_in_float", 0.0), 3),
+                "percent": round(pnew["percent"] - pold["percent"], 2),
                 "percent_new": pnew["percent"],
                 "percent_old": pold["percent"],
-                "percent_change": round(pnew["percent"] - pold["percent"], 2),
             }
         )
 
-    enter_list.sort(key=lambda x: x["percent_change"], reverse=True)
-    inc_dec_list.sort(key=lambda x: x["percent_change"], reverse=True)
-    exit_list.sort(key=lambda x: x["percent_change"], reverse=True)
+    enter_list.sort(key=lambda x: x["percent"], reverse=True)
+    inc_dec_list.sort(key=lambda x: x["percent"], reverse=True)
+    exit_list.sort(key=lambda x: x["percent"], reverse=True)
 
     return enter_list, inc_dec_list, exit_list
 
@@ -96,8 +92,8 @@ def _write_op(fund, enter_list, inc_dec_list, exit_list):
                 "size": fund["size"],
                 "manager": fund["manager"],
                 "enter": enter_list,
-                "inc_dec": inc_dec_list,
                 "exit": exit_list,
+                "inc_dec": inc_dec_list,
             }
         },
         upsert=True,
