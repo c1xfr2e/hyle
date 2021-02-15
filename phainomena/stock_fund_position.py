@@ -23,7 +23,6 @@ def _aggregate_fund_position(stock_entry_dict, fund):
                 "fund_size": fund["size"],
                 "percent": p["percent"],
                 "volume": p["volume"],
-                "volume_in_float": p["volume_in_float"],
             }
         )
 
@@ -39,7 +38,6 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
                 "fund_name": fund_change["name"],
                 "percent": e["percent"],
                 "volume": e["volume"],
-                "volume_in_float": e["volume_in_float"],
             }
         )
     for e in fund_change["exit"]:
@@ -52,7 +50,6 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
                 "fund_name": fund_change["name"],
                 "percent": e["percent"],
                 "volume": e["volume"],
-                "volume_in_float": e["volume_in_float"],
             }
         )
         pass
@@ -66,7 +63,6 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
                 "fund_name": fund_change["name"],
                 "percent": i["percent"],
                 "volume": i["volume"],
-                "volume_in_float": i["volume_in_float"],
             }
         )
 
@@ -121,7 +117,7 @@ ENTRY = {
     "summary": {
         "fund_size": 0.0,
         "volume": 0.0,
-        "volume_in_float": 0.0,
+        "volume_change": 0.0,
     },
     "latest": [],
     "enter": [],
@@ -143,7 +139,6 @@ def _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
             entry = stock_entry_dict.setdefault(p["code"], copy.deepcopy(ENTRY))
             entry["summary"]["fund_size"] += fund["size"]
             entry["summary"]["volume"] += p["volume"]
-            entry["summary"]["volume_in_float"] += p["volume_in_float"]
             entry["latest"].append(
                 {
                     "fund_code": fund["code"],
@@ -151,13 +146,11 @@ def _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
                     "fund_size": fund["size"],
                     "percent": p["percent"],
                     "volume": p["volume"],
-                    "volume_in_float": p["volume_in_float"],
                 }
             )
     for entry in stock_entry_dict.values():
         entry["summary"]["fund_size"] = round(entry["summary"]["fund_size"], 2)
         entry["summary"]["volume"] = round(entry["summary"]["volume"], 2)
-        entry["summary"]["volume_in_float"] = round(entry["summary"]["volume_in_float"], 3)
 
 
 def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, company):
@@ -175,9 +168,9 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                     "fund_name": position_change["name"],
                     "percent": c["percent"],
                     "volume": c["volume"],
-                    "volume_in_float": c["volume_in_float"],
                 }
             )
+            entry["summary"]["volume_change"] += c["volume"]
         for c in position_change["exit"]:
             entry = stock_entry_dict.setdefault(c["code"], copy.deepcopy(ENTRY))
             entry["exit"].append(
@@ -186,9 +179,9 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                     "fund_name": position_change["name"],
                     "percent": c["percent"],
                     "volume": c["volume"],
-                    "volume_in_float": c["volume_in_float"],
                 }
             )
+            entry["summary"]["volume_change"] -= c["volume"]
         for c in position_change["inc_dec"]:
             entry = stock_entry_dict.setdefault(c["code"], copy.deepcopy(ENTRY))
             entry["inc_dec"].append(
@@ -197,9 +190,9 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                     "fund_name": position_change["name"],
                     "percent": c["percent"],
                     "volume": c["volume"],
-                    "volume_in_float": c["volume_in_float"],
                 }
             )
+            entry["summary"]["volume_change"] += c["volume"]
 
 
 def process_by_each_company(company):

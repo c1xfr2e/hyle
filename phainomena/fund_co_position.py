@@ -9,31 +9,6 @@ import pymongo
 from phainomena import db
 
 
-SAMPLE = {
-    "date": "2020-09-30",
-    "position": [
-        {
-            "name": "金螳螂",
-            "code": "002081",
-            "volume": 10000,
-            "value": 1000025,
-            "volume_in_float": 0.25,
-            "total_percent": 6.6,
-            "funds": [
-                {
-                    "name": "广发中证工程基建指数",
-                    "code": "002001",
-                },
-                {
-                    "name": "天弘文化新兴产业",
-                    "code": "001002",
-                },
-            ],
-        }
-    ],
-}
-
-
 def _add_position(cur, p, fund):
     return {
         "name": p["name"],
