@@ -5,6 +5,7 @@
     获取基金股票持仓
 """
 
+import logging
 import pymongo
 from bs4 import BeautifulSoup
 
@@ -119,22 +120,26 @@ if __name__ == "__main__":
 
     sess = requests.Session()
 
-    funds = list(db.Fund.find(projection=["_id"]))
+    funds = list(db.Fund.find({"position_by_date.0": {"$exists": 0}}, projection=["_id"]))
 
     progress_total = len(funds)
     print_progress_bar(0, progress_total, length=40)
 
-    position_by_date = []
+    all_position_by_date = []
     for i, f in enumerate(funds):
-        position_by_date.append(
+        position_by_date = get_fund_stock_position(sess, f["_id"])
+        if len(position_by_date) == 0:
+            logging.error("empty position_by_date: {} {}".format(f["_id"], f["name"]))
+            continue
+        all_position_by_date.append(
             {
                 "fund_id": f["_id"],
-                "position_by_date": get_fund_stock_position(sess, f["_id"]),
+                "position_by_date": position_by_date,
             }
         )
         print_progress_bar(i + 1, progress_total, length=40)
 
     stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
-    set_position_volume_in_float(stock_profiles, position_by_date)
+    set_position_volume_in_float(stock_profiles, all_position_by_date)
 
-    store_fund_stock_position_list(db.Fund, position_by_date)
+    store_fund_stock_position_list(db.Fund, all_position_by_date)
