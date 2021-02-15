@@ -8,6 +8,8 @@ from phainomena import db
 
 REPORT_DATE = "2020-12-31"
 
+ALL_STOCKS_DICT = {st["_id"]: st for st in list(db.Stock.find(projection=["name"]))}
+
 
 def _aggregate_fund_position(stock_entry_dict, fund):
     for p in fund["position_by_date"][0]["position"]:
@@ -69,28 +71,26 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
         )
 
 
-def aggregate_all_stock_fund_position(stock_entry_dict):
+def _aggregate_all_stock_fund_position(stock_entry_dict):
     fund_list = list(db.Fund.find({"position_by_date.0.date": REPORT_DATE}))
     for fund in fund_list:
         _aggregate_fund_position(stock_entry_dict, fund)
 
 
-def aggregate_all_stock_fund_position_change(stock_entry_dict):
+def _aggregate_all_stock_fund_position_change(stock_entry_dict):
     change_list = list(db.FundPositionChange.find({"date": REPORT_DATE}))
     for change in change_list:
         _aggregate_fund_position_change(stock_entry_dict, change)
 
 
 def process_by_each_fund():
-    stocks = {st["_id"]: st for st in list(db.Stock.find(projection=["name"]))}
-
     stock_entry_dict = {}
 
-    aggregate_all_stock_fund_position(stock_entry_dict)
-    aggregate_all_stock_fund_position_change(stock_entry_dict)
+    _aggregate_all_stock_fund_position(stock_entry_dict)
+    _aggregate_all_stock_fund_position_change(stock_entry_dict)
 
     write_op_list = []
-    for code, stock in stocks.items():
+    for code, stock in ALL_STOCKS_DICT.items():
         if code not in stock_entry_dict:
             continue
 
@@ -132,7 +132,7 @@ ENTRY = {
 import copy
 
 
-def aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
+def _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
     funds_list_of_company = list(
         db.Fund.find(
             {"co_id": company["_id"], "position_by_date.0.date": REPORT_DATE},
@@ -160,7 +160,7 @@ def aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
         entry["summary"]["volume_in_float"] = round(entry["summary"]["volume_in_float"], 3)
 
 
-def aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, company):
+def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, company):
     fund_position_change_list_of_company = list(
         db.FundPositionChange.find(
             {"co_id": company["_id"], "date": REPORT_DATE},
@@ -202,15 +202,12 @@ def aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compan
             )
 
 
-ALL_STOCKS_DICT = {st["_id"]: st for st in list(db.Stock.find(projection=["name"]))}
-
-
 def process_by_each_company(company):
     stock_entry_dict = {}
     write_op_list = []
 
-    aggregate_fund_position_of_company_by_stock(stock_entry_dict, company)
-    aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, company)
+    _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company)
+    _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, company)
 
     for code, entry in stock_entry_dict.items():
         if code not in ALL_STOCKS_DICT:
