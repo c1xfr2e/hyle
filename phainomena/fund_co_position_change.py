@@ -33,6 +33,7 @@ def diff_company_position(new_position_dict, old_position_dict):
             "code": code,
             "name": new_position_dict[code]["name"],
             "total_percent": new_position_dict[code]["total_percent"],
+            "volume": new_position_dict[code]["volume"],
             "funds": new_position_dict[code]["funds"],
         }
         for code in enter_stock_codes
@@ -44,6 +45,7 @@ def diff_company_position(new_position_dict, old_position_dict):
             "code": code,
             "name": old_position_dict[code]["name"],
             "total_percent": old_position_dict[code]["total_percent"],
+            "volume": old_position_dict[code]["volume"],
             "funds": old_position_dict[code]["funds"],
         }
         for code in exit_stock_codes
