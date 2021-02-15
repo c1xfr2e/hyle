@@ -215,6 +215,11 @@ def process_by_each_company(company):
 
         entry["name"] = company["name"]
 
+        entry["latest"].sort(key=lambda x: x["volume"], reverse=True)
+        entry["enter"].sort(key=lambda x: x["volume"], reverse=True)
+        entry["exit"].sort(key=lambda x: x["volume"], reverse=True)
+        entry["inc_dec"].sort(key=lambda x: x["volume"], reverse=True)
+
         write_op_list.append(
             pymongo.UpdateOne(
                 {"_id": code},
