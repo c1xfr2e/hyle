@@ -113,6 +113,10 @@ def store_fund_stock_position_list(mongo_col, stock_position_list):
     mongo_col.bulk_write(op_list)
 
 
+def _fund_filter():
+    return {"position_by_date.0": {"$exists": 0}}
+
+
 if __name__ == "__main__":
     import requests
     from download.eastmoney.fund import db
@@ -120,7 +124,7 @@ if __name__ == "__main__":
 
     sess = requests.Session()
 
-    funds = list(db.Fund.find({"position_by_date.0": {"$exists": 0}}, projection=["_id"]))
+    funds = list(db.Fund.find(_fund_filter(), projection=["_id", "name"]))
 
     progress_total = len(funds)
     print_progress_bar(0, progress_total, length=40)
@@ -129,7 +133,7 @@ if __name__ == "__main__":
     for i, f in enumerate(funds):
         position_by_date = get_fund_stock_position(sess, f["_id"])
         if len(position_by_date) == 0:
-            logging.error("empty position_by_date: {} {}".format(f["_id"], f["name"]))
+            logging.warning("empty position_by_date: {} {}".format(f["_id"], f["name"]))
             continue
         all_position_by_date.append(
             {

@@ -89,6 +89,10 @@ def store_fund_list(mongo_col, fund_list, co_name):
     mongo_col.bulk_write(ops)
 
 
+def _company_filter():
+    return {}
+
+
 if __name__ == "__main__":
     import argparse
 
@@ -99,10 +103,13 @@ if __name__ == "__main__":
     import requests
     from download.eastmoney.fund import db
 
-    companies = db.FundCompany.find()
+    companies = db.FundCompany.find(_company_filter())
     sess = requests.Session()
     for co in companies:
-        funds = get_fund_list(sess, co["gsid"], args.type)
+        if args.type in ["001", "002"]:
+            funds = get_fund_list(sess, co["gsid"], args.type)
+        else:
+            funds = get_fund_list(sess, co["gsid"], "001") + get_fund_list(sess, co["gsid"], "002")
         if not funds:
             logging.warning("no funds: %s %s", co["gsid"], co["name"])
             continue
