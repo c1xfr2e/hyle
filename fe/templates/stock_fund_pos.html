@@ -16,6 +16,10 @@
       background-repeat: no-repeat;
     }
 
+    .dark-content-text {
+      color: #bbb;
+    }
+
   </style>
 </head>
 
@@ -24,8 +28,10 @@
   <div>
 
     <div class="w3-container w3-metro-darken">
-      <h2>{{stock_name}} <span style="display: inline-block; margin-left: 8px; font-size:18px">{{stock_code}}</span></h2>
-      <p>{{report_date}} 基金持仓</p>
+      <h2>{{stock_name}}
+        <span class="dark-content-text" style="display: inline-block; margin-left: 8px; font-size:18px">{{stock_code}}</span>
+      </h2>
+      <p class="dark-content-text" >{{report_date}} 基金持仓</p>
     </div>
 
     <table class="w3-table w3-tiny">
