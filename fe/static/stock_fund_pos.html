@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<title>股票基金持仓</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
+
+<head>
+  <script></script>
+  <style>
+    .strikethrough {
+      background: repeating-linear-gradient(180deg,
+        #34568B 0%,
+        #34568B 100%);
+      background-size: 100% 1px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div>
+
+    <div class="w3-container w3-flat-midnight-blue">
+      <h2>金 螳 螂 <span style="font-size:16px">002081</span></h2>
+      <p>2020-12-31 基金持仓</p>
+    </div>
+
+    <table class="w3-table w3-hoverable w3-tiny">
+      <thead>
+        <tr style="font-size:small; color:#555555;">
+          <th id=""></th>
+          <th id="">持股数（万）</th>
+          <th id="">流通比</th>
+          <th id="">净值比</th>
+          <th id="">变动</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="w3-leftbar w3-border-blue-grey w3-light-gray">
+          <td style="padding: 4px 8px 4px 8px" colspan="5"><img src="天弘.svg" height="28px"></img></td>
+          <!-- <td>1000.23</td>
+          <td>0.28</td>
+          <td>5.6%</td>
+          <td><span style="color:#e50000;font-weight: bold;"></span></td> -->
+        </tr>
+        <tr class="w3-hover-light-blue">
+          <td>广发工程基建指数A</td>
+          <td>1000.23</td>
+          <td>0.28</td>
+          <td>5.6%</td>
+          <td><span style="color:#e50000;font-weight: bold;">新进</span></td>
+        </tr>
+        <tr class="w3-hover-light-blue">
+          <td>广发工程基建指数A</td>
+          <td>1000.23</td>
+          <td>0.28(+0.1)</td>
+          <td>5.6%</td>
+          <td><span style="color:#f06292">加仓</span></td>
+        </tr>
+        <tr class="w3-hover-light-blue">
+          <td>广发工程基建指数A</td>
+          <td>1000.23</td>
+          <td>1(-0.21)</td>
+          <td>5.6%</td>
+          <td><span style="color:#26a69a">减仓</span></td>
+        </tr>
+        <tr class="w3-hover-light-blue w3-border-0">
+          <td class="strikethrough">广发工程基建指数A</td>
+          <td class="strikethrough">1000.23</td>
+          <td class="strikethrough">0.33</td>
+          <td class="strikethrough">5.6%</td>
+          <td><span style="color:green;font-weight: bold;">退出</span></td>
+        </tr>
+        <tr class="w3-hover-light-blue w3-border-0">
+          <td class="strikethrough">广发工程基建指数A</td>
+          <td class="strikethrough">1000.23</td>
+          <td class="strikethrough">0.33</td>
+          <td class="strikethrough">5.6%</td>
+          <td><span style="color:green;font-weight: bold;">退出</span></td>
+        </tr>
+        <tr class="w3-leftbar w3-border-blue-grey w3-light-gray">
+          <td colspan="5" style="padding: 4px 8px 4px 8px"><img src="易方达.jpg" height="28px"></td>
+          <!-- <td>1000.23</td>
+          <td>0.28</td>
+          <td>5.6%</td>
+          <td><span style="color:#e50000;font-weight: bold;"></span></td> -->
+        </tr>
+        <tr class="w3-hover-light-blue">
+          <td>易方达基建指数文化建设</td>
+          <td>1000.23</td>
+          <td>0.28</td>
+          <td>5.6%</td>
+          <td><span style="color:#e50000;font-weight: bold;">新进</span></td>
+        </tr>
+        <tr class="w3-hover-light-blue">
+          <td>易方达基建指数A</td>
+          <td>1000.23</td>
+          <td>0.28(+0.1)</td>
+          <td>5.6%</td>
+          <td><span style="color:#f06292">加仓</span></td>
+        </tr>
+        <tr class="w3-hover-light-blue">
+          <td>易方达基建指数A</td>
+          <td>1000.23</td>
+          <td>1(-0.21)</td>
+          <td>5.6%</td>
+          <td><span style="color:#26a69a">减仓</span></td>
+        </tr>
+        <tr class="w3-leftbar w3-border-blue-grey w3-light-gray">
+          <td style="font-size:15px; padding: 4px 8px 4px 8px; line-height: 28px;" colspan="5">大成基金</td>
+          <!-- <td>1000.23</td>
+          <td>0.28</td>
+          <td>5.6%</td>
+          <td><span style="color:#e50000;font-weight: bold;"></span></td> -->
+        </tr>
+        <tr class="w3-hover-light-blue">
+          <td>大成基建指数文化建设</td>
+          <td>1000.23</td>
+          <td>0.28</td>
+          <td>5.6%</td>
+          <td><span style="color:#e50000;font-weight: bold;">新进</span></td>
+        </tr>
+        <tr class="w3-hover-light-blue">
+          <td>大成基建指数A</td>
+          <td>1000.23</td>
+          <td>0.28(+0.1)</td>
+          <td>5.6%</td>
+          <td><span style="color:#f06292">加仓</span></td>
+        </tr>
+        <tr class="w3-hover-light-blue">
+          <td>大成基建指数A</td>
+          <td>1000.23</td>
+          <td>1(-0.21)</td>
+          <td>5.6%</td>
+          <td><span style="color:#26a69a">减仓</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</body>
+
+</html>

@@ -148,6 +148,7 @@ def _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
                     "volume": p["volume"],
                 }
             )
+
     for entry in stock_entry_dict.values():
         entry["summary"]["fund_size"] = round(entry["summary"]["fund_size"], 2)
         entry["summary"]["volume"] = round(entry["summary"]["volume"], 2)
@@ -193,6 +194,9 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                 }
             )
             entry["summary"]["volume_change"] += c["volume"]
+
+    for entry in stock_entry_dict.values():
+        entry["summary"]["volume_change"] = round(entry["summary"]["volume_change"], 2)
 
 
 def process_by_each_company(company):

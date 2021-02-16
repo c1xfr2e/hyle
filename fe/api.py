@@ -11,6 +11,7 @@ def get_fund_company_position(coid):
     co_pos = db.FundCompanyPosition.find_one({"_id": coid})
     if not co_pos:
         return {}
+
     position = co_pos["position_by_date"][0]["position"]
     co_pos_change = db.FundCompanyPositionChange.find_one({"_id": coid})
     if co_pos_change:

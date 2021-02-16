@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<title>股票基金持仓 - {{stock_name}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
+
+<head>
+  <script></script>
+  <style>
+    .strikethrough {
+      background: repeating-linear-gradient(180deg,
+        #34568B 0%,
+        #34568B 100%);
+      background-size: 100% 1px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div>
+
+    <div class="w3-container w3-flat-midnight-blue">
+      <h2>{{stock_name}} <span style="display: inline-block; margin-left: 8px; font-size:18px">{{stock_code}}</span></h2>
+      <p>{{report_date}} 基金持仓</p>
+    </div>
+
+    <table class="w3-table w3-tiny">
+      <thead>
+        <tr style="font-size:small; color:#555555;">
+          <th></th>
+          <th>持股数（万）</th>
+          <th>流通比（%）</th>
+          <th>净值比（%）</th>
+          <th class="w3-right-align">持仓变动</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for co in company_list %}
+        <tr class="w3-leftbar w3-border-blue-grey w3-light-gray">
+          <td style="font-size:15px; font-weight: bold; padding: 4px 8px 4px 8px; line-height: 28px;" colspan="5">{{co["name"]}}</td>
+        </tr>
+          {% for fund in co["funds"] %}
+          <tr class="">
+            <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["name"]|safe }}</td>
+            <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["volume"]|safe }}</td>
+            <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["volume_in_float"]|safe }}</td>
+            <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["percent"]|safe }}</td>
+            <td class="w3-right-align"><span style="{{change_type_styles[fund['change_type']]}}">{{fund['change_type']}}</span></td>
+          </tr>
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+
+</body>
+
+</html>
