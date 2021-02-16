@@ -9,9 +9,7 @@
   <script></script>
   <style>
     .strikethrough {
-      background: repeating-linear-gradient(180deg,
-        #34568B 0%,
-        #34568B 100%);
+      background: repeating-linear-gradient(180deg, #34568B 0%, #34568B 100%);
       background-size: 100% 1px;
       background-position: center;
       background-repeat: no-repeat;
@@ -33,6 +31,8 @@
       <thead>
         <tr style="font-size:small; color:#555555;">
           <th></th>
+          <th></th>
+          <th>基金规模（亿）</th>
           <th>持股数（万）</th>
           <th>流通比（%）</th>
           <th>净值比（%）</th>
@@ -41,12 +41,19 @@
       </thead>
       <tbody>
         {% for co in company_list %}
-        <tr class="w3-leftbar w3-border-blue-grey w3-light-gray">
-          <td style="font-size:15px; font-weight: bold; padding: 4px 8px 4px 8px; line-height: 28px;" colspan="5">{{co["name"]}}</td>
+        <tr class="w3-leftbar w3-border-blue-grey w3-light-gray" style="font-weight: bold">
+          <td colspan="2" style="font-size:15px; padding: 4px 8px 4px 8px; line-height: 28px;">{{co["name"]}}</td>
+          <td>{{ co["summary"]["fund_size"]|safe }}</td>
+          <td>{{ co["summary"]["volume"]|safe }}</td>
+          <td>{{ co["summary"]["volume_in_float"]|safe }}</td>
+          <td>{{ co["summary"]["percent"]|safe }}</td>
+          <td></td>
         </tr>
           {% for fund in co["funds"] %}
           <tr class="">
+            <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["code"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["name"]|safe }}</td>
+            <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["fund_size"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["volume"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["volume_in_float"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["percent"]|safe }}</td>

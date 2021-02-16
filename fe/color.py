@@ -3,6 +3,6 @@
 """
 
 Enter = "#e50000"
-Exit = "green"
-Increase = "#f06292"
-Decrease = "#26a69a"
+Exit = "#27a64c"
+Increase = "#bd1e24"
+Decrease = "#007256"

@@ -36,6 +36,7 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
             {
                 "fund_code": fund_change["_id"],
                 "fund_name": fund_change["name"],
+                "fund_size": fund_change["size"],
                 "percent": e["percent"],
                 "volume": e["volume"],
             }
@@ -48,6 +49,7 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
             {
                 "fund_code": fund_change["_id"],
                 "fund_name": fund_change["name"],
+                "fund_size": fund_change["size"],
                 "percent": e["percent"],
                 "volume": e["volume"],
             }
@@ -61,6 +63,7 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
             {
                 "fund_code": fund_change["_id"],
                 "fund_name": fund_change["name"],
+                "fund_size": fund_change["size"],
                 "percent": i["percent"],
                 "volume": i["volume"],
             }
@@ -118,6 +121,7 @@ ENTRY = {
         "fund_size": 0.0,
         "volume": 0.0,
         "volume_change": 0.0,
+        "percent": 0.0,
     },
     "latest": [],
     "enter": [],
@@ -139,6 +143,7 @@ def _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
             entry = stock_entry_dict.setdefault(p["code"], copy.deepcopy(ENTRY))
             entry["summary"]["fund_size"] += fund["size"]
             entry["summary"]["volume"] += p["volume"]
+            entry["summary"]["percent"] += p["percent"]
             entry["latest"].append(
                 {
                     "fund_code": fund["code"],
@@ -152,6 +157,7 @@ def _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
     for entry in stock_entry_dict.values():
         entry["summary"]["fund_size"] = round(entry["summary"]["fund_size"], 2)
         entry["summary"]["volume"] = round(entry["summary"]["volume"], 2)
+        entry["summary"]["percent"] = round(entry["summary"]["percent"], 2)
 
 
 def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, company):
@@ -167,6 +173,7 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                 {
                     "fund_code": position_change["_id"],
                     "fund_name": position_change["name"],
+                    "fund_size": position_change["size"],
                     "percent": c["percent"],
                     "volume": c["volume"],
                 }
@@ -178,6 +185,7 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                 {
                     "fund_code": position_change["_id"],
                     "fund_name": position_change["name"],
+                    "fund_size": position_change["size"],
                     "percent": c["percent"],
                     "volume": c["volume"],
                 }
@@ -189,6 +197,7 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                 {
                     "fund_code": position_change["_id"],
                     "fund_name": position_change["name"],
+                    "fund_size": position_change["size"],
                     "percent": c["percent"],
                     "volume": c["volume"],
                 }

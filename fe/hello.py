@@ -43,7 +43,7 @@ def _format_dec_text(val, dec):
 
 
 def _format_inc_dec_number(item, inc_dec, float_shares):
-    volume_in_float_change = round(inc_dec["volume"] * 10000 * 1000 / float_shares, 3)
+    volume_in_float_change = round(inc_dec["volume"] * 10000 * 100 / float_shares, 3)
     if inc_dec["volume"] > 0:
         item["change_type"] = "加仓"
         item["volume"] = _format_inc_text(item["volume"], inc_dec["volume"])
@@ -55,6 +55,9 @@ def _format_inc_dec_number(item, inc_dec, float_shares):
 
 
 def _to_display_list(company, stock_profile):
+    summary = company["summary"]
+    summary["volume_in_float"] = round(summary["volume"] * 10000 * 100 / stock_profile["float_shares"], 3)
+
     display_funds = []
     enter_dict = {i["fund_code"]: i for i in company["enter"]}
     inc_dec_dict = {i["fund_code"]: i for i in company["inc_dec"]}
@@ -62,7 +65,9 @@ def _to_display_list(company, stock_profile):
     for p in company["latest"]:
         fund_code = p["fund_code"]
         item = {
+            "code": p["fund_code"],
             "name": p["fund_name"],
+            "fund_size": p["fund_size"],
             "volume": p["volume"],
             "volume_in_float": round(p["volume"] * 10000 * 100 / stock_profile["float_shares"], 3),
             "percent": p["percent"],
@@ -76,7 +81,9 @@ def _to_display_list(company, stock_profile):
     for p in company["exit"]:
         display_funds.append(
             {
+                "code": p["fund_code"],
                 "name": p["fund_name"],
+                "fund_size": p["fund_size"],
                 "volume": p["volume"],
                 "volume_in_float": round(p["volume"] * 10000 * 100 / stock_profile["float_shares"], 3),
                 "percent": p["percent"],
@@ -87,6 +94,7 @@ def _to_display_list(company, stock_profile):
     return {
         "name": company["name"],
         "funds": display_funds,
+        "summary": summary,
     }
 
 
