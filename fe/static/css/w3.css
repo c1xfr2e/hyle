@@ -2010,3 +2010,9 @@ a {
   color: #000 !important;
   background-color: #FDAC53 !important
 }
+
+.w3-2020-sunlight,
+.w3-hover-2020-sunlight:hover {
+  color: #000 !important;
+  background-color: #EDD59E !important
+}

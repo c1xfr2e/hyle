@@ -5,12 +5,18 @@
 <link rel="stylesheet" href="/static/css/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-metro.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-safety.css">
+<link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
 
 <head>
   <script src="/static/js/fund_co_pos.js"></script>
   <style>
     .my-sidebar-item {
       font-size: 12px;
+    }
+
+    .column-sort-icon {
+      display: inline-block;
+      padding-left: 5px;
     }
 
   </style>
@@ -20,9 +26,9 @@
   <div class="w3-sidebar w3-bar-block w3-card w3-metro-darken" style="width:170px">
     <h5 class="w3-bar-item w3-border-bottom w3-border-gray" style="margin-bottom:0; margin-top:5px">基金公司</h5>
     {% for co in co_list %}
-    <button class="w3-bar-item w3-button tablink my-sidebar-item w3-hover-marigold"
-            id="{{co["_id"]}}"
-            onclick="openFundCompany(event, '{{co["_id"]}}')">{{co["co_name"]}}</button>
+    <button class="w3-bar-item w3-button tablink my-sidebar-item w3-hover-2020-sunlight"
+            id="{{co['_id']}}"
+            onclick="openFundCompany(event, '{{co['_id']}}')">{{co['co_name']}}</button>
     {% endfor %}
   </div>
 
@@ -32,10 +38,10 @@
       <thead>
         <tr class="w3-border-bottom">
           <th>股票</th>
-          <th id="volume_in_float" onclick="sortColumn('volume_in_float')">流通比</th>
-          <th id="percent" onclick="sortColumn('percent')">净值比</th>
-          <th id="fund_count" onclick="sortColumn('fund_count')">基金家数</th>
-          <th id="position_change" onclick="sortColumn('position_change')">持仓变动</th>
+          <th id="volume_in_float" onclick="sortColumn(event, 'volume_in_float')">流通比(%)<i class="column-sort-icon"></i></th>
+          <th id="percent" onclick="sortColumn(event, 'percent')">净值比(%)<i class="column-sort-icon"></i></th>
+          <th id="fund_count" onclick="sortColumn(event, 'fund_count')">基金家数<i class="column-sort-icon"></i></th>
+          <th id="position_change" onclick="sortColumn(event, 'position_change')">持仓变动<i class="column-sort-icon"></i></th>
         </tr>
       </thead>
       <tbody id="table_data">

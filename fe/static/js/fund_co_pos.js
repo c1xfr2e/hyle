@@ -1,5 +1,6 @@
 
 window.onload = () => {
+  // 首次打开加载天弘基金
   openFundCompany(null, "80041198")
   document.getElementById("80041198").className += " w3-safety-blue";
 }
@@ -31,10 +32,10 @@ function loadTableData(data) {
     if (p.enter_count > 0 || p.exit_count > 0) {
       positionChange = `新进: <span style="color:#e50000">${p.enter_count}</span> 退出: <span style="color:#27a64c">${p.exit_count}</span>`
     }
-    dataHTML += `<tr class="w3-hover-marigold">
+    dataHTML += `<tr class="w3-hover-2020-sunlight">
       <td><span style="display: inline-block; width: 80px;">${p.name}</span><span style="display: inline-block; color: gray;">${p.code}</span></td>
-      <td>${p.volume_in_float}%</td>
-      <td>${p.percent}%</td>
+      <td>${p.volume_in_float}</td>
+      <td>${p.percent}</td>
       <td>${p.funds.length}</td>
       <td>${positionChange}</td>
     </tr>`;
@@ -62,12 +63,27 @@ let sortOptions = {
   },
 }
 
-function sortColumn(columnName) {
+function sortColumn(evt, columnName) {
   op = sortOptions[columnName]
   op.direction = !op.direction
   op.sortFunc(op.direction)
 
   loadTableData(positionTableData)
+
+  columnSortIcons = document.getElementsByClassName("column-sort-icon");
+  for (i = 0; i < columnSortIcons.length; i++) {
+    columnSortIcons[i].className = columnSortIcons[i].className.replace(" fa fa-angle-up", "");
+    columnSortIcons[i].className = columnSortIcons[i].className.replace(" fa fa-angle-down", "");
+  }
+
+  curIcon = evt.currentTarget.getElementsByClassName("column-sort-icon")[0]
+  if (op.direction) {
+    curIcon.className += " fa fa-angle-up"
+  } else {
+    curIcon.className += " fa fa-angle-down"
+  }
+
+  console.log(curIcon.className)
 }
 
 function sortNumberColumn(col, dir) {
