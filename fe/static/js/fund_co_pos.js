@@ -1,7 +1,7 @@
 
 window.onload = () => {
   openFundCompany(null, "80041198")
-  document.getElementById("80041198").className += " w3-red";
+  document.getElementById("80041198").className += " w3-safety-blue";
 }
 
 let positionTableData;
@@ -16,9 +16,9 @@ function openFundCompany(evt, coid) {
   if (evt) {
     tablinks = document.getElementsByClassName("tablink");
     for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+      tablinks[i].className = tablinks[i].className.replace(" w3-safety-blue", "");
     }
-    evt.currentTarget.className += " w3-red";
+    evt.currentTarget.className += " w3-safety-blue";
   }
 }
 
@@ -29,9 +29,9 @@ function loadTableData(data) {
   for (let p of data) {
     let positionChange = "";
     if (p.enter_count > 0 || p.exit_count > 0) {
-      positionChange = `新进: <span style="color:#d50000">${p.enter_count}</span> 退出: <span style="color:green">${p.exit_count}</span>`
+      positionChange = `新进: <span style="color:#e50000">${p.enter_count}</span> 退出: <span style="color:#27a64c">${p.exit_count}</span>`
     }
-    dataHTML += `<tr class="w3-hover-light-blue">
+    dataHTML += `<tr class="w3-hover-marigold">
       <td><span style="display: inline-block; width: 80px;">${p.name}</span><span style="display: inline-block; color: gray;">${p.code}</span></td>
       <td>${p.volume_in_float}%</td>
       <td>${p.percent}%</td>
