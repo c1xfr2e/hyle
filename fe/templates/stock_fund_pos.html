@@ -49,7 +49,11 @@
       <tbody>
         {% for co in company_list %}
         <tr class="w3-leftbar w3-border-blue-grey w3-light-gray" style="font-weight: bold">
+          {% if co["logo"] %}
+          <td colspan="2" style="padding: 4px 8px 4px 8px" colspan="5"><img src="/static/img/{{co['logo']}}" height="28px"></img></td>
+          {% else %}
           <td colspan="2" style="font-size:15px; padding: 4px 8px 4px 8px; line-height: 28px;">{{co["name"]}}</td>
+          {% endif %}
           <td>{{ co["summary"]["fund_size"]|safe }}</td>
           <td>{{ co["summary"]["volume"]|safe }}</td>
           <td>{{ co["summary"]["volume_in_float"]|safe }}</td>

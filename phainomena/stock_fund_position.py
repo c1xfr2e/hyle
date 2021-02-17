@@ -220,6 +220,8 @@ def process_by_each_company(company):
             continue
 
         entry["name"] = company["name"]
+        if company.get("logo"):
+            entry["logo"] = company["logo"]
 
         entry["latest"].sort(key=lambda x: x["volume"], reverse=True)
         entry["enter"].sort(key=lambda x: x["volume"], reverse=True)

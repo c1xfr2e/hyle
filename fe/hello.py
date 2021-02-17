@@ -93,6 +93,7 @@ def _to_display_list(company, stock_profile):
 
     return {
         "name": company["name"],
+        "logo": company.get("logo"),
         "funds": display_funds,
         "summary": summary,
     }
