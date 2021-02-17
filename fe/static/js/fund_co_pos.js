@@ -36,7 +36,10 @@ function loadTableData(data) {
       positionChange = `新进: <span style="color:#e50000">${p.enter_count}</span> 退出: <span style="color:#27a64c">${p.exit_count}</span>`
     }
     dataHTML += `<tr class="w3-hover-2020-sunlight">
-      <td><span style="display: inline-block; width: 80px;">${p.name}</span><span style="display: inline-block; color: gray;">${p.code}</span></td>
+      <td>
+        <span style="display: inline-block; width: 65px; font-size: 13px;">${p.name}</span>
+        <span style="display: inline-block; color: gray;">${p.code}</span>
+      </td>
       <td>${p.volume_in_float}</td>
       <td>${p.percent}</td>
       <td>${p.funds.length}</td>
