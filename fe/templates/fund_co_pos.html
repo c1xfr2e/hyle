@@ -37,11 +37,27 @@
     <table class="w3-table w3-striped w3-hoverable w3-tiny">
       <thead>
         <tr class="w3-border-bottom">
-          <th>股票</th>
-          <th id="volume_in_float" onclick="sortColumn(event, 'volume_in_float')">流通比(%)<i class="column-sort-icon"></i></th>
-          <th id="percent" onclick="sortColumn(event, 'percent')">净值比(%)<i class="column-sort-icon"></i></th>
-          <th id="fund_count" onclick="sortColumn(event, 'fund_count')">基金家数<i class="column-sort-icon"></i></th>
-          <th id="position_change" onclick="sortColumn(event, 'position_change')">持仓变动<i class="column-sort-icon"></i></th>
+          <th width="220">股票</th>
+          <th width="126" id="volume_in_float" onclick="sortColumn(event, 'volume_in_float')">
+            流通比(%)
+            <i class="column-sort-icon fa fa-angle-up" style="display: none;"></i>
+            <i class="column-sort-icon fa fa-angle-down" style="display: none;"></i>
+          </th>
+          <th width="126" id="percent" onclick="sortColumn(event, 'percent')">
+            净值比(%)
+            <i class="column-sort-icon fa fa-angle-up" style="display: none;"></i>
+            <i class="column-sort-icon fa fa-angle-down" style="display: none;"></i>
+          </th>
+          <th width="126" id="fund_count" onclick="sortColumn(event, 'fund_count')">
+            基金家数
+            <i class="column-sort-icon fa fa-angle-up" style="display: none;"></i>
+            <i class="column-sort-icon fa fa-angle-down" style="display: none;"></i>
+          </th>
+          <th id="position_change" onclick="sortColumn(event, 'position_change')">
+            持仓变动
+            <i class="column-sort-icon fa fa-angle-up" style="display: none;"></i>
+            <i class="column-sort-icon fa fa-angle-down" style="display: none;"></i>
+          </th>
         </tr>
       </thead>
       <tbody id="table_data">

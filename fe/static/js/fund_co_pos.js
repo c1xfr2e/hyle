@@ -14,6 +14,7 @@ function openFundCompany(evt, coid) {
       positionTableData = data
       loadTableData(positionTableData)
     });
+
   if (evt) {
     tablinks = document.getElementsByClassName("tablink");
     for (i = 0; i < tablinks.length; i++) {
@@ -21,6 +22,8 @@ function openFundCompany(evt, coid) {
     }
     evt.currentTarget.className += " w3-safety-blue";
   }
+
+  displayColumnSortIcons("volume_in_float", false)
 }
 
 function loadTableData(data) {
@@ -63,6 +66,20 @@ let sortOptions = {
   },
 }
 
+function displayColumnSortIcons(idToShow, direction) {
+  columnSortIcons = document.getElementsByClassName("column-sort-icon");
+  for (i = 0; i < columnSortIcons.length; i++) {
+    columnSortIcons[i].style.display = "none"
+  }
+
+  curIcons = document.getElementById(idToShow).getElementsByClassName("column-sort-icon");
+  if (direction) {
+    curIcons[0].style.display = "inline"
+  } else {
+    curIcons[1].style.display = "inline"
+  }
+}
+
 function sortColumn(evt, columnName) {
   op = sortOptions[columnName]
   op.direction = !op.direction
@@ -70,20 +87,7 @@ function sortColumn(evt, columnName) {
 
   loadTableData(positionTableData)
 
-  columnSortIcons = document.getElementsByClassName("column-sort-icon");
-  for (i = 0; i < columnSortIcons.length; i++) {
-    columnSortIcons[i].className = columnSortIcons[i].className.replace(" fa fa-angle-up", "");
-    columnSortIcons[i].className = columnSortIcons[i].className.replace(" fa fa-angle-down", "");
-  }
-
-  curIcon = evt.currentTarget.getElementsByClassName("column-sort-icon")[0]
-  if (op.direction) {
-    curIcon.className += " fa fa-angle-up"
-  } else {
-    curIcon.className += " fa fa-angle-down"
-  }
-
-  console.log(curIcon.className)
+  displayColumnSortIcons(evt.currentTarget.id, op.direction)
 }
 
 function sortNumberColumn(col, dir) {
