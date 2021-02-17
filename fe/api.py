@@ -12,16 +12,17 @@ def get_fund_company_position(coid):
     if not co_pos:
         return {}
 
+    stock_co_pos_list = list(db.StockFundPosition.find({"by_company.{}".format(coid): {"$exists": 1}}))
+    stock_co_pos_dict = {it["_id"]: it["by_company"] for it in stock_co_pos_list}
+
     position = co_pos["position_by_date"][0]["position"]
-    co_pos_change = db.FundCompanyPositionChange.find_one({"_id": coid})
-    if co_pos_change:
-        enter_dict = {e["code"]: e for e in co_pos_change["enter"]}
-        exit_dict = {e["code"]: e for e in co_pos_change["exit"]}
-        for p in position:
-            p["enter_count"] = p["exit_count"] = 0
-            if p["code"] in enter_dict:
-                p["enter_count"] = len(enter_dict[p["code"]]["funds"])
-            if p["code"] in exit_dict:
-                p["exit_count"] = len(exit_dict[p["code"]]["funds"])
+    for p in position:
+        # p["enter_count"] = p["exit_count"] = 0
+        stock_co_pos = stock_co_pos_dict.get(p["code"])
+        if not stock_co_pos:
+            continue
+        co_entry = stock_co_pos[coid]
+        p["enter_count"] = len(co_entry["enter"])
+        p["exit_count"] = len(co_entry["exit"])
 
     return jsonify(position)

@@ -16,14 +16,14 @@ def _add_position(cur, p, fund):
         "volume": cur.get("volume", 0) + p["volume"],
         "value": cur.get("value", 0) + p["value"],
         "volume_in_float": cur.get("volume_in_float", 0) + p["volume_in_float"],
-        "total_percent": cur.get("total_percent", 0) + p["percent"],
+        "percent": cur.get("percent", 0) + p["percent"],
         "funds": cur.get("funds", []) + [{"name": fund["name"], "code": fund["code"]}],
     }
 
 
-def group_funds_position(funds_of_company):
+def _aggregate_funds_of_company(fund_list):
     position_by_date_dict = {}
-    for fund in funds_of_company:
+    for fund in fund_list:
         for pos_date in fund["position_by_date"]:
             stock_position_dict = position_by_date_dict.setdefault(pos_date["date"], {})
             for pos in pos_date["position"]:
@@ -38,7 +38,7 @@ def group_funds_position(funds_of_company):
 def _position_by_date_dict_to_list(position_by_date_dict):
     list_ = list(position_by_date_dict.values())
     list_.sort(
-        key=lambda x: x["volume_in_float"] * 100000 + x["total_percent"],
+        key=lambda x: x["volume_in_float"] * 100000 + x["percent"],
         reverse=True,
     )
     return list_
@@ -49,7 +49,7 @@ def _round_floats(position_list):
         p["volume"] = round(p["volume"], 2)
         p["value"] = round(p["value"], 2)
         p["volume_in_float"] = round(p["volume_in_float"], 3)
-        p["total_percent"] = round(p["total_percent"], 2)
+        p["percent"] = round(p["percent"], 2)
     return position_list
 
 
@@ -78,10 +78,17 @@ def _write_op(company, position_by_date_dict):
     )
 
 
+def _fund_filter():
+    return {
+        "co_id": co["_id"],
+        "position_by_date.0": {"$exists": 1},
+    }
+
+
 if __name__ == "__main__":
     write_op_list = []
     for co in list(db.FundCompany.find()):
-        funds_of_company = list(db.Fund.find({"co_id": co["_id"]}))
-        position_by_date_dict = group_funds_position(funds_of_company)
+        funds_of_company = list(db.Fund.find(_fund_filter()))
+        position_by_date_dict = _aggregate_funds_of_company(funds_of_company)
         write_op_list.append(_write_op(co, position_by_date_dict))
     db.FundCompanyPosition.bulk_write(write_op_list)

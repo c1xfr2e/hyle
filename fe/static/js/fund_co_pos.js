@@ -34,7 +34,7 @@ function loadTableData(data) {
     dataHTML += `<tr class="w3-hover-light-blue">
       <td><span style="display: inline-block; width: 80px;">${p.name}</span><span style="display: inline-block; color: gray;">${p.code}</span></td>
       <td>${p.volume_in_float}%</td>
-      <td>${p.total_percent}%</td>
+      <td>${p.percent}%</td>
       <td>${p.funds.length}</td>
       <td>${positionChange}</td>
     </tr>`;
@@ -48,16 +48,16 @@ let sortOptions = {
     direction: true,
     sortFunc: (dir) => sortNumberColumn("volume_in_float", dir),
   },
-  total_percent: {
+  percent: {
     direction: true,
-    sortFunc: (dir) => sortNumberColumn("total_percent", dir),
+    sortFunc: (dir) => sortNumberColumn("percent", dir),
   },
   fund_count: {
     direction: true,
     sortFunc: sortFundCount
   },
   position_change: {
-    direction: false,
+    direction: true,
     sortFunc: sortPositionChange
   },
 }
