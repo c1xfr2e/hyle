@@ -1,25 +1,7 @@
-from flask import abort, Flask, render_template
+from flask import abort, render_template
 
 from . import color, db
-
-
-def create_app():
-    app = Flask(__name__)
-
-    from . import api
-
-    app.register_blueprint(api.bp)
-
-    return app
-
-
-app = create_app()
-
-
-@app.route("/fundco/position")
-def list_fund_company_position():
-    co_pos_list = list(db.FundCompanyPosition.find(projection=["co_name"]))
-    return render_template("fund_co_pos.html", co_list=co_pos_list)
+from .app import app
 
 
 def _company_dict_to_list(by_company_dict):
