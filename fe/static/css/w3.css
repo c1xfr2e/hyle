@@ -2016,3 +2016,13 @@ a {
   color: #000 !important;
   background-color: #EDD59E !important
 }
+
+.w3-metro-darken {
+  color: #fff;
+  background-color: #1d1d1d;
+}
+
+.w3-border-metro-darken,
+.w3-hover-border-metro-darken:hover {
+  border-color: #1d1d1d !important
+}

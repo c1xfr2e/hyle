@@ -2,7 +2,7 @@
 <html>
 <title>股票基金持仓 - {{stock_name}}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="/static/css/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-metro.css">
 
@@ -48,7 +48,7 @@
       </thead>
       <tbody>
         {% for co in company_list %}
-        <tr class="w3-leftbar w3-border-blue-grey w3-light-gray" style="font-weight: bold">
+        <tr class="w3-leftbar w3-border-metro-darken w3-light-gray" style="font-weight: bold">
           {% if co["logo"] %}
           <td colspan="2" style="padding: 4px 8px 4px 8px" colspan="5"><img src="/static/img/{{co['logo']}}" height="28px"></img></td>
           {% else %}
