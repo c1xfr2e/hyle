@@ -1,7 +1,7 @@
 
 window.onload = () => {
   // 首次打开加载天弘基金
-  openFundCompany(null, "80041198")
+  openFundCompany(null, "80041198");
   document.getElementById("80041198").className += " w3-safety-blue";
 }
 
@@ -11,8 +11,8 @@ function openFundCompany(evt, coid) {
   fetch(`/api/fundco/${coid}/position`)
     .then(response => response.json())
     .then(data => {
-      positionTableData = data
-      loadTableData(positionTableData)
+      positionTableData = data;
+      loadTableData(positionTableData);
     });
 
   if (evt) {
@@ -23,7 +23,8 @@ function openFundCompany(evt, coid) {
     evt.currentTarget.className += " w3-safety-blue";
   }
 
-  displayColumnSortIcons("volume_in_float", false)
+  resetColumnSortDirections("volume_in_float");
+  resetColumnSortIcons("volume_in_float", false);
 }
 
 function loadTableData(data) {
@@ -49,17 +50,17 @@ function loadTableData(data) {
     </tr>`;
   }
 
-  tableBody.innerHTML = dataHTML
+  tableBody.innerHTML = dataHTML;
 }
 
 let sortOptions = {
   volume_in_float: {
     direction: true,
-    sortFunc: (dir) => sortNumberColumn("volume_in_float", dir),
+    sortFunc: (dir) => sortNumberColumn("volume_in_float", dir)
   },
   percent: {
     direction: true,
-    sortFunc: (dir) => sortNumberColumn("percent", dir),
+    sortFunc: (dir) => sortNumberColumn("percent", dir)
   },
   fund_count: {
     direction: true,
@@ -71,34 +72,41 @@ let sortOptions = {
   },
 }
 
-function displayColumnSortIcons(idToShow, direction) {
+function resetColumnSortDirections(current) {
+  for (col in sortOptions) {
+    sortOptions[col].direction = true;
+  }
+  sortOptions[current].direction = false;
+}
+
+function resetColumnSortIcons(idToShow, direction) {
   columnSortIcons = document.getElementsByClassName("column-sort-icon");
   for (i = 0; i < columnSortIcons.length; i++) {
-    columnSortIcons[i].style.display = "none"
+    columnSortIcons[i].style.display = "none";
   }
 
   curIcons = document.getElementById(idToShow).getElementsByClassName("column-sort-icon");
   if (direction) {
-    curIcons[0].style.display = "inline"
+    curIcons[0].style.display = "inline";
   } else {
-    curIcons[1].style.display = "inline"
+    curIcons[1].style.display = "inline";
   }
 }
 
 function sortColumn(evt, columnName) {
-  op = sortOptions[columnName]
-  op.direction = !op.direction
-  op.sortFunc(op.direction)
+  op = sortOptions[columnName];
+  op.direction = !op.direction;
+  op.sortFunc(op.direction);
 
-  loadTableData(positionTableData)
+  loadTableData(positionTableData);
 
-  displayColumnSortIcons(evt.currentTarget.id, op.direction)
+  resetColumnSortIcons(evt.currentTarget.id, op.direction);
 }
 
 function sortNumberColumn(col, dir) {
   positionTableData = positionTableData.sort(
     (p1, p2) => {
-      return dir ? p1[col] - p2[col] : p2[col] - p1[col]
+      return dir ? p1[col] - p2[col] : p2[col] - p1[col];
     }
   );
 }
@@ -106,7 +114,7 @@ function sortNumberColumn(col, dir) {
 function sortFundCount(dir) {
   positionTableData = positionTableData.sort(
     (p1, p2) => {
-      return dir? p1.funds.length - p2.funds.length : p2.funds.length - p1.funds.length
+      return dir? p1.funds.length - p2.funds.length : p2.funds.length - p1.funds.length;
     }
   );
 }
@@ -114,8 +122,8 @@ function sortFundCount(dir) {
 function sortPositionChange(dir) {
   positionTableData = positionTableData.sort(
     (p1, p2) => {
-      v1 = p1.enter_count * 1000 - p1.exit_count
-      v2 = p2.enter_count * 1000 - p2.exit_count
+      v1 = p1.enter_count * 1000 - p1.exit_count;
+      v2 = p2.enter_count * 1000 - p2.exit_count;
       return dir? v1 - v2 : v2 - v1;
     }
   );

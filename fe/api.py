@@ -17,7 +17,7 @@ def get_fund_company_position(coid):
 
     position = co_pos["position_by_date"][0]["position"]
     for p in position:
-        # p["enter_count"] = p["exit_count"] = 0
+        p["enter_count"] = p["exit_count"] = 0
         stock_co_pos = stock_co_pos_dict.get(p["code"])
         if not stock_co_pos:
             continue
