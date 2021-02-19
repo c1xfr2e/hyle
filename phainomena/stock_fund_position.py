@@ -8,7 +8,7 @@ from phainomena import db
 
 REPORT_DATE = "2020-12-31"
 
-ALL_STOCKS_DICT = {st["_id"]: st for st in list(db.Stock.find(projection=["name"]))}
+ALL_STOCKS_DICT = {st["_id"]: st for st in list(db.Stock.find(projection=["name", "profile"]))}
 
 
 def _aggregate_fund_position(stock_entry_dict, fund):
@@ -122,6 +122,7 @@ ENTRY = {
         "volume": 0.0,
         "volume_change": 0.0,
         "percent": 0.0,
+        "percent_change": 0.0,
     },
     "latest": [],
     "enter": [],
@@ -179,6 +180,7 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                 }
             )
             entry["summary"]["volume_change"] += c["volume"]
+            entry["summary"]["percent_change"] += c["percent"]
         for c in position_change["exit"]:
             entry = stock_entry_dict.setdefault(c["code"], copy.deepcopy(ENTRY))
             entry["exit"].append(
@@ -191,6 +193,7 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                 }
             )
             entry["summary"]["volume_change"] -= c["volume"]
+            entry["summary"]["percent_change"] -= c["percent"]
         for c in position_change["inc_dec"]:
             entry = stock_entry_dict.setdefault(c["code"], copy.deepcopy(ENTRY))
             entry["inc_dec"].append(
@@ -203,9 +206,17 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                 }
             )
             entry["summary"]["volume_change"] += c["volume"]
+            entry["summary"]["percent_change"] += c["percent"]
 
-    for entry in stock_entry_dict.values():
-        entry["summary"]["volume_change"] = round(entry["summary"]["volume_change"], 2)
+    for stock_code, entry in stock_entry_dict.items():
+        volume_change = round(entry["summary"]["volume_change"], 2)
+        entry["summary"]["volume_change"] = volume_change
+        if stock_code in ALL_STOCKS_DICT:
+            entry["summary"]["volume_in_float_change"] = round(
+                volume_change * 10000 * 100 / ALL_STOCKS_DICT[stock_code]["profile"]["float_shares"],
+                3,
+            )
+        entry["summary"]["percent_change"] = round(entry["summary"]["percent_change"], 2)
 
 
 def process_by_each_company(company):
