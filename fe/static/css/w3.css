@@ -2017,6 +2017,12 @@ a {
   background-color: #EDD59E !important
 }
 
+.w3-2021-illuminating,
+.w3-hover-2021-illuminating:hover {
+  color: #000 !important;
+  background-color: #F5DF4D !important
+}
+
 .w3-metro-darken {
   color: #fff;
   background-color: #1d1d1d;

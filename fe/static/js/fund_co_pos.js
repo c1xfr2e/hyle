@@ -34,11 +34,14 @@ function loadTableData(data) {
   for (let p of data) {
     let positionChange = "";
     if (p.enter_count > 0 || p.exit_count > 0) {
-      positionChange = `新进: <span style="color:#e50000">${p.enter_count}</span> 退出: <span style="color:#27a64c">${p.exit_count}</span>`
+      positionChange = `
+        <span style="color:#e50000; display:inline-block;">+${p.enter_count}</span>
+        <span style="color:#27a64c; display:inline-block; margin-left:4px;">-${p.exit_count}</span>
+      `
     }
-    dataHTML += `<tr class="w3-hover-2020-sunlight">
+    dataHTML += `<tr class="w3-hover-2021-illuminating">
       <td>
-        <span style="display: inline-block; width: 65px; font-size: 13px;">
+        <span style="display: inline-block; width: 70px; font-size: 13px;">
           <a href="/stock/${p.code}/fundpos">${p.name}<a>
         </span>
         <span style="display: inline-block; color: gray;">${p.code}</span>

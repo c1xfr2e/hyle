@@ -39,11 +39,11 @@
         <tr style="font-size:small; color:#555555;">
           <th width="70"></th>
           <th width="190"></th>
-          <th width="120">规模（亿）</th>
-          <th width="145">持股数（万）</th>
-          <th width="145">流通比（%）</th>
-          <th width="115">净值比（%）</th>
-          <th class="w3-right-align">变动</th>
+          <th width="110">规模(亿)</th>
+          <th width="140">持股数(万)</th>
+          <th width="140">流通比(%)</th>
+          <th width="110">净值比(%)</th>
+          <th class="w3-right-align" style="padding-right: 13px;">变动</th>
         </tr>
       </thead>
       <tbody>
@@ -68,7 +68,7 @@
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["volume"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["volume_in_float"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["percent"]|safe }}</td>
-            <td class="w3-right-align"><span style="{{change_type_styles[fund['change_type']]}}">{{fund['change_type']}}</span></td>
+            <td style="padding-right: 13px;" class="w3-right-align"><span style="{{change_type_styles[fund['change_type']]}}">{{fund['change_type']}}</span></td>
           </tr>
           {% endfor %}
         {% endfor %}
