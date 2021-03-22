@@ -125,9 +125,7 @@ def get_all(funds):
     return all_position_by_date
 
 
-def set_position_volume_in_float(fund_position_list):
-    stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
-
+def set_position_volume_in_float(fund_position_list, stock_profiles):
     for fp in fund_position_list:
         if not fp["position_by_date"]:
             continue
@@ -162,5 +160,7 @@ if __name__ == "__main__":
 
     all_position_by_date = get_all(funds)
 
-    set_position_volume_in_float(all_position_by_date)
+    stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
+    set_position_volume_in_float(all_position_by_date, stock_profiles)
+
     store_fund_stock_position_list(db.Fund, all_position_by_date)
