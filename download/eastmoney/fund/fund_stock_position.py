@@ -155,7 +155,7 @@ def store_fund_stock_position_list(mongo_col, stock_position_list):
 if __name__ == "__main__":
     funds = list(
         db.Fund.find(
-            {"position_by_date.0": {"$ne": REPORT_DATE}},
+            {"position_by_date.0.date": {"$ne": REPORT_DATE}},
             projection=["_id", "name"],
         )
     )
