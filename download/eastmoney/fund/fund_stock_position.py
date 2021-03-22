@@ -2,12 +2,23 @@
 # coding: utf-8
 
 """
-    获取基金股票持仓
+    调用 eastmoeny 接口获取基金报告期股票持仓，保存到 mongodb
+
+    Preconditions:
+        - mongodb 数据: fund, stock_profile
+
+    eastmoney 接口数据样例:
+        sample/fund_stock_position.html
 """
 
 import logging
 import pymongo
+import requests
 from bs4 import BeautifulSoup
+
+from download.eastmoney.fund import db
+from setting import REPORT_DATE
+from util.progress_bar import print_progress_bar
 
 
 def _to_float(text):
@@ -48,7 +59,10 @@ def _parse_tr(tr):
     )
 
 
-def get_fund_stock_position(session, fund_code):
+def get_fund_stock_position_by_date(session, fund_code):
+    """
+    get 基金报告期持仓（日期列表）
+    """
     url = "http://fundf10.eastmoney.com/FundArchivesDatas.aspx"
     headers = {
         "Host": "fundf10.eastmoney.com",
@@ -88,16 +102,41 @@ def get_fund_stock_position(session, fund_code):
     return position_by_date_list
 
 
-def set_position_volume_in_float(stock_profile_dict, fund_position_list):
+def get_all(funds):
+    sess = requests.Session()
+
+    progress_total = len(funds)
+    print_progress_bar(0, progress_total, length=40)
+
+    all_position_by_date = []
+    for i, f in enumerate(funds):
+        position_by_date = get_fund_stock_position_by_date(sess, f["_id"])
+        if len(position_by_date) == 0:
+            logging.warning("empty position_by_date: {} {}".format(f["_id"], f["name"]))
+            continue
+        all_position_by_date.append(
+            {
+                "fund_id": f["_id"],
+                "position_by_date": position_by_date,
+            }
+        )
+        print_progress_bar(i + 1, progress_total, length=40)
+
+    return all_position_by_date
+
+
+def set_position_volume_in_float(fund_position_list):
+    stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
+
     for fp in fund_position_list:
         if not fp["position_by_date"]:
             continue
         for position_by_date in fp["position_by_date"]:
             for st in position_by_date["position"]:
-                if st["code"] not in stock_profile_dict:
+                if st["code"] not in stock_profiles:
                     st["volume_in_float"] = 0.0
                     continue
-                st["volume_in_float"] = round(st["volume"] * 10000 * 100 / stock_profile_dict[st["code"]]["float_shares"], 3)
+                st["volume_in_float"] = round(st["volume"] * 10000 * 100 / stock_profiles[st["code"]]["float_shares"], 3)
 
 
 def store_fund_stock_position_list(mongo_col, stock_position_list):
@@ -113,37 +152,15 @@ def store_fund_stock_position_list(mongo_col, stock_position_list):
     mongo_col.bulk_write(op_list)
 
 
-def _fund_filter():
-    return {"position_by_date.0": {"$exists": 0}}
-
-
 if __name__ == "__main__":
-    import requests
-    from download.eastmoney.fund import db
-    from util.progress_bar import print_progress_bar
-
-    sess = requests.Session()
-
-    funds = list(db.Fund.find(_fund_filter(), projection=["_id", "name"]))
-
-    progress_total = len(funds)
-    print_progress_bar(0, progress_total, length=40)
-
-    all_position_by_date = []
-    for i, f in enumerate(funds):
-        position_by_date = get_fund_stock_position(sess, f["_id"])
-        if len(position_by_date) == 0:
-            logging.warning("empty position_by_date: {} {}".format(f["_id"], f["name"]))
-            continue
-        all_position_by_date.append(
-            {
-                "fund_id": f["_id"],
-                "position_by_date": position_by_date,
-            }
+    funds = list(
+        db.Fund.find(
+            {"position_by_date.0": {"$ne": REPORT_DATE}},
+            projection=["_id", "name"],
         )
-        print_progress_bar(i + 1, progress_total, length=40)
+    )
 
-    stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
-    set_position_volume_in_float(stock_profiles, all_position_by_date)
+    all_position_by_date = get_all(funds)
 
+    set_position_volume_in_float(all_position_by_date)
     store_fund_stock_position_list(db.Fund, all_position_by_date)
