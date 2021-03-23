@@ -2,12 +2,16 @@
 # coding: utf-8
 
 """
-    获取基金公司列表（按资产规模排序）
+    调用 eastmoeny 接口获取基金基金公司列表（按资产规模排序）
+    保存到 mongodb
 """
 
 import json
 import pymongo
+import requests
 from datetime import datetime
+
+from download.eastmoney.fund import db
 
 
 def _to_float(text):
@@ -27,12 +31,12 @@ def get_company_list(session):
     resp = session.get(url, headers=headers)
 
     # 返回数据的格式为: var json={datas:[['80000080','山西证券股份有限公司', ...}
-    # 用单引号替换双引号
-    text = '{"datas"' + resp.text[15:].replace("'", '"')
+    # 需要用单引号替换双引号，截取 json 数据
+    offset = 15
+    text = '{"datas"' + resp.text[offset:].replace("'", '"')
 
-    # 按管理规模从高到低排序
     ret_list = json.loads(text)["datas"]
-    co_list = [
+    company_list = [
         dict(
             gsid=i[0],
             name=i[9],
@@ -41,26 +45,29 @@ def get_company_list(session):
         )
         for i in ret_list
     ]
-    co_list.sort(key=lambda x: x["size"], reverse=True)
 
-    return co_list
+    # 按规模排序
+    company_list.sort(key=lambda x: x["size"], reverse=True)
+
+    return company_list
 
 
-def store_company_list(mongo_col, co_list):
+def store_company_list(mongo_col, company_list):
     ops = [
         pymongo.UpdateOne(
-            {"_id": i["gsid"]},
-            {"$set": i},
+            {"_id": co["gsid"]},
+            {"$set": co},
             upsert=True,
         )
-        for i in co_list
+        for co in company_list
     ]
     mongo_col.bulk_write(ops)
 
 
 if __name__ == "__main__":
-    import requests
-    from download.eastmoney.fund import db
-
     fund_co_list = get_company_list(requests.Session())
-    store_company_list(db.FundCompany, fund_co_list[0:50])
+
+    # 保存规模 top 前几的基金公司
+    FUND_COMPANY_TOP_COUNT = 50
+
+    store_company_list(db.FundCompany, fund_co_list[0:FUND_COMPANY_TOP_COUNT])
