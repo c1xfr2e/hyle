@@ -4,9 +4,8 @@
 import pymongo
 
 from phainomena import db
+from setting import REPORT_DATE
 
-
-REPORT_DATE = "2020-12-31"
 
 ALL_STOCKS_DICT = {st["_id"]: st for st in list(db.Stock.find(projection=["name", "profile"]))}
 

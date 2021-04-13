@@ -8,9 +8,8 @@
 import pymongo
 
 from phainomena import db
+from setting import REPORT_DATE
 
-
-REPORT_DATE = "2020-12-31"
 
 FUND_POSITION_CHANGE = {
     "enter": [

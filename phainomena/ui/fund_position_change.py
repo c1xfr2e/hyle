@@ -5,9 +5,8 @@ import jinja2
 import os
 
 from phainomena import db
+from setting import REPORT_DATE
 
-
-REPORT_DATE = "2020-12-31"
 
 TEMPLATE = """
 # 基金持仓变动 {{report_date}}

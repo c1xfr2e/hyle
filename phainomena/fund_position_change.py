@@ -9,9 +9,7 @@ import pymongo
 from enum import Enum
 
 from phainomena import db
-
-
-REPORT_DATE = "2020-12-31"
+from setting import REPORT_DATE
 
 # 持仓变动类型
 class PositionChange(Enum):
