@@ -15,7 +15,7 @@ def get_fund_company_position(coid):
     stock_co_pos_list = list(db.StockFundPosition.find({"by_company.{}".format(coid): {"$exists": 1}}))
     stock_co_pos_dict = {it["_id"]: it["by_company"] for it in stock_co_pos_list}
 
-    position = co_pos["position_by_date"][0]["position"]
+    position = co_pos["position_history"][0]["position"]
     for p in position:
         p["enter_count"] = p["exit_count"] = 0
         stock_co_pos = stock_co_pos_dict.get(p["code"])

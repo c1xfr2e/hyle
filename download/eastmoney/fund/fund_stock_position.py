@@ -48,7 +48,7 @@ def _parse_tr(tr):
 
 def get_stock_position_history_of_fund(session, fund_code):
     """
-    拉取基金持仓历史数据，按报告期列表 (list by report date)
+    拉取基金持仓历史数据，按报告期列表 (order by report date)
 
     Args:
         fund_code: 基金代码
@@ -74,7 +74,8 @@ def get_stock_position_history_of_fund(session, fund_code):
     }
     resp = session.get(url, headers=headers, params=params)
 
-    position_by_date_list = []
+    position_history = []
+
     html = BeautifulSoup(resp.content, features="html.parser")
     divs = html.find_all("div", "box")
     for div in divs:
@@ -86,14 +87,14 @@ def get_stock_position_history_of_fund(session, fund_code):
             if not p:
                 continue
             position_list.append(p)
-        position_by_date_list.append(
+        position_history.append(
             dict(
                 date=date,
                 position=position_list,
             )
         )
 
-    return position_by_date_list
+    return position_history
 
 
 def get_stock_position_history_of_funds(fund_list):
@@ -116,7 +117,7 @@ def get_stock_position_history_of_funds(fund_list):
         all_data.append(
             {
                 "fund_id": f["_id"],
-                "position_by_date": position_history,
+                "position_history": position_history,
             }
         )
         print_progress_bar(i + 1, progress_total, length=40)
@@ -124,12 +125,12 @@ def get_stock_position_history_of_funds(fund_list):
     return all_data
 
 
-def _set_position_volume_in_float(fund_position_list, stock_profiles):
-    for fp in fund_position_list:
-        if not fp["position_by_date"]:
+def _set_position_volume_in_float(position_history_list, stock_profiles):
+    for i in position_history_list:
+        if not i["position_history"]:
             continue
-        for position_by_date in fp["position_by_date"]:
-            for st in position_by_date["position"]:
+        for ph in i["position_history"]:
+            for st in ph["position"]:
                 if st["code"] not in stock_profiles:
                     st["volume_in_float"] = 0.0
                     continue
@@ -142,7 +143,7 @@ def _store_fund_stock_position_list(stock_position_list):
         op_list.append(
             pymongo.UpdateOne(
                 {"_id": sp["fund_id"]},
-                {"$set": {"position_by_date": sp["position_by_date"]}},
+                {"$set": {"position_history": sp["position_history"]}},
                 upsert=True,
             )
         )
@@ -152,7 +153,7 @@ def _store_fund_stock_position_list(stock_position_list):
 if __name__ == "__main__":
     fund_list = list(
         db.Fund.find(
-            {"position_by_date.0.date": {"$ne": REPORT_DATE}},
+            {"position_history.0.date": {"$ne": REPORT_DATE}},
             projection=["_id", "name"],
         )
     )

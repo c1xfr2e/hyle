@@ -63,12 +63,12 @@ def obtain_company_position_change(report_date):
     co_position_change_list = []
     co_positions = list(db.FundCompanyPosition.find().sort("size", pymongo.DESCENDING))
     for cop in co_positions:
-        position_by_date = cop["position_by_date"]
-        if len(position_by_date) < 2 or position_by_date[0]["date"] != report_date:
+        position_history = cop["position_history"]
+        if len(position_history) < 2 or position_history[0]["date"] != report_date:
             continue
         enter_list, exit_list = diff_company_position(
-            _position_to_dict(position_by_date[0]["position"]),
-            _position_to_dict(position_by_date[1]["position"]),
+            _position_to_dict(position_history[0]["position"]),
+            _position_to_dict(position_history[1]["position"]),
         )
         co_position_change_list.append(
             {

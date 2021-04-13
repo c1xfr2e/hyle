@@ -22,21 +22,21 @@ def _add_position(cur, p, fund):
 
 
 def _aggregate_funds_of_company(fund_list):
-    position_by_date_dict = {}
+    position_history_dict = {}
     for fund in fund_list:
-        for pos_date in fund["position_by_date"]:
-            stock_position_dict = position_by_date_dict.setdefault(pos_date["date"], {})
+        for pos_date in fund["position_history"]:
+            stock_position_dict = position_history_dict.setdefault(pos_date["date"], {})
             for pos in pos_date["position"]:
                 stock_position_dict[pos["code"]] = _add_position(
                     stock_position_dict.setdefault(pos["code"], {}),
                     pos,
                     fund,
                 )
-    return position_by_date_dict
+    return position_history_dict
 
 
-def _position_by_date_dict_to_list(position_by_date_dict):
-    list_ = list(position_by_date_dict.values())
+def _position_history_dict_to_list(position_history_dict):
+    list_ = list(position_history_dict.values())
     list_.sort(
         key=lambda x: x["volume_in_float"] * 100000 + x["percent"],
         reverse=True,
@@ -53,15 +53,15 @@ def _round_floats(position_list):
     return position_list
 
 
-def _write_op(company, position_by_date_dict):
-    stock_position_list_by_date = [
+def _write_op(company, position_history_dict):
+    stock_position_history = [
         {
             "date": date,
             "position": _round_floats(
-                _position_by_date_dict_to_list(position_by_date_dict[date]),
+                _position_history_dict_to_list(position_history_dict[date]),
             ),
         }
-        for date in sorted(position_by_date_dict.keys(), reverse=True)
+        for date in sorted(position_history_dict.keys(), reverse=True)
     ]
     return pymongo.UpdateOne(
         {
@@ -71,7 +71,7 @@ def _write_op(company, position_by_date_dict):
             "$set": {
                 "co_name": company["name"],
                 "co_size": company["size"],
-                "position_by_date": stock_position_list_by_date,
+                "position_history": stock_position_history,
             }
         },
         upsert=True,
@@ -81,7 +81,7 @@ def _write_op(company, position_by_date_dict):
 def _fund_filter():
     return {
         "co_id": co["_id"],
-        "position_by_date.0": {"$exists": 1},
+        "position_history.0": {"$exists": 1},
     }
 
 
@@ -89,6 +89,6 @@ if __name__ == "__main__":
     write_op_list = []
     for co in list(db.FundCompany.find()):
         funds_of_company = list(db.Fund.find(_fund_filter()))
-        position_by_date_dict = _aggregate_funds_of_company(funds_of_company)
-        write_op_list.append(_write_op(co, position_by_date_dict))
+        position_history_dict = _aggregate_funds_of_company(funds_of_company)
+        write_op_list.append(_write_op(co, position_history_dict))
     db.FundCompanyPosition.bulk_write(write_op_list)

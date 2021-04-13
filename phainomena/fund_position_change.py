@@ -89,7 +89,7 @@ def _write_op(fund, enter_list, inc_dec_list, exit_list):
             "$set": {
                 "co_id": fund["co_id"],
                 "co_name": fund["co_name"],
-                "date": fund["position_by_date"][0]["date"],
+                "date": fund["position_history"][0]["date"],
                 "name": fund["name"],
                 "size": fund["size"],
                 "manager": fund["manager"],
@@ -105,16 +105,16 @@ def _write_op(fund, enter_list, inc_dec_list, exit_list):
 if __name__ == "__main__":
     funds = db.Fund.find(
         {
-            "$where": "this.position_by_date.length>1",
-            "position_by_date.0.date": REPORT_DATE,
+            "$where": "this.position_history.length>1",
+            "position_history.0.date": REPORT_DATE,
         }
     )
 
     write_op_list = []
     for f in funds:
         enter, inc_dec, exit_ = diff_position(
-            f["position_by_date"][0]["position"],
-            f["position_by_date"][1]["position"],
+            f["position_history"][0]["position"],
+            f["position_history"][1]["position"],
         )
         write_op_list.append(_write_op(f, enter, inc_dec, exit_))
 

@@ -12,7 +12,7 @@ ALL_STOCKS_DICT = {st["_id"]: st for st in list(db.Stock.find(projection=["name"
 
 
 def _aggregate_fund_position(stock_entry_dict, fund):
-    for p in fund["position_by_date"][0]["position"]:
+    for p in fund["position_history"][0]["position"]:
         stock_entry = stock_entry_dict.setdefault(p["code"], {})
         company_entry = stock_entry.setdefault(fund["co_id"], {"name": fund["co_name"]})
         latest = company_entry.setdefault("latest", [])
@@ -71,7 +71,7 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
 
 
 def _aggregate_all_stock_fund_position(stock_entry_dict):
-    fund_list = list(db.Fund.find({"position_by_date.0.date": REPORT_DATE}))
+    fund_list = list(db.Fund.find({"position_history.0.date": REPORT_DATE}))
     for fund in fund_list:
         _aggregate_fund_position(stock_entry_dict, fund)
 
@@ -136,11 +136,11 @@ import copy
 def _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
     funds_list_of_company = list(
         db.Fund.find(
-            {"co_id": company["_id"], "position_by_date.0.date": REPORT_DATE},
+            {"co_id": company["_id"], "position_history.0.date": REPORT_DATE},
         )
     )
     for fund in funds_list_of_company:
-        for p in fund["position_by_date"][0]["position"]:
+        for p in fund["position_history"][0]["position"]:
             entry = stock_entry_dict.setdefault(p["code"], copy.deepcopy(ENTRY))
             entry["summary"]["fund_size"] += fund["size"]
             entry["summary"]["volume"] += p["volume"]
