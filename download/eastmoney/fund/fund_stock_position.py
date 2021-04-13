@@ -2,13 +2,11 @@
 # coding: utf-8
 
 """
-    调用 eastmoeny 接口获取基金报告期股票持仓，保存到 mongodb
+    调用 eastmoeny 接口获取基金报告期股票持仓
+    数据更新到 mongodb 的 fund collection
 
     Preconditions:
-        - mongodb 数据: fund, stock_profile
-
-    eastmoney 接口数据样例:
-        sample/fund_stock_position.html
+        - mongodb collection: fund, stock_profile
 """
 
 import logging
@@ -19,18 +17,7 @@ from bs4 import BeautifulSoup
 from download.eastmoney.fund import db
 from setting import REPORT_DATE
 from util.progress_bar import print_progress_bar
-
-
-def _to_float(text):
-    if not text or text in ["-", "--", "---"]:
-        return 0.0
-    return float(text)
-
-
-def _to_percent(text):
-    if not text[-1] == "%":
-        return 0.0
-    return float(text[0:-1])
+from util.strconv import to_float, to_percent
 
 
 def _parse_tr(tr):
@@ -53,16 +40,23 @@ def _parse_tr(tr):
     return dict(
         code=tds[1].text,
         name=tds[2].text,
-        percent=_to_percent(tds[-3].text),
-        volume=_to_float(tds[-2].text.replace(",", "")),
-        value=_to_float(tds[-1].text.replace(",", "")),
+        percent=to_percent(tds[-3].text),
+        volume=to_float(tds[-2].text.replace(",", "")),
+        value=to_float(tds[-1].text.replace(",", "")),
     )
 
 
-def get_fund_stock_position_by_date(session, fund_code):
+def get_stock_position_history_of_fund(session, fund_code):
     """
-    get 基金报告期持仓（日期列表）
+    拉取基金持仓历史数据，按报告期列表 (list by report date)
+
+    Args:
+        fund_code: 基金代码
+
+    数据样例:
+        sample/fund_stock_position.html
     """
+
     url = "http://fundf10.eastmoney.com/FundArchivesDatas.aspx"
     headers = {
         "Host": "fundf10.eastmoney.com",
@@ -84,48 +78,53 @@ def get_fund_stock_position_by_date(session, fund_code):
     html = BeautifulSoup(resp.content, features="html.parser")
     divs = html.find_all("div", "box")
     for div in divs:
-        position = []
+        position_list = []
         date = div.find("font").text
         trs = div.find("tbody")("tr")
         for tr in trs:
-            tr_data = _parse_tr(tr)
-            if not tr_data:
+            p = _parse_tr(tr)
+            if not p:
                 continue
-            position.append(tr_data)
+            position_list.append(p)
         position_by_date_list.append(
             dict(
                 date=date,
-                position=position,
+                position=position_list,
             )
         )
 
     return position_by_date_list
 
 
-def get_all(funds):
+def get_stock_position_history_of_funds(fund_list):
+    """
+    拉取多个基金的持仓历史数据
+    打印进度条
+    """
+
     sess = requests.Session()
 
-    progress_total = len(funds)
+    progress_total = len(fund_list)
     print_progress_bar(0, progress_total, length=40)
 
-    all_position_by_date = []
-    for i, f in enumerate(funds):
-        position_by_date = get_fund_stock_position_by_date(sess, f["_id"])
-        if len(position_by_date) == 0:
-            logging.warning("empty position_by_date: {} {}".format(f["_id"], f["name"]))
+    all_data = []
+    for i, f in enumerate(fund_list):
+        position_history = get_stock_position_history_of_fund(sess, f["_id"])
+        if len(position_history) == 0:
+            logging.warning("empty position_history: {} {}".format(f["_id"], f["name"]))
             continue
-        all_position_by_date.append(
+        all_data.append(
             {
                 "fund_id": f["_id"],
-                "position_by_date": position_by_date,
+                "position_by_date": position_history,
             }
         )
         print_progress_bar(i + 1, progress_total, length=40)
 
-    return all_position_by_date
+    return all_data
 
 
-def set_position_volume_in_float(fund_position_list, stock_profiles):
+def _set_position_volume_in_float(fund_position_list, stock_profiles):
     for fp in fund_position_list:
         if not fp["position_by_date"]:
             continue
@@ -137,7 +136,7 @@ def set_position_volume_in_float(fund_position_list, stock_profiles):
                 st["volume_in_float"] = round(st["volume"] * 10000 * 100 / stock_profiles[st["code"]]["float_shares"], 3)
 
 
-def store_fund_stock_position_list(mongo_col, stock_position_list):
+def _store_fund_stock_position_list(stock_position_list):
     op_list = []
     for sp in stock_position_list:
         op_list.append(
@@ -147,20 +146,20 @@ def store_fund_stock_position_list(mongo_col, stock_position_list):
                 upsert=True,
             )
         )
-    mongo_col.bulk_write(op_list)
+    db.Fund.bulk_write(op_list)
 
 
 if __name__ == "__main__":
-    funds = list(
+    fund_list = list(
         db.Fund.find(
             {"position_by_date.0.date": {"$ne": REPORT_DATE}},
             projection=["_id", "name"],
         )
     )
 
-    all_position_by_date = get_all(funds)
+    all_position_history = get_stock_position_history_of_funds(fund_list)
 
     stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
-    set_position_volume_in_float(all_position_by_date, stock_profiles)
+    _set_position_volume_in_float(all_position_history, stock_profiles)
 
-    store_fund_stock_position_list(db.Fund, all_position_by_date)
+    _store_fund_stock_position_list(all_position_history)

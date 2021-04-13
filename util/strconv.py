@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-from decimal import Decimal
-
 
 CN_MONEY_UNIT = {
     u"元": 1,
@@ -13,6 +11,12 @@ CN_MONEY_UNIT = {
 }
 
 
+def to_float(text):
+    if not text or text in ["-", "--", "---"]:
+        return 0.0
+    return float(text)
+
+
 def to_percent(text):
     if not text[-1] == "%":
         return 0.0
@@ -21,7 +25,7 @@ def to_percent(text):
 
 def parse_cn_text(s: str):
     """
-    Convert string to number:
+    Parse Chinese text to number:
         '21.62亿' --> 21.62 * 10^8
         '3215万' --> 3215 * 10^5
     """
@@ -37,20 +41,15 @@ def parse_cn_text(s: str):
 
 
 def cn_to_int(s):
+    # 中文转 int
     num = parse_cn_text(s)
     return int(num) if num is not None else 0
 
 
 def cn_to_float(s):
+    # 中文转 float
     num = parse_cn_text(s)
     return float(num) if num is not None else 0.0
-
-
-def number_or_zero(data, conv, zero=0):
-    try:
-        return conv(data)
-    except Exception:
-        return zero
 
 
 if __name__ == "__main__":
