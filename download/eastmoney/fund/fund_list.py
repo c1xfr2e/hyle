@@ -51,6 +51,9 @@ def get_fund_list_of_company(session, company_id, fund_type):
     Args:
         compoany_id: 东方财富的基金公司 gsid
         fund_type: 基金类型: 001(股票型) 或 002(混合型)
+
+    Returns:
+        基金列表: List[Dict]
     """
 
     url = "http://fund.eastmoney.com/Company/home/KFSFundNet"

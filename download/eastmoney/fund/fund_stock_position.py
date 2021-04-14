@@ -53,7 +53,10 @@ def get_stock_position_history_of_fund(session, fund_code):
     Args:
         fund_code: 基金代码
 
-    数据样例:
+    Returns:
+        持仓历史列表: List[Dict]
+
+    东方财富接口数据样例:
         sample/fund_stock_position.html
     """
 
