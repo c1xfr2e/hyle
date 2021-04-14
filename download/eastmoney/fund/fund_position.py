@@ -46,7 +46,7 @@ def _parse_tr(tr):
     )
 
 
-def get_stock_position_history_of_fund(session, fund_code):
+def get_position_history_of_fund(session, fund_code):
     """
     拉取基金持仓历史数据，按报告期列表 (order by report date)
 
@@ -57,7 +57,7 @@ def get_stock_position_history_of_fund(session, fund_code):
         持仓历史列表: List[Dict]
 
     东方财富接口数据样例:
-        sample/fund_stock_position.html
+        sample/fund_position.html
     """
 
     url = "http://fundf10.eastmoney.com/FundArchivesDatas.aspx"
@@ -100,7 +100,7 @@ def get_stock_position_history_of_fund(session, fund_code):
     return position_history
 
 
-def get_stock_position_history_of_funds(fund_list):
+def get_position_history_of_funds(fund_list):
     """
     拉取多个基金的持仓历史数据
     打印进度条
@@ -113,7 +113,7 @@ def get_stock_position_history_of_funds(fund_list):
 
     all_data = []
     for i, f in enumerate(fund_list):
-        position_history = get_stock_position_history_of_fund(sess, f["_id"])
+        position_history = get_position_history_of_fund(sess, f["_id"])
         if len(position_history) == 0:
             logging.warning("empty position_history: {} {}".format(f["_id"], f["name"]))
             continue
@@ -128,8 +128,8 @@ def get_stock_position_history_of_funds(fund_list):
     return all_data
 
 
-def _set_float_percent(position_history_list, stock_profiles):
-    for i in position_history_list:
+def _set_float_percent(all_position_history, stock_profiles):
+    for i in all_position_history:
         if not i["position_history"]:
             continue
         for ph in i["position_history"]:
@@ -140,13 +140,13 @@ def _set_float_percent(position_history_list, stock_profiles):
                 st["float_percent"] = round(st["shares"] * 10000 * 100 / stock_profiles[st["code"]]["float_shares"], 3)
 
 
-def _store_fund_stock_position_list(stock_position_list):
+def _store_all_fund_position_history(all_position_history):
     op_list = []
-    for sp in stock_position_list:
+    for ph in all_position_history:
         op_list.append(
             pymongo.UpdateOne(
-                {"_id": sp["fund_id"]},
-                {"$set": {"position_history": sp["position_history"]}},
+                {"_id": ph["fund_id"]},
+                {"$set": {"position_history": ph["position_history"]}},
                 upsert=True,
             )
         )
@@ -161,9 +161,9 @@ if __name__ == "__main__":
         )
     )
 
-    all_position_history = get_stock_position_history_of_funds(fund_list)
+    all_position_history = get_position_history_of_funds(fund_list)
 
     stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
     _set_float_percent(all_position_history, stock_profiles)
 
-    _store_fund_stock_position_list(all_position_history)
+    _store_all_fund_position_history(all_position_history)
