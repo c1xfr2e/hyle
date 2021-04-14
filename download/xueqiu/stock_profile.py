@@ -14,11 +14,47 @@ import requests
 import time
 from datetime import datetime
 
-from download.xueqiu import db
+import db
 from download.xueqiu.cookie import get_cookies
 
 
+def _parse_data(d):
+    return dict(
+        total_value=d["market_capital"],
+        float_value=d["float_market_capital"],
+        total_shares=d["total_shares"],
+        float_shares=d["float_shares"],
+        pb=d["pb"],
+        pe_lyr=d["pe_lyr"],
+        pe_ttm=d["pe_ttm"],
+        pe_forecast=d["pe_forecast"],
+        eps=d["eps"],
+        navps=d["navps"],
+        dividend_yield=d["dividend_yield"],
+        pledge_ratio=d["pledge_ratio"],
+        goodwill_in_net_assets=d["goodwill_in_net_assets"],
+        price=d["last_close"],
+        avg_price=d["avg_price"],
+        change=d["percent"],
+        amount=d["amount"],
+        volume=d["volume"],
+        volume_percent=d["volume_ratio"],
+        amplitude=d["amplitude"],
+        high_52_week=d["high52w"],
+        low_52_week=d["low52w"],
+        update_time=datetime.now(),
+    )
+
+
 def get_stock_profile(session, stock_code):
+    """拉取股票基本信息
+
+    Args:
+        stock_code: 6 位股票代码
+
+    Returns:
+        dict of stock profile
+    """
     code = "{}{}".format("SH" if stock_code.startswith("6") else "SZ", stock_code)
     url = "https://stock.xueqiu.com/v5/stock/quote.json"
     params = {
@@ -42,47 +78,19 @@ def get_stock_profile(session, stock_code):
         cookies=get_cookies(),
         allow_redirects=False,
     )
-    return resp.json()["data"]["quote"]
-
-
-def _extract(p):
-    return dict(
-        total_value=p["market_capital"],
-        float_value=p["float_market_capital"],
-        total_shares=p["total_shares"],
-        float_shares=p["float_shares"],
-        pb=p["pb"],
-        pe_lyr=p["pe_lyr"],
-        pe_ttm=p["pe_ttm"],
-        pe_forecast=p["pe_forecast"],
-        eps=p["eps"],
-        navps=p["navps"],
-        dividend_yield=p["dividend_yield"],
-        pledge_ratio=p["pledge_ratio"],
-        goodwill_in_net_assets=p["goodwill_in_net_assets"],
-        price=p["last_close"],
-        avg_price=p["avg_price"],
-        change=p["percent"],
-        amount=p["amount"],
-        volume=p["volume"],
-        volume_percent=p["volume_ratio"],
-        amplitude=p["amplitude"],
-        high_52_week=p["high52w"],
-        low_52_week=p["low52w"],
-        update_time=datetime.now(),
-    )
+    return _parse_data(resp.json()["data"]["quote"])
 
 
 def _try_get(session, stock_code):
     try:
-        return _extract(get_stock_profile(session, stock_code))
+        return get_stock_profile(session, stock_code)
     except Exception as e:
         logging.error("_try_get failed: {}".format(stock_code))
         logging.exception(e)
         return None
 
 
-def _get_and_store(mongo_col, stock_codes):
+def _get_and_store(stock_codes):
     failed_stock_codes = []
     write_op_list = []
     sess = requests.Session()
@@ -102,7 +110,7 @@ def _get_and_store(mongo_col, stock_codes):
         )
         time.sleep(0.2)
 
-    mongo_col.bulk_write(write_op_list)
+    db.Stock.bulk_write(write_op_list)
     return failed_stock_codes
 
 
@@ -117,7 +125,7 @@ if __name__ == "__main__":
         if n == 0:
             break
         n -= 1
-        failed_codes = _get_and_store(db.Stock, stock_codes)
+        failed_codes = _get_and_store(stock_codes)
         if not failed_codes:
             break
         stock_codes = failed_codes
