@@ -27,19 +27,19 @@
       "name": "download.szse",
       "type": "python",
       "request": "launch",
-      "module": "szse.${fileBasenameNoExtension}"
+      "module": "download.szse.${fileBasenameNoExtension}"
     },
     {
       "name": "download.shse",
       "type": "python",
       "request": "launch",
-      "module": "shse.${fileBasenameNoExtension}"
+      "module": "download.shse.${fileBasenameNoExtension}"
     },
     {
       "name": "download.xueqiu",
       "type": "python",
       "request": "launch",
-      "module": "xueqiu.${fileBasenameNoExtension}"
+      "module": "download.xueqiu.${fileBasenameNoExtension}"
     },
     {
       "name": "phainomena",
