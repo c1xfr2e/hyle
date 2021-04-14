@@ -6,7 +6,8 @@
 """
 
 import pymongo
-from phainomena import db
+
+import db
 
 
 def _add_position(cur, p, fund):

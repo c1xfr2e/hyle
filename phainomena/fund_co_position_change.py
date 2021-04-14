@@ -7,7 +7,7 @@
 
 import pymongo
 
-from phainomena import db
+import db
 from setting import REPORT_DATE
 
 

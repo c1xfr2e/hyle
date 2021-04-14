@@ -1,5 +1,4 @@
-import pymongo
-from download.eastmoney.stock import db
+import db
 
 
 def match_topic_detail(topics):

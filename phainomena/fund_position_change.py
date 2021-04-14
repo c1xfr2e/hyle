@@ -8,7 +8,7 @@
 import pymongo
 from enum import Enum
 
-from phainomena import db
+import db
 from setting import REPORT_DATE
 
 # 持仓变动类型
