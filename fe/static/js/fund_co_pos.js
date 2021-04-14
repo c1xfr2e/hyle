@@ -23,8 +23,8 @@ function openFundCompany(evt, coid) {
     evt.currentTarget.className += " w3-safety-blue";
   }
 
-  resetColumnSortDirections("volume_in_float");
-  resetColumnSortIcons("volume_in_float", false);
+  resetColumnSortDirections("float_percent");
+  resetColumnSortIcons("float_percent", false);
 }
 
 function loadTableData(data) {
@@ -46,7 +46,7 @@ function loadTableData(data) {
         </span>
         <span style="display: inline-block; color: gray;">${p.code}</span>
       </td>
-      <td>${p.volume_in_float}</td>
+      <td>${p.float_percent}</td>
       <td>${p.percent}</td>
       <td>${p.funds.length}</td>
       <td>${positionChange}</td>
@@ -57,9 +57,9 @@ function loadTableData(data) {
 }
 
 let sortOptions = {
-  volume_in_float: {
+  float_percent: {
     direction: true,
-    sortFunc: (dir) => sortNumberColumn("volume_in_float", dir)
+    sortFunc: (dir) => sortNumberColumn("float_percent", dir)
   },
   percent: {
     direction: true,

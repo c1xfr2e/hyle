@@ -17,7 +17,7 @@ TEMPLATE = """
 | 操作 | 股票 | 代码 | 占流通比 | 净值比 | 净值比变动 |
 |:------|:------|:------|:------|:------|:------|
 {% for pc in fund.display_position_change %}
-| <span style="color:{{pc.color}}">{{pc.operation}}</span> | {{pc.name}} | {{pc.code}} | {{pc.volume_in_float}}% | {{pc.percent_new}}%| {{pc.percent}}% |
+| <span style="color:{{pc.color}}">{{pc.operation}}</span> | {{pc.name}} | {{pc.code}} | {{pc.float_percent}}% | {{pc.percent_new}}%| {{pc.percent}}% |
 {% endfor %}
 
 {% endfor %}
@@ -40,7 +40,7 @@ def _fund_filter():
 
 # TODO: UI feature
 def _exclude_position_change(pc):
-    if pc["volume_in_float"] > 0.05:
+    if pc["float_percent"] > 0.05:
         return False
     if abs(pc["percent"]) < 1.0:
         return True
@@ -69,7 +69,7 @@ if __name__ == "__main__":
             display_position_change.append(enter)
         if not display_position_change:
             continue
-        display_position_change.sort(key=lambda x: x["volume_in_float"], reverse=True)
+        display_position_change.sort(key=lambda x: x["float_percent"], reverse=True)
         pc["display_position_change"] = display_position_change
         display_fund_list.append(pc)
 

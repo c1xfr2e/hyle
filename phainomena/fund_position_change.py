@@ -37,7 +37,7 @@ def diff_position(new_position, old_position):
                 "code": pos["code"],
                 "volume": pos["volume"],
                 "value": pos["value"],
-                "volume_in_float": pos["volume_in_float"],
+                "float_percent": pos["float_percent"],
                 "percent": pos["percent"],
             }
         )
@@ -50,7 +50,7 @@ def diff_position(new_position, old_position):
                 "code": pos["code"],
                 "volume": pos["volume"],
                 "value": pos["value"],
-                "volume_in_float": pos["volume_in_float"],
+                "float_percent": pos["float_percent"],
                 "percent": pos["percent"],
             }
         )
@@ -66,7 +66,7 @@ def diff_position(new_position, old_position):
                 "code": pnew["code"],
                 "volume": round(volume_change / 10000, 2),
                 "value": round(pnew["value"] - pold["value"], 2),
-                "volume_in_float": round(pnew["volume_in_float"] - pold["volume_in_float"], 3),
+                "float_percent": round(pnew["float_percent"] - pold["float_percent"], 3),
                 "percent": round(pnew["percent"] - pold["percent"], 2),
                 "percent_new": pnew["percent"],
                 "percent_old": pold["percent"],

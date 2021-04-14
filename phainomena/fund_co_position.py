@@ -15,7 +15,7 @@ def _add_position(cur, p, fund):
         "code": p["code"],
         "volume": cur.get("volume", 0) + p["volume"],
         "value": cur.get("value", 0) + p["value"],
-        "volume_in_float": cur.get("volume_in_float", 0) + p["volume_in_float"],
+        "float_percent": cur.get("float_percent", 0) + p["float_percent"],
         "percent": cur.get("percent", 0) + p["percent"],
         "funds": cur.get("funds", []) + [{"name": fund["name"], "code": fund["code"]}],
     }
@@ -38,7 +38,7 @@ def _aggregate_funds_of_company(fund_list):
 def _position_history_dict_to_list(position_history_dict):
     list_ = list(position_history_dict.values())
     list_.sort(
-        key=lambda x: x["volume_in_float"] * 100000 + x["percent"],
+        key=lambda x: x["float_percent"] * 100000 + x["percent"],
         reverse=True,
     )
     return list_
@@ -48,7 +48,7 @@ def _round_floats(position_list):
     for p in position_list:
         p["volume"] = round(p["volume"], 2)
         p["value"] = round(p["value"], 2)
-        p["volume_in_float"] = round(p["volume_in_float"], 3)
+        p["float_percent"] = round(p["float_percent"], 3)
         p["percent"] = round(p["percent"], 2)
     return position_list
 

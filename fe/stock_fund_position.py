@@ -26,26 +26,26 @@ def _format_inc_dec_text(val, change):
 
 
 def _format_fund_inc_dec_number(item, inc_dec, float_shares):
-    volume_in_float_change = round(inc_dec["volume"] * 10000 * 100 / float_shares, 3)
+    float_percent_change = round(inc_dec["volume"] * 10000 * 100 / float_shares, 3)
     if inc_dec["volume"] > 0:
         item["change_type"] = "加仓"
         item["volume"] = _format_inc_dec_text(item["volume"], inc_dec["volume"])
-        item["volume_in_float"] = _format_inc_dec_text(item["volume_in_float"], volume_in_float_change)
+        item["float_percent"] = _format_inc_dec_text(item["float_percent"], float_percent_change)
     else:
         item["change_type"] = "减仓"
         item["volume"] = _format_inc_dec_text(item["volume"], inc_dec["volume"])
-        item["volume_in_float"] = _format_inc_dec_text(item["volume_in_float"], volume_in_float_change)
+        item["float_percent"] = _format_inc_dec_text(item["float_percent"], float_percent_change)
 
 
 def _format_co_summary_inc_dec_number(summary):
     summary["volume"] = _format_inc_dec_text(summary["volume"], summary["volume_change"])
-    summary["volume_in_float"] = _format_inc_dec_text(summary["volume_in_float"], summary["volume_in_float_change"])
+    summary["float_percent"] = _format_inc_dec_text(summary["float_percent"], summary["float_percent_change"])
     summary["percent"] = _format_inc_dec_text(summary["percent"], summary["percent_change"])
 
 
 def _to_display_list(company, stock_profile):
     summary = company["summary"]
-    summary["volume_in_float"] = round(summary["volume"] * 10000 * 100 / stock_profile["float_shares"], 3)
+    summary["float_percent"] = round(summary["volume"] * 10000 * 100 / stock_profile["float_shares"], 3)
     _format_co_summary_inc_dec_number(summary)
 
     display_funds = []
@@ -59,7 +59,7 @@ def _to_display_list(company, stock_profile):
             "name": p["fund_name"],
             "fund_size": p["fund_size"],
             "volume": p["volume"],
-            "volume_in_float": round(p["volume"] * 10000 * 100 / stock_profile["float_shares"], 3),
+            "float_percent": round(p["volume"] * 10000 * 100 / stock_profile["float_shares"], 3),
             "percent": p["percent"],
         }
         if fund_code in enter_dict:
@@ -75,7 +75,7 @@ def _to_display_list(company, stock_profile):
                 "name": p["fund_name"],
                 "fund_size": p["fund_size"],
                 "volume": p["volume"],
-                "volume_in_float": round(p["volume"] * 10000 * 100 / stock_profile["float_shares"], 3),
+                "float_percent": round(p["volume"] * 10000 * 100 / stock_profile["float_shares"], 3),
                 "percent": p["percent"],
                 "change_type": "退出",
             }

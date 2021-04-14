@@ -128,16 +128,16 @@ def get_stock_position_history_of_funds(fund_list):
     return all_data
 
 
-def _set_position_volume_in_float(position_history_list, stock_profiles):
+def _set_float_percent(position_history_list, stock_profiles):
     for i in position_history_list:
         if not i["position_history"]:
             continue
         for ph in i["position_history"]:
             for st in ph["position"]:
                 if st["code"] not in stock_profiles:
-                    st["volume_in_float"] = 0.0
+                    st["float_percent"] = 0.0
                     continue
-                st["volume_in_float"] = round(st["volume"] * 10000 * 100 / stock_profiles[st["code"]]["float_shares"], 3)
+                st["float_percent"] = round(st["shares"] * 10000 * 100 / stock_profiles[st["code"]]["float_shares"], 3)
 
 
 def _store_fund_stock_position_list(stock_position_list):
@@ -164,6 +164,6 @@ if __name__ == "__main__":
     all_position_history = get_stock_position_history_of_funds(fund_list)
 
     stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
-    _set_position_volume_in_float(all_position_history, stock_profiles)
+    _set_float_percent(all_position_history, stock_profiles)
 
     _store_fund_stock_position_list(all_position_history)
