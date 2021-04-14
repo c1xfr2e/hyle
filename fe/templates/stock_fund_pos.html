@@ -55,7 +55,7 @@
           <td colspan="2" style="font-size:15px; padding: 4px 8px 4px 8px; line-height: 28px;">{{co["name"]}}</td>
           {% endif %}
           <td>{{ co["summary"]["fund_size"]|safe }}</td>
-          <td>{{ co["summary"]["volume"]|safe }}</td>
+          <td>{{ co["summary"]["quantity"]|safe }}</td>
           <td>{{ co["summary"]["float_percent"]|safe }}</td>
           <td>{{ co["summary"]["percent"]|safe }}</td>
           <td></td>
@@ -65,7 +65,7 @@
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["code"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["name"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["fund_size"]|safe }}</td>
-            <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["volume"]|safe }}</td>
+            <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["quantity"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["float_percent"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["percent"]|safe }}</td>
             <td style="padding-right: 13px;" class="w3-right-align"><span style="{{change_type_styles[fund['change_type']]}}">{{fund['change_type']}}</span></td>

@@ -13,7 +13,7 @@ def _add_position(cur, p, fund):
     return {
         "name": p["name"],
         "code": p["code"],
-        "volume": cur.get("volume", 0) + p["volume"],
+        "quantity": cur.get("quantity", 0) + p["quantity"],
         "value": cur.get("value", 0) + p["value"],
         "float_percent": cur.get("float_percent", 0) + p["float_percent"],
         "percent": cur.get("percent", 0) + p["percent"],
@@ -46,7 +46,7 @@ def _position_history_dict_to_list(position_history_dict):
 
 def _round_floats(position_list):
     for p in position_list:
-        p["volume"] = round(p["volume"], 2)
+        p["quantity"] = round(p["quantity"], 2)
         p["value"] = round(p["value"], 2)
         p["float_percent"] = round(p["float_percent"], 3)
         p["percent"] = round(p["percent"], 2)

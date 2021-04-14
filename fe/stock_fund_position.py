@@ -10,7 +10,7 @@ def _company_dict_to_list(by_company_dict):
         co_entry["id"] = co_id
         list_.append(co_entry)
     list_.sort(
-        key=lambda x: x["summary"]["volume"] if x["summary"]["volume"] != 0 else x["summary"]["volume_change"],
+        key=lambda x: x["summary"]["quantity"] if x["summary"]["quantity"] != 0 else x["summary"]["quantity_change"],
         reverse=True,
     )
     return list_
@@ -26,26 +26,26 @@ def _format_inc_dec_text(val, change):
 
 
 def _format_fund_inc_dec_number(item, inc_dec, float_shares):
-    float_percent_change = round(inc_dec["volume"] * 10000 * 100 / float_shares, 3)
-    if inc_dec["volume"] > 0:
+    float_percent_change = round(inc_dec["quantity"] * 10000 * 100 / float_shares, 3)
+    if inc_dec["quantity"] > 0:
         item["change_type"] = "加仓"
-        item["volume"] = _format_inc_dec_text(item["volume"], inc_dec["volume"])
+        item["quantity"] = _format_inc_dec_text(item["quantity"], inc_dec["quantity"])
         item["float_percent"] = _format_inc_dec_text(item["float_percent"], float_percent_change)
     else:
         item["change_type"] = "减仓"
-        item["volume"] = _format_inc_dec_text(item["volume"], inc_dec["volume"])
+        item["quantity"] = _format_inc_dec_text(item["quantity"], inc_dec["quantity"])
         item["float_percent"] = _format_inc_dec_text(item["float_percent"], float_percent_change)
 
 
 def _format_co_summary_inc_dec_number(summary):
-    summary["volume"] = _format_inc_dec_text(summary["volume"], summary["volume_change"])
+    summary["quantity"] = _format_inc_dec_text(summary["quantity"], summary["quantity_change"])
     summary["float_percent"] = _format_inc_dec_text(summary["float_percent"], summary["float_percent_change"])
     summary["percent"] = _format_inc_dec_text(summary["percent"], summary["percent_change"])
 
 
 def _to_display_list(company, stock_profile):
     summary = company["summary"]
-    summary["float_percent"] = round(summary["volume"] * 10000 * 100 / stock_profile["float_shares"], 3)
+    summary["float_percent"] = round(summary["quantity"] * 10000 * 100 / stock_profile["float_shares"], 3)
     _format_co_summary_inc_dec_number(summary)
 
     display_funds = []
@@ -58,8 +58,8 @@ def _to_display_list(company, stock_profile):
             "code": p["fund_code"],
             "name": p["fund_name"],
             "fund_size": p["fund_size"],
-            "volume": p["volume"],
-            "float_percent": round(p["volume"] * 10000 * 100 / stock_profile["float_shares"], 3),
+            "quantity": p["quantity"],
+            "float_percent": round(p["quantity"] * 10000 * 100 / stock_profile["float_shares"], 3),
             "percent": p["percent"],
         }
         if fund_code in enter_dict:
@@ -74,8 +74,8 @@ def _to_display_list(company, stock_profile):
                 "code": p["fund_code"],
                 "name": p["fund_name"],
                 "fund_size": p["fund_size"],
-                "volume": p["volume"],
-                "float_percent": round(p["volume"] * 10000 * 100 / stock_profile["float_shares"], 3),
+                "quantity": p["quantity"],
+                "float_percent": round(p["quantity"] * 10000 * 100 / stock_profile["float_shares"], 3),
                 "percent": p["percent"],
                 "change_type": "退出",
             }

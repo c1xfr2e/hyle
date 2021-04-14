@@ -21,7 +21,7 @@ def _aggregate_fund_position(stock_entry_dict, fund):
                 "fund_name": fund["name"],
                 "fund_size": fund["size"],
                 "percent": p["percent"],
-                "volume": p["volume"],
+                "quantity": p["quantity"],
             }
         )
 
@@ -37,7 +37,7 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
                 "fund_name": fund_change["name"],
                 "fund_size": fund_change["size"],
                 "percent": e["percent"],
-                "volume": e["volume"],
+                "quantity": e["quantity"],
             }
         )
     for e in fund_change["exit"]:
@@ -50,7 +50,7 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
                 "fund_name": fund_change["name"],
                 "fund_size": fund_change["size"],
                 "percent": e["percent"],
-                "volume": e["volume"],
+                "quantity": e["quantity"],
             }
         )
         pass
@@ -64,7 +64,7 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
                 "fund_name": fund_change["name"],
                 "fund_size": fund_change["size"],
                 "percent": i["percent"],
-                "volume": i["volume"],
+                "quantity": i["quantity"],
             }
         )
 
@@ -94,10 +94,10 @@ def process_by_each_fund():
 
         stock_entry = stock_entry_dict[code]
         for co_entry in stock_entry.values():
-            co_entry.get("latest", []).sort(key=lambda x: x["volume"], reverse=True)
-            co_entry.get("enter", []).sort(key=lambda x: x["volume"], reverse=True)
-            co_entry.get("exit", []).sort(key=lambda x: x["volume"], reverse=True)
-            co_entry.get("inc_dec", []).sort(key=lambda x: x["volume"], reverse=True)
+            co_entry.get("latest", []).sort(key=lambda x: x["quantity"], reverse=True)
+            co_entry.get("enter", []).sort(key=lambda x: x["quantity"], reverse=True)
+            co_entry.get("exit", []).sort(key=lambda x: x["quantity"], reverse=True)
+            co_entry.get("inc_dec", []).sort(key=lambda x: x["quantity"], reverse=True)
 
         write_op_list.append(
             pymongo.UpdateOne(
@@ -118,8 +118,8 @@ def process_by_each_fund():
 ENTRY = {
     "summary": {
         "fund_size": 0.0,
-        "volume": 0.0,
-        "volume_change": 0.0,
+        "quantity": 0.0,
+        "quantity_change": 0.0,
         "percent": 0.0,
         "percent_change": 0.0,
     },
@@ -142,7 +142,7 @@ def _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
         for p in fund["position_history"][0]["position"]:
             entry = stock_entry_dict.setdefault(p["code"], copy.deepcopy(ENTRY))
             entry["summary"]["fund_size"] += fund["size"]
-            entry["summary"]["volume"] += p["volume"]
+            entry["summary"]["quantity"] += p["quantity"]
             entry["summary"]["percent"] += p["percent"]
             entry["latest"].append(
                 {
@@ -150,13 +150,13 @@ def _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
                     "fund_name": fund["name"],
                     "fund_size": fund["size"],
                     "percent": p["percent"],
-                    "volume": p["volume"],
+                    "quantity": p["quantity"],
                 }
             )
 
     for entry in stock_entry_dict.values():
         entry["summary"]["fund_size"] = round(entry["summary"]["fund_size"], 2)
-        entry["summary"]["volume"] = round(entry["summary"]["volume"], 2)
+        entry["summary"]["quantity"] = round(entry["summary"]["quantity"], 2)
         entry["summary"]["percent"] = round(entry["summary"]["percent"], 2)
 
 
@@ -175,10 +175,10 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                     "fund_name": position_change["name"],
                     "fund_size": position_change["size"],
                     "percent": c["percent"],
-                    "volume": c["volume"],
+                    "quantity": c["quantity"],
                 }
             )
-            entry["summary"]["volume_change"] += c["volume"]
+            entry["summary"]["quantity_change"] += c["quantity"]
             entry["summary"]["percent_change"] += c["percent"]
         for c in position_change["exit"]:
             entry = stock_entry_dict.setdefault(c["code"], copy.deepcopy(ENTRY))
@@ -188,10 +188,10 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                     "fund_name": position_change["name"],
                     "fund_size": position_change["size"],
                     "percent": c["percent"],
-                    "volume": c["volume"],
+                    "quantity": c["quantity"],
                 }
             )
-            entry["summary"]["volume_change"] -= c["volume"]
+            entry["summary"]["quantity_change"] -= c["quantity"]
             entry["summary"]["percent_change"] -= c["percent"]
         for c in position_change["inc_dec"]:
             entry = stock_entry_dict.setdefault(c["code"], copy.deepcopy(ENTRY))
@@ -201,18 +201,18 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                     "fund_name": position_change["name"],
                     "fund_size": position_change["size"],
                     "percent": c["percent"],
-                    "volume": c["volume"],
+                    "quantity": c["quantity"],
                 }
             )
-            entry["summary"]["volume_change"] += c["volume"]
+            entry["summary"]["quantity_change"] += c["quantity"]
             entry["summary"]["percent_change"] += c["percent"]
 
     for stock_code, entry in stock_entry_dict.items():
-        volume_change = round(entry["summary"]["volume_change"], 2)
-        entry["summary"]["volume_change"] = volume_change
+        quantity_change = round(entry["summary"]["quantity_change"], 2)
+        entry["summary"]["quantity_change"] = quantity_change
         if stock_code in ALL_STOCKS_DICT:
             entry["summary"]["volume_in_float_change"] = round(
-                volume_change * 10000 * 100 / ALL_STOCKS_DICT[stock_code]["profile"]["float_shares"],
+                quantity_change * 10000 * 100 / ALL_STOCKS_DICT[stock_code]["profile"]["float_shares"],
                 3,
             )
         entry["summary"]["percent_change"] = round(entry["summary"]["percent_change"], 2)
@@ -233,10 +233,10 @@ def process_by_each_company(company):
         if company.get("logo"):
             entry["logo"] = company["logo"]
 
-        entry["latest"].sort(key=lambda x: x["volume"], reverse=True)
-        entry["enter"].sort(key=lambda x: x["volume"], reverse=True)
-        entry["exit"].sort(key=lambda x: x["volume"], reverse=True)
-        entry["inc_dec"].sort(key=lambda x: x["volume"], reverse=True)
+        entry["latest"].sort(key=lambda x: x["quantity"], reverse=True)
+        entry["enter"].sort(key=lambda x: x["quantity"], reverse=True)
+        entry["exit"].sort(key=lambda x: x["quantity"], reverse=True)
+        entry["inc_dec"].sort(key=lambda x: x["quantity"], reverse=True)
 
         write_op_list.append(
             pymongo.UpdateOne(

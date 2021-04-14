@@ -41,7 +41,7 @@ def _parse_tr(tr):
         code=tds[1].text,
         name=tds[2].text,
         percent=to_percent(tds[-3].text),
-        volume=to_float(tds[-2].text.replace(",", "")),
+        quantity=to_float(tds[-2].text.replace(",", "")),
         value=to_float(tds[-1].text.replace(",", "")),
     )
 

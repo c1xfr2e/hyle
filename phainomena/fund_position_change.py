@@ -35,7 +35,7 @@ def diff_position(new_position, old_position):
             {
                 "name": pos["name"],
                 "code": pos["code"],
-                "volume": pos["volume"],
+                "quantity": pos["quantity"],
                 "value": pos["value"],
                 "float_percent": pos["float_percent"],
                 "percent": pos["percent"],
@@ -48,7 +48,7 @@ def diff_position(new_position, old_position):
             {
                 "name": pos["name"],
                 "code": pos["code"],
-                "volume": pos["volume"],
+                "quantity": pos["quantity"],
                 "value": pos["value"],
                 "float_percent": pos["float_percent"],
                 "percent": pos["percent"],
@@ -57,14 +57,14 @@ def diff_position(new_position, old_position):
 
     for c in inc_dec_stock_codes:
         pnew, pold = new_dict[c], old_dict[c]
-        volume_change = pnew["volume"] * 10000 - pold["volume"] * 10000
-        if volume_change == 0:
+        quantity_change = pnew["quantity"] * 10000 - pold["quantity"] * 10000
+        if quantity_change == 0:
             continue
         inc_dec_list.append(
             {
                 "name": pnew["name"],
                 "code": pnew["code"],
-                "volume": round(volume_change / 10000, 2),
+                "quantity": round(quantity_change / 10000, 2),
                 "value": round(pnew["value"] - pold["value"], 2),
                 "float_percent": round(pnew["float_percent"] - pold["float_percent"], 3),
                 "percent": round(pnew["percent"] - pold["percent"], 2),
