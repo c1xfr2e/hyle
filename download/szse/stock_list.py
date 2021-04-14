@@ -13,6 +13,8 @@ from collections import namedtuple
 from datetime import datetime
 from typing import List
 
+import db
+
 
 def is_downloadable(url) -> bool:
     """
@@ -66,8 +68,8 @@ def get_stock_list() -> List[stock]:
     return stock_list
 
 
-def store_stock_list(mongo_col, stock_list):
-    ops = [
+def _store_stock_list(stock_list):
+    op_list = [
         pymongo.UpdateOne(
             {"_id": stock.code},
             {
@@ -87,11 +89,8 @@ def store_stock_list(mongo_col, stock_list):
         )
         for stock in stock_list
     ]
-    mongo_col.bulk_write(ops)
+    db.Stock.bulk_write(op_list)
 
 
 if __name__ == "__main__":
-    from download.szse import db
-
-    stock_list = get_stock_list()
-    store_stock_list(db.Stock, stock_list)
+    _store_stock_list(get_stock_list())
