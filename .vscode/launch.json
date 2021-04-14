@@ -42,6 +42,12 @@
       "module": "download.xueqiu.${fileBasenameNoExtension}"
     },
     {
+      "name": "integrate",
+      "type": "python",
+      "request": "launch",
+      "module": "integrate.${fileBasenameNoExtension}"
+    },
+    {
       "name": "phainomena",
       "type": "python",
       "request": "launch",
