@@ -6,7 +6,7 @@
     数据更新到 mongodb 的 fund collection
 
     Preconditions:
-        - mongodb collection: fund, stock_profile
+        - mongodb collection: fund
 """
 
 import logging
@@ -128,18 +128,6 @@ def get_position_history_of_funds(fund_list):
     return all_data
 
 
-def _set_float_percent(all_position_history, stock_profiles):
-    for i in all_position_history:
-        if not i["position_history"]:
-            continue
-        for ph in i["position_history"]:
-            for st in ph["position"]:
-                if st["code"] not in stock_profiles:
-                    st["float_percent"] = 0.0
-                    continue
-                st["float_percent"] = round(st["shares"] * 10000 * 100 / stock_profiles[st["code"]]["float_shares"], 3)
-
-
 def _store_all_fund_position_history(all_position_history):
     op_list = []
     for ph in all_position_history:
@@ -160,10 +148,5 @@ if __name__ == "__main__":
             projection=["_id", "name"],
         )
     )
-
-    all_position_history = get_position_history_of_funds(fund_list)
-
-    stock_profiles = {st["_id"]: st["profile"] for st in db.Stock.find(projection=["profile"])}
-    _set_float_percent(all_position_history, stock_profiles)
-
-    _store_all_fund_position_history(all_position_history)
+    all_data = get_position_history_of_funds(fund_list)
+    _store_all_fund_position_history(all_data)

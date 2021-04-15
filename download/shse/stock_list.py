@@ -18,8 +18,8 @@ import db
 stock = namedtuple(
     "stock",
     [
-        "code",  # 6 位代码
-        "name",  # 简称
+        "code",  # 股票 6 位代码
+        "name",  # 股票简称
         "list_date",  # 上市日期
     ],
 )
@@ -34,7 +34,7 @@ def get_stock_list_by_page(page: int, stock_type) -> List[stock]:
         stock_type: 所属板块 (1:上海主板 2:B股 8:科创板)
 
     Returns:
-        股票基本信息列表
+        股票基本信息 list
 
     上交所接口返回的数据格式：
         {
