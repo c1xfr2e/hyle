@@ -31,25 +31,25 @@ def diff_company_position(new_position_dict, old_position_dict):
         {
             "code": code,
             "name": new_position_dict[code]["name"],
-            "percent": new_position_dict[code]["percent"],
+            "net_percent": new_position_dict[code]["net_percent"],
             "quantity": new_position_dict[code]["quantity"],
             "funds": new_position_dict[code]["funds"],
         }
         for code in enter_stock_codes
     ]
-    enter_list.sort(key=lambda x: x["percent"], reverse=True)
+    enter_list.sort(key=lambda x: x["net_percent"], reverse=True)
 
     exit_list = [
         {
             "code": code,
             "name": old_position_dict[code]["name"],
-            "percent": old_position_dict[code]["percent"],
+            "net_percent": old_position_dict[code]["net_percent"],
             "quantity": old_position_dict[code]["quantity"],
             "funds": old_position_dict[code]["funds"],
         }
         for code in exit_stock_codes
     ]
-    exit_list.sort(key=lambda x: x["percent"], reverse=True)
+    exit_list.sort(key=lambda x: x["net_percent"], reverse=True)
 
     return enter_list, exit_list
 

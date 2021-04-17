@@ -40,7 +40,7 @@ def _format_fund_inc_dec_number(item, inc_dec, float_shares):
 def _format_co_summary_inc_dec_number(summary):
     summary["quantity"] = _format_inc_dec_text(summary["quantity"], summary["quantity_change"])
     summary["float_percent"] = _format_inc_dec_text(summary["float_percent"], summary["float_percent_change"])
-    summary["percent"] = _format_inc_dec_text(summary["percent"], summary["percent_change"])
+    summary["net_percent"] = _format_inc_dec_text(summary["net_percent"], summary["percent_change"])
 
 
 def _to_display_list(company, stock_profile):
@@ -60,7 +60,7 @@ def _to_display_list(company, stock_profile):
             "fund_size": p["fund_size"],
             "quantity": p["quantity"],
             "float_percent": round(p["quantity"] * 10000 * 100 / stock_profile["float_shares"], 3),
-            "percent": p["percent"],
+            "net_percent": p["net_percent"],
         }
         if fund_code in enter_dict:
             item["change_type"] = "新进"
@@ -76,7 +76,7 @@ def _to_display_list(company, stock_profile):
                 "fund_size": p["fund_size"],
                 "quantity": p["quantity"],
                 "float_percent": round(p["quantity"] * 10000 * 100 / stock_profile["float_shares"], 3),
-                "percent": p["percent"],
+                "net_percent": p["net_percent"],
                 "change_type": "退出",
             }
         )

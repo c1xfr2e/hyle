@@ -20,7 +20,7 @@ def _aggregate_fund_position(stock_entry_dict, fund):
                 "fund_code": fund["code"],
                 "fund_name": fund["name"],
                 "fund_size": fund["size"],
-                "percent": p["percent"],
+                "net_percent": p["net_percent"],
                 "quantity": p["quantity"],
             }
         )
@@ -36,7 +36,7 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
                 "fund_code": fund_change["_id"],
                 "fund_name": fund_change["name"],
                 "fund_size": fund_change["size"],
-                "percent": e["percent"],
+                "net_percent": e["net_percent"],
                 "quantity": e["quantity"],
             }
         )
@@ -49,7 +49,7 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
                 "fund_code": fund_change["_id"],
                 "fund_name": fund_change["name"],
                 "fund_size": fund_change["size"],
-                "percent": e["percent"],
+                "net_percent": e["net_percent"],
                 "quantity": e["quantity"],
             }
         )
@@ -63,7 +63,7 @@ def _aggregate_fund_position_change(stock_entry_dict, fund_change):
                 "fund_code": fund_change["_id"],
                 "fund_name": fund_change["name"],
                 "fund_size": fund_change["size"],
-                "percent": i["percent"],
+                "net_percent": i["net_percent"],
                 "quantity": i["quantity"],
             }
         )
@@ -120,7 +120,7 @@ ENTRY = {
         "fund_size": 0.0,
         "quantity": 0.0,
         "quantity_change": 0.0,
-        "percent": 0.0,
+        "net_percent": 0.0,
         "percent_change": 0.0,
     },
     "latest": [],
@@ -143,13 +143,13 @@ def _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
             entry = stock_entry_dict.setdefault(p["code"], copy.deepcopy(ENTRY))
             entry["summary"]["fund_size"] += fund["size"]
             entry["summary"]["quantity"] += p["quantity"]
-            entry["summary"]["percent"] += p["percent"]
+            entry["summary"]["net_percent"] += p["net_percent"]
             entry["latest"].append(
                 {
                     "fund_code": fund["code"],
                     "fund_name": fund["name"],
                     "fund_size": fund["size"],
-                    "percent": p["percent"],
+                    "net_percent": p["net_percent"],
                     "quantity": p["quantity"],
                 }
             )
@@ -157,7 +157,7 @@ def _aggregate_fund_position_of_company_by_stock(stock_entry_dict, company):
     for entry in stock_entry_dict.values():
         entry["summary"]["fund_size"] = round(entry["summary"]["fund_size"], 2)
         entry["summary"]["quantity"] = round(entry["summary"]["quantity"], 2)
-        entry["summary"]["percent"] = round(entry["summary"]["percent"], 2)
+        entry["summary"]["net_percent"] = round(entry["summary"]["net_percent"], 2)
 
 
 def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, company):
@@ -174,12 +174,12 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                     "fund_code": position_change["_id"],
                     "fund_name": position_change["name"],
                     "fund_size": position_change["size"],
-                    "percent": c["percent"],
+                    "net_percent": c["net_percent"],
                     "quantity": c["quantity"],
                 }
             )
             entry["summary"]["quantity_change"] += c["quantity"]
-            entry["summary"]["percent_change"] += c["percent"]
+            entry["summary"]["percent_change"] += c["net_percent"]
         for c in position_change["exit"]:
             entry = stock_entry_dict.setdefault(c["code"], copy.deepcopy(ENTRY))
             entry["exit"].append(
@@ -187,12 +187,12 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                     "fund_code": position_change["_id"],
                     "fund_name": position_change["name"],
                     "fund_size": position_change["size"],
-                    "percent": c["percent"],
+                    "net_percent": c["net_percent"],
                     "quantity": c["quantity"],
                 }
             )
             entry["summary"]["quantity_change"] -= c["quantity"]
-            entry["summary"]["percent_change"] -= c["percent"]
+            entry["summary"]["percent_change"] -= c["net_percent"]
         for c in position_change["inc_dec"]:
             entry = stock_entry_dict.setdefault(c["code"], copy.deepcopy(ENTRY))
             entry["inc_dec"].append(
@@ -200,12 +200,12 @@ def _aggregate_fund_position_postion_of_company_by_stock(stock_entry_dict, compa
                     "fund_code": position_change["_id"],
                     "fund_name": position_change["name"],
                     "fund_size": position_change["size"],
-                    "percent": c["percent"],
+                    "net_percent": c["net_percent"],
                     "quantity": c["quantity"],
                 }
             )
             entry["summary"]["quantity_change"] += c["quantity"]
-            entry["summary"]["percent_change"] += c["percent"]
+            entry["summary"]["percent_change"] += c["net_percent"]
 
     for stock_code, entry in stock_entry_dict.items():
         quantity_change = round(entry["summary"]["quantity_change"], 2)

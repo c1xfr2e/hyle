@@ -40,7 +40,7 @@ def _parse_tr(tr):
     return dict(
         code=tds[1].text,
         name=tds[2].text,
-        percent=to_percent(tds[-3].text),
+        net_percent=to_percent(tds[-3].text),
         quantity=to_float(tds[-2].text.replace(",", "")),
         value=to_float(tds[-1].text.replace(",", "")),
     )

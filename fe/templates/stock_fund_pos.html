@@ -57,7 +57,7 @@
           <td>{{ co["summary"]["fund_size"]|safe }}</td>
           <td>{{ co["summary"]["quantity"]|safe }}</td>
           <td>{{ co["summary"]["float_percent"]|safe }}</td>
-          <td>{{ co["summary"]["percent"]|safe }}</td>
+          <td>{{ co["summary"]["net_percent"]|safe }}</td>
           <td></td>
         </tr>
           {% for fund in co["funds"] %}
@@ -67,7 +67,7 @@
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["fund_size"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["quantity"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["float_percent"]|safe }}</td>
-            <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["percent"]|safe }}</td>
+            <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["net_percent"]|safe }}</td>
             <td style="padding-right: 13px;" class="w3-right-align"><span style="{{change_type_styles[fund['change_type']]}}">{{fund['change_type']}}</span></td>
           </tr>
           {% endfor %}

@@ -17,7 +17,7 @@ TEMPLATE = """
 | 操作 | 股票 | 代码 | 占流通比 | 净值比 | 净值比变动 |
 |:------|:------|:------|:------|:------|:------|
 {% for pc in fund.display_position_change %}
-| <span style="color:{{pc.color}}">{{pc.operation}}</span> | {{pc.name}} | {{pc.code}} | {{pc.float_percent}}% | {{pc.percent_new}}%| {{pc.percent}}% |
+| <span style="color:{{pc.color}}">{{pc.operation}}</span> | {{pc.name}} | {{pc.code}} | {{pc.float_percent}}% | {{pc.percent_new}}%| {{pc.net_percent}}% |
 {% endfor %}
 
 {% endfor %}
@@ -42,7 +42,7 @@ def _fund_filter():
 def _exclude_position_change(pc):
     if pc["float_percent"] > 0.05:
         return False
-    if abs(pc["percent"]) < 1.0:
+    if abs(pc["net_percent"]) < 1.0:
         return True
     return False
 

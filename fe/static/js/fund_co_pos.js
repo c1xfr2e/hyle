@@ -47,7 +47,7 @@ function loadTableData(data) {
         <span style="display: inline-block; color: gray;">${p.code}</span>
       </td>
       <td>${p.float_percent}</td>
-      <td>${p.percent}</td>
+      <td>${p.net_percent}</td>
       <td>${p.funds.length}</td>
       <td>${positionChange}</td>
     </tr>`;
@@ -61,9 +61,9 @@ let sortOptions = {
     direction: true,
     sortFunc: (dir) => sortNumberColumn("float_percent", dir)
   },
-  percent: {
+  net_percent: {
     direction: true,
-    sortFunc: (dir) => sortNumberColumn("percent", dir)
+    sortFunc: (dir) => sortNumberColumn("net_percent", dir)
   },
   fund_count: {
     direction: true,
