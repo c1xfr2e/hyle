@@ -5,7 +5,8 @@
     设置基金持仓中的流通股本比
 
     Preconditions:
-        - mongodb collection: fund, stock_profile
+        - mongodb documents: fund, stock_profile
+        - fund 中已有 position_history 数据
 """
 
 import pymongo

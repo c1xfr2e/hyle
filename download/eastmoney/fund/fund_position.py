@@ -6,7 +6,7 @@
     数据更新到 mongodb 的 fund collection
 
     Preconditions:
-        - mongodb collection: fund
+        - mongodb documents: fund
 """
 
 import logging

@@ -6,7 +6,7 @@
     数据保存到 mongodb 的 fund collection
 
     Preconditions:
-        - mongodb collection: fund_company, fund
+        - mongodb documents: fund_company
 """
 
 import argparse
