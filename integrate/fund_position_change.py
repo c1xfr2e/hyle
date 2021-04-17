@@ -3,6 +3,10 @@
 
 """
     对比基金最新两季持仓，得出持仓变动
+
+    Preconditions:
+        - mongodb documents: fund
+        - fund 中已有 position_history 数据
 """
 
 import pymongo
@@ -19,7 +23,19 @@ class PositionChange(Enum):
     Exit = "exit"  # 退出
 
 
-def diff_position(new, old):
+def diff_fund_position(new, old):
+    """
+    比较两个基金持仓, 得出 diff
+
+    Args:
+        new: 新持仓
+        old: 旧持仓
+
+    Returns:
+        enter_list:  新进列表
+        inc_dec_list: 增减仓列表
+        exit_list: 退出列表
+    """
     new_dict = {p["code"]: p for p in new}
     old_dict = {p["code"]: p for p in old}
 
@@ -29,34 +45,34 @@ def diff_position(new, old):
 
     enter_list, inc_dec_list, exit_list = [], [], []
 
-    for c in enter_codes:
-        pos = new_dict[c]
+    for code in enter_codes:
+        p = new_dict[code]
         enter_list.append(
             {
-                "name": pos["name"],
-                "code": pos["code"],
-                "quantity": pos["quantity"],
-                "value": pos["value"],
-                "float_percent": pos["float_percent"],
-                "new_percent": pos["new_percent"],
+                "name": p["name"],
+                "code": p["code"],
+                "quantity": p["quantity"],
+                "value": p["value"],
+                "float_percent": p["float_percent"],
+                "new_percent": p["new_percent"],
             }
         )
 
-    for c in exit_codes:
-        pos = old_dict[c]
+    for code in exit_codes:
+        p = old_dict[code]
         exit_list.append(
             {
-                "name": pos["name"],
-                "code": pos["code"],
-                "quantity": pos["quantity"],
-                "value": pos["value"],
-                "float_percent": pos["float_percent"],
-                "net_percent": pos["net_percent"],
+                "name": p["name"],
+                "code": p["code"],
+                "quantity": p["quantity"],
+                "value": p["value"],
+                "float_percent": p["float_percent"],
+                "net_percent": p["net_percent"],
             }
         )
 
-    for c in inc_dec_codes:
-        pnew, pold = new_dict[c], old_dict[c]
+    for code in inc_dec_codes:
+        pnew, pold = new_dict[code], old_dict[code]
         quantity_change = pnew["quantity"] * 10000 - pold["quantity"] * 10000
         if quantity_change == 0:
             continue
@@ -110,7 +126,7 @@ if __name__ == "__main__":
 
     write_op_list = []
     for f in funds:
-        enter, inc_dec, exit_ = diff_position(
+        enter, inc_dec, exit_ = diff_fund_position(
             f["position_history"][0]["position"],
             f["position_history"][1]["position"],
         )
