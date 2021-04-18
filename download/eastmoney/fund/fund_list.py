@@ -105,7 +105,7 @@ def _store_fund_list(fund_list, co_name):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(add_help=True)
-    parser.add_argument("-t", "--type", help="基金类型: 001(股票型) 002(混合型)", type=str, default="002")
+    parser.add_argument("-t", "--type", help="基金类型: 001(股票型) 002(混合型)", type=str, default="")
     args = parser.parse_args()
 
     sess = requests.Session()
