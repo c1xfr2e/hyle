@@ -46,12 +46,13 @@ def _parse_tr(tr):
     )
 
 
-def get_position_history_of_fund(session, fund_code):
+def get_position_history_of_fund(session, fund_code, report_year):
     """
     拉取基金持仓历史数据，按报告期列表 (order by report date)
 
     Args:
         fund_code: 基金代码
+        report_year: 报告期年份
 
     Returns:
         持仓历史列表: List[Dict]
@@ -66,7 +67,7 @@ def get_position_history_of_fund(session, fund_code):
         "Connection": "keep-alive",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) Chrome/87.0.4280.141 Safari/537.36",
         "Accept": "*/*",
-        "Referer": "http://fundf10.eastmoney.com/ccmx_001975.html",
+        # "Referer": "http://fundf10.eastmoney.com/ccmx_{code}.html".format(code=fund_code),
         "Accept-Encoding": "gzip, deflate",
         "Accept-Language": "en,zh-CN;q=0.9,zh;q=0.8",
     }
@@ -74,11 +75,17 @@ def get_position_history_of_fund(session, fund_code):
         "type": "jjcc",
         "code": fund_code,
         "topline": "15",
+        "year": report_year,
     }
     resp = session.get(url, headers=headers, params=params)
 
-    position_history = []
+    # 检查 arryear 中的是否有当前年
+    i = resp.text.rfind("arryear:[") + len("arryear:[")
+    arryear = resp.text[i : i + 4]
+    if arryear != report_year:
+        return None
 
+    position_history = []
     html = BeautifulSoup(resp.content, features="html.parser")
     divs = html.find_all("div", "box")
     for div in divs:
@@ -100,7 +107,7 @@ def get_position_history_of_fund(session, fund_code):
     return position_history
 
 
-def get_position_history_of_funds(fund_list):
+def get_position_history_of_funds(fund_list, year):
     """
     拉取多个基金的持仓历史数据
     打印进度条
@@ -113,16 +120,17 @@ def get_position_history_of_funds(fund_list):
 
     all_data = []
     for i, f in enumerate(fund_list):
-        position_history = get_position_history_of_fund(sess, f["_id"])
-        if len(position_history) == 0:
-            logging.warning("empty position_history: {} {}".format(f["_id"], f["name"]))
-            continue
-        all_data.append(
-            {
-                "fund_id": f["_id"],
-                "position_history": position_history,
-            }
-        )
+        position_history = get_position_history_of_fund(sess, f["_id"], year)
+        if position_history:
+            all_data.append(
+                {
+                    "fund_id": f["_id"],
+                    "position_history": position_history,
+                }
+            )
+        else:
+            # logging.warning("empty position_history: {} {}".format(f["_id"], f["name"]))
+            pass
         print_progress_bar(i + 1, progress_total, length=40)
 
     return all_data
@@ -148,5 +156,5 @@ if __name__ == "__main__":
             projection=["_id", "name"],
         )
     )
-    all_data = get_position_history_of_funds(fund_list)
+    all_data = get_position_history_of_funds(fund_list, REPORT_DATE[0:4])
     _store_all_fund_position_history(all_data)
