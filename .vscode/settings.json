@@ -23,7 +23,7 @@
     "python.linting.flake8Enabled": true,
     "python.linting.flake8Path": "${workspaceFolder}/venv/bin/flake8",
     "python.linting.flake8Args": [
-        "--ignore=E221,E265,E302,E305,E402,E128,E225,E226,F403,F405,E401,F401",
+        "--ignore=E203,E221,E265,E302,E305,E402,E128,E225,E226,F403,F405,E401,F401",
         "--max-line-length=500"
     ],
     "python.analysis.disabled": [
