@@ -82,10 +82,6 @@ def diff_company_position(new_position, old_position):
     return enter_list, exit_list
 
 
-def _position_to_dict(position):
-    return {p["code"]: p for p in position}
-
-
 if __name__ == "__main__":
     co_position_change_doc_list = []
     co_positions = list(db.FundCompanyPosition.find().sort("size", pymongo.DESCENDING))
