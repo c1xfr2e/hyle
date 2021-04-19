@@ -54,7 +54,7 @@ def diff_fund_position(new, old):
                 "quantity": p["quantity"],
                 "value": p["value"],
                 "float_percent": p["float_percent"],
-                "new_percent": p["new_percent"],
+                "net_percent": p["net_percent"],
             }
         )
 
