@@ -5,7 +5,7 @@
     比较基金公司最新两季持仓，得出持仓变动并保存
 
     Preconditions:
-        - mongodb documents: fund_company_position_change
+        - mongodb documents: fund_company_position
 
     document 格式:
         {
