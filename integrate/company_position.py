@@ -20,7 +20,7 @@ def _add_position(cur, p, fund):
         "code": p["code"],
         "quantity": cur.get("quantity", 0) + p["quantity"],
         "value": cur.get("value", 0) + p["value"],
-        "float_percent": cur.get("float_percent", 0) + p["float_percent"],
+        "float_percent": cur.get("float_percent", 0) + p.get("float_percent", 0),
         "net_percent": cur.get("net_percent", 0) + p["net_percent"],
         "funds": cur.get("funds", []) + [{"name": fund["name"], "code": fund["code"]}],
     }
