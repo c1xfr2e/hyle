@@ -261,7 +261,8 @@ def process_by_each_company(company):
             )
         )
 
-    db.StockFundPosition.bulk_write(write_op_list)
+    if write_op_list:
+        db.StockFundPosition.bulk_write(write_op_list)
 
 
 if __name__ == "__main__":
