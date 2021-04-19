@@ -81,8 +81,8 @@ def get_position_history_of_fund(session, fund_code, report_year):
 
     # 检查 arryear 中的是否有当前年
     i = resp.text.rfind("arryear:[") + len("arryear:[")
-    arryear = resp.text[i : i + 4]
-    if arryear != report_year:
+    arryear = resp.text[i:]
+    if report_year not in arryear:
         return None
 
     position_history = []
@@ -103,6 +103,9 @@ def get_position_history_of_fund(session, fund_code, report_year):
                 position=position_list,
             )
         )
+
+    # if not position_history:
+    #     logging.warning("empty position_history: {}\n".format(fund_code))
 
     return position_history
 
@@ -128,17 +131,28 @@ def get_position_history_of_funds(fund_list, year):
                     "position_history": position_history,
                 }
             )
-        else:
-            # logging.warning("empty position_history: {} {}".format(f["_id"], f["name"]))
-            pass
         print_progress_bar(i + 1, progress_total, length=40)
 
     return all_data
 
 
-def _store_all_fund_position_history(all_position_history):
+def _merge_with_existing(fund_list, all_fund_ph):
+    funds_dict = {f["_id"]: f.get("position_history") for f in fund_list}
+    for fph in all_fund_ph:
+        existing_ph = funds_dict[fph["fund_id"]]
+        if not existing_ph:
+            continue
+        new_ph = fph["position_history"]
+        existing_date = existing_ph[0]["date"]
+        i = 0
+        while i < len(new_ph) and new_ph[i]["date"] > existing_date:
+            i += 1
+        fph["position_history"] = new_ph[0:i] + existing_ph
+
+
+def _store_all_fund_position_history(all_fund_ph):
     op_list = []
-    for ph in all_position_history:
+    for ph in all_fund_ph:
         op_list.append(
             pymongo.UpdateOne(
                 {"_id": ph["fund_id"]},
@@ -146,15 +160,20 @@ def _store_all_fund_position_history(all_position_history):
                 upsert=True,
             )
         )
-    db.Fund.bulk_write(op_list)
+    if op_list:
+        db.Fund.bulk_write(op_list)
 
 
 if __name__ == "__main__":
     fund_list = list(
         db.Fund.find(
             {"position_history.0.date": {"$ne": REPORT_DATE}},
-            projection=["_id", "name"],
+            projection=["_id", "name", "position_history"],
         )
     )
-    all_data = get_position_history_of_funds(fund_list, REPORT_DATE[0:4])
-    _store_all_fund_position_history(all_data)
+
+    all_fund_ph = get_position_history_of_funds(fund_list, REPORT_DATE[0:4])
+
+    _merge_with_existing(fund_list, all_fund_ph)
+
+    _store_all_fund_position_history(all_fund_ph)
