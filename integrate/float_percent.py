@@ -23,7 +23,12 @@ if __name__ == "__main__":
     )
     sp_dict = {s["_id"]: s["profile"] for s in stocks}
 
-    fund_list = list(db.Fund.find(projection=["position_history"]))
+    fund_list = list(
+        db.Fund.find(
+            {"position_history": {"$exists": 1}},
+            projection=["position_history"],
+        )
+    )
     for f in fund_list:
         if not f["position_history"]:
             continue
@@ -32,13 +37,13 @@ if __name__ == "__main__":
                 if p["code"] not in sp_dict:
                     p["float_percent"] = 0.0
                     continue
-                p["float_percent"] = round(p["shares"] * 10000 * 100 / sp_dict[p["code"]]["float_shares"], 3)
+                p["float_percent"] = round(p["quantity"] * 10000 * 100 / sp_dict[p["code"]]["float_shares"], 3)
 
     op_list = []
     for f in fund_list:
         op_list.append(
             pymongo.UpdateOne(
-                {"_id": f["fund_id"]},
+                {"_id": f["_id"]},
                 {"$set": {"position_history": f["position_history"]}},
                 upsert=True,
             )
