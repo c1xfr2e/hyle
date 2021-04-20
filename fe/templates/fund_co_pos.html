@@ -9,6 +9,13 @@
 
 <head>
   <script src="/static/js/fund_co_pos.js"></script>
+  <script>
+    // 首次加载的基金公司
+    window.onload = () => {
+      openFundCompany(null, "{{co_id}}");
+      document.getElementById("{{co_id}}").className += " w3-safety-blue";
+    }
+  </script>
   <style>
     .my-sidebar-item {
       font-size: 12px;

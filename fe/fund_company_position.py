@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 
 from . import db
 from .app import app
@@ -13,4 +13,8 @@ def list_fund_company_position():
             projection=["co_name"],
         )
     )
-    return render_template("fund_co_pos.html", co_list=co_pos_list)
+    return render_template(
+        "fund_co_pos.html",
+        co_list=co_pos_list,
+        co_id=co_pos_list[0]["_id"],
+    )
