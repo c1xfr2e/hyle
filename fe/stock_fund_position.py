@@ -40,7 +40,7 @@ def _format_fund_inc_dec_number(item, inc_dec, float_shares):
 def _format_co_summary_inc_dec_number(summary):
     summary["quantity"] = _format_inc_dec_text(summary["quantity"], summary["quantity_change"])
     summary["float_percent"] = _format_inc_dec_text(summary["float_percent"], summary["float_percent_change"])
-    summary["net_percent"] = _format_inc_dec_text(summary["net_percent"], summary["percent_change"])
+    summary["net_percent"] = _format_inc_dec_text(summary["net_percent"], summary["net_percent_change"])
 
 
 def _to_display_list(company, stock_profile):
@@ -96,7 +96,7 @@ CHANGE_TYPE_STYLES = {
     "减仓": "color:{}".format(color.Decrease),
 }
 
-REPORT_DATE = "2020-12-31"
+REPORT_DATE = "2021-03-31"
 
 
 @app.route("/stock/<id_>/fundpos")
