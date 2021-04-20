@@ -2,6 +2,7 @@ from flask import abort, render_template
 
 from . import color, db
 from .app import app
+from .setting import REPORT_DATE
 
 
 def _company_dict_to_list(by_company_dict):
@@ -95,8 +96,6 @@ CHANGE_TYPE_STYLES = {
     "加仓": "color:{}".format(color.Increase),
     "减仓": "color:{}".format(color.Decrease),
 }
-
-REPORT_DATE = "2021-03-31"
 
 
 @app.route("/stock/<id_>/fundpos")
