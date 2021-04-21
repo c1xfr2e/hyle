@@ -1,10 +1,4 @@
 
-window.onload = () => {
-  // 首次打开加载天弘基金
-  openFundCompany(null, "80041198");
-  document.getElementById("80041198").className += " w3-safety-blue";
-}
-
 let positionTableData;
 
 function openFundCompany(evt, coid) {
