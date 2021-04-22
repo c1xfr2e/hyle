@@ -72,6 +72,29 @@ def get_stock_list_by_page(session, page_number, page_size) -> List[Dict]:
     return resp.json()["data"]["diff"]
 
 
+def _parse_fields(data):
+    return {
+        "code": data["f12"],
+        "name": data["f14"],
+        "price": data["f2"],
+        "change": data["f3"],
+        "volume": data["f5"],
+        "amount": data["f6"],
+        "amplitude": data["f7"],
+        "turnover": data["f8"],
+        "market": "sh" if data["f13"] == 1 else "sz",
+        "total_value": data["f20"],
+        "float_value": data["f21"],
+        "total_shares": data["f38"],
+        "float_shares": data["f39"],
+        "roe": data["f37"],
+        "pb": data["f23"],
+        "pe_lyr": data["f114"],
+        "pe_forecast": data["f9"],
+        "list_date": data["f26"],
+    }
+
+
 def get_stock_list() -> List[Dict]:
     sess = requests.Session()
     stock_list = []
@@ -79,10 +102,9 @@ def get_stock_list() -> List[Dict]:
     page_no = 1
     page_size = 500
     while page_no <= total / page_size:
-        r = get_stock_list_by_page(sess, page_no, page_size)
-        print([s["f12"] for s in r])
+        data = get_stock_list_by_page(sess, page_no, page_size)
         page_no += 1
-        stock_list.extend(r)
+        stock_list.extend([_parse_fields(d) for d in data])
     return stock_list
 
 
