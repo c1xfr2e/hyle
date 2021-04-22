@@ -10,6 +10,9 @@
   brew install python3
   ```
 
+### 安装 pip3
+  方法见 https://pip.pypa.io/en/stable/installing
+
 ### 设置 pip 国内镜像
   - 找到配置文件, 一般在 `~/.config/pip/pip.conf`
   - 加上下面的配置
