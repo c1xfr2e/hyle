@@ -11,7 +11,7 @@
   ```
 
 ### 设置 pip 国内镜像
-  - 找到配置文件, 一般在 `.config/pip/pip.conf`
+  - 找到配置文件, 一般在 `~/.config/pip/pip.conf`
   - 加上下面的配置
     ```
     [global]
