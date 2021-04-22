@@ -6,9 +6,12 @@
     数据保存到 mongodb 的 stock collection
 """
 
+import datetime
+import pymongo
 import requests
-
 from typing import Dict, List
+
+import db
 
 
 def get_stock_total(session):
@@ -66,7 +69,7 @@ def get_stock_list_by_page(session, page_number, page_size) -> List[Dict]:
         "invt": "2",
         "fid": "f20",  # 按市值排序
         "fs": "m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23",
-        "fields": "f2,f3,f4,f5,f6,f7,f8,f12,f13,f14,f20,f21,f38,f39,f37,f23,f114,f9,f26",
+        "fields": "f2,f3,f4,f5,f6,f7,f8,f12,f13,f14,f20,f21,f38,f39,f37,f23,f114,f9,f26,f112",
     }
     resp = session.get(url, headers=headers, params=params)
     return resp.json()["data"]["diff"]
@@ -76,22 +79,23 @@ def _parse_fields(data):
     return {
         "code": data["f12"],
         "name": data["f14"],
+        "market": "sh" if data["f13"] == 1 else "sz",
+        "list_date": data["f26"],
+        "total_value": data["f20"],
+        "float_value": data["f21"],
+        "total_shares": data["f38"],
+        "float_shares": data["f39"],
+        "roe": data["f37"],
+        "eps": data["f112"],
+        "pb": data["f23"],
+        "pe_lyr": data["f114"],
+        "pe_forecast": data["f9"],
         "price": data["f2"],
         "change": data["f3"],
         "volume": data["f5"],
         "amount": data["f6"],
         "amplitude": data["f7"],
         "turnover": data["f8"],
-        "market": "sh" if data["f13"] == 1 else "sz",
-        "total_value": data["f20"],
-        "float_value": data["f21"],
-        "total_shares": data["f38"],
-        "float_shares": data["f39"],
-        "roe": data["f37"],
-        "pb": data["f23"],
-        "pe_lyr": data["f114"],
-        "pe_forecast": data["f9"],
-        "list_date": data["f26"],
     }
 
 
@@ -110,4 +114,25 @@ def get_stock_list() -> List[Dict]:
 
 if __name__ == "__main__":
     sess = requests.Session()
-    print(get_stock_list_by_page(sess, 1, 10))
+    # stock_list = get_stock_list_by_page(sess, 1, 10)
+    stock_list = get_stock_list(sess)
+    op_list = []
+    for stock in stock_list:
+        doc = {
+            "code": stock["code"],
+            "name": stock["name"],
+            "market": stock["market"],
+            "list_date": stock["list_date"],
+            "profile": stock,
+            "update_time": datetime.now(),
+        }
+        del doc["profile"]["code"]
+        del doc["profile"]["name"]
+        del doc["profile"]["market"]
+        del doc["profile"]["list_date"]
+        pymongo.UpdateOne(
+            {"_id": stock.code},
+            {"$set": doc},
+            upsert=True,
+        )
+    db.Stock.bulk_write(op_list)
