@@ -78,7 +78,7 @@ def get_stock_list_by_page(session, page_number, page_size) -> List[Dict]:
 def _parse_fields(data):
     return {
         "code": data["f12"],
-        "name": data["f14"],
+        "name": data["f14"].replace(" ", ""),
         "market": "sh" if data["f13"] == 1 else "sz",
         "list_date": data["f26"],
         "total_value": data["f20"],
