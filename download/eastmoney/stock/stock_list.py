@@ -3,6 +3,7 @@
 
 """
     get 沪深股票列表
+    数据保存到 mongodb 的 stock collection
 """
 
 import requests
@@ -65,7 +66,7 @@ def get_stock_list_by_page(session, page_number, page_size) -> List[Dict]:
         "invt": "2",
         "fid": "f20",  # 按市值排序
         "fs": "m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23",
-        "fields": "f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f114,f115,f152",
+        "fields": "f2,f3,f4,f5,f6,f7,f8,f12,f13,f14,f20,f21,f38,f39,f37,f23,f114,f9,f26",
     }
     resp = session.get(url, headers=headers, params=params)
     return resp.json()["data"]["diff"]
@@ -73,6 +74,7 @@ def get_stock_list_by_page(session, page_number, page_size) -> List[Dict]:
 
 def get_stock_list() -> List[Dict]:
     sess = requests.Session()
+    stock_list = []
     total = get_stock_total(sess)
     page_no = 1
     page_size = 500
@@ -80,9 +82,10 @@ def get_stock_list() -> List[Dict]:
         r = get_stock_list_by_page(sess, page_no, page_size)
         print([s["f12"] for s in r])
         page_no += 1
+        stock_list.extend(r)
+    return stock_list
 
 
 if __name__ == "__main__":
     sess = requests.Session()
-
-    get_stock_list()
+    print(get_stock_list_by_page(sess, 1, 10))
