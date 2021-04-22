@@ -150,6 +150,7 @@ def process_by_each_company(company):
                     "$set": {
                         "name": ALL_STOCKS_DICT[code]["name"],
                         "by_company.{}".format(company["_id"]): co_entry,
+                        "date": REPORT_DATE,
                     }
                 },
                 upsert=True,
