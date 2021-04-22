@@ -6,9 +6,9 @@
     数据保存到 mongodb 的 stock collection
 """
 
-import datetime
 import pymongo
 import requests
+from datetime import datetime
 from typing import Dict, List
 
 import db
@@ -105,7 +105,7 @@ def get_stock_list() -> List[Dict]:
     total = get_stock_total(sess)
     page_no = 1
     page_size = 500
-    while page_no <= total / page_size:
+    while page_no <= (total + page_size - 1) // page_size:
         data = get_stock_list_by_page(sess, page_no, page_size)
         page_no += 1
         stock_list.extend([_parse_fields(d) for d in data])
@@ -113,9 +113,7 @@ def get_stock_list() -> List[Dict]:
 
 
 if __name__ == "__main__":
-    sess = requests.Session()
-    # stock_list = get_stock_list_by_page(sess, 1, 10)
-    stock_list = get_stock_list(sess)
+    stock_list = get_stock_list()
     op_list = []
     for stock in stock_list:
         doc = {
@@ -126,13 +124,16 @@ if __name__ == "__main__":
             "profile": stock,
             "update_time": datetime.now(),
         }
-        del doc["profile"]["code"]
-        del doc["profile"]["name"]
-        del doc["profile"]["market"]
-        del doc["profile"]["list_date"]
-        pymongo.UpdateOne(
-            {"_id": stock.code},
-            {"$set": doc},
-            upsert=True,
+        stock_code = stock["code"]
+        del stock["code"]
+        del stock["name"]
+        del stock["market"]
+        del stock["list_date"]
+        op_list.append(
+            pymongo.UpdateOne(
+                {"_id": stock_code},
+                {"$set": doc},
+                upsert=True,
+            )
         )
     db.Stock.bulk_write(op_list)
