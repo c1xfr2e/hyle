@@ -1,4 +1,10 @@
+import logging
+
 from flask import Flask
+
+
+log = logging.getLogger("werkzeug")
+log.setLevel(logging.ERROR)
 
 
 def create_app():
