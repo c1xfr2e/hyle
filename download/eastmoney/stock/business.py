@@ -7,7 +7,6 @@
     返回数据样例: samples/business.json
 """
 
-import copy
 import pymongo
 import requests
 
@@ -36,14 +35,13 @@ def get_business(session, stock_code, market):
         "code": code,
     }
     resp = session.get(url, headers=headers, params=params)
-    data = resp.json()
-    resp.close()
-    r = [
-        copy.deepcopy(data["zygcfx"][0]),
-        copy.deepcopy(data["zygcfx"][1]),
-    ]
-    del data
-    return r
+    zygcfx = resp.json()["zygcfx"]
+    if len(zygcfx) == 0:
+        return None
+    if len(zygcfx) >= 2:
+        return [zygcfx[0], zygcfx[1]]
+    else:
+        return [zygcfx[0]]
 
 
 def _parse_business(business):
@@ -101,11 +99,14 @@ def get_and_store_business():
     print_progress_bar(0, progress_total, length=40)
 
     for i, st in enumerate(stocks):
-        business_list = _parse_business(get_business(sess, st["code"], st["market"]))
+        b = get_business(sess, st["code"], st["market"])
+        if not b:
+            continue
+        business = _parse_business(b)
         write_op_list.append(
             pymongo.UpdateOne(
                 {"_id": st["_id"]},
-                {"$set": {"business": business_list}},
+                {"$set": {"business": business}},
             )
         )
         print_progress_bar(i + 1, progress_total, length=40)
