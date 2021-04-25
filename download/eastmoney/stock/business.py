@@ -7,12 +7,19 @@
     返回数据样例: samples/business.json
 """
 
-import logging
+import copy
 import pymongo
 import requests
 
 from download.eastmoney.stock import db
+from util.progress_bar import print_progress_bar
 from util.strconv import cn_to_float, to_percent
+
+
+def _text_to_float(s):
+    if s == "-" or s == "--":
+        return 0.0
+    return cn_to_float(s)
 
 
 def get_business(session, stock_code, market):
@@ -30,19 +37,18 @@ def get_business(session, stock_code, market):
     }
     resp = session.get(url, headers=headers, params=params)
     data = resp.json()
-    return data["zygcfx"][0:2]
+    resp.close()
+    r = [
+        copy.deepcopy(data["zygcfx"][0]),
+        copy.deepcopy(data["zygcfx"][1]),
+    ]
+    del data
+    return r
 
 
-def _text_to_float(s):
-    if s == "-" or s == "--":
-        return 0.0
-    return cn_to_float(s)
-
-
-def _filter_business(business):
+def _parse_business(business):
     business_list = []
     for b in business:
-        date = b["rq"]
         by_industry = [
             {
                 "name": hy["zygc"],
@@ -67,7 +73,7 @@ def _filter_business(business):
         ]
         business_list.append(
             {
-                "date": date,
+                "date": b["rq"],
                 "by_industry": by_industry,
                 "by_product": by_product,
             }
@@ -76,32 +82,33 @@ def _filter_business(business):
 
 
 def _find_filter():
-    return {
-        # "business": {"$exists": 0},
-    }
+    return {}
 
 
 def get_and_store_business():
     sess = requests.Session()
 
     write_op_list = []
-    stock_cols = db.Stock.find(
-        filter=_find_filter(),
-        projection=["market", "code"],
+
+    stocks = list(
+        db.Stock.find(
+            filter=_find_filter(),
+            projection=["market", "code"],
+        )
     )
-    for stock in stock_cols:
-        market = "sh" if stock["market"] == "kcb" else stock["market"]
-        try:
-            business_list = _filter_business(get_business(sess, stock["code"], market))
-            write_op_list.append(
-                pymongo.UpdateOne(
-                    {"_id": stock["_id"]},
-                    {"$set": {"business": business_list}},
-                )
+
+    progress_total = len(stocks)
+    print_progress_bar(0, progress_total, length=40)
+
+    for i, st in enumerate(stocks):
+        business_list = _parse_business(get_business(sess, st["code"], st["market"]))
+        write_op_list.append(
+            pymongo.UpdateOne(
+                {"_id": st["_id"]},
+                {"$set": {"business": business_list}},
             )
-        except Exception as e:
-            logging.info(stock)
-            logging.exception(e)
+        )
+        print_progress_bar(i + 1, progress_total, length=40)
 
     db.Stock.bulk_write(write_op_list)
 
@@ -114,5 +121,5 @@ if __name__ == "__main__":
     #     "market": "sh",
     #     "code": "600028",
     # }
-    # business_list = _filter_business(get_business(requests.Session(), stock["code"], stock["market"]))
+    # business_list = _parse_business(get_business(requests.Session(), stock["code"], stock["market"]))
     # print(business_list)
