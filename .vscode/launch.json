@@ -18,6 +18,12 @@
       "module": "download.eastmoney.fund.${fileBasenameNoExtension}"
     },
     {
+      "name": "download.eastmoney.quote",
+      "type": "python",
+      "request": "launch",
+      "module": "download.eastmoney.quote.${fileBasenameNoExtension}"
+    },
+    {
       "name": "download.eastmoney.stock",
       "type": "python",
       "request": "launch",

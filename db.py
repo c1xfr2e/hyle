@@ -29,3 +29,6 @@ Stock = cli["stock"]
 
 # 股票基金持仓情况
 StockFundPosition = cli["stock_fund_position"]
+
+# K线
+Kline = cli["kline"]
