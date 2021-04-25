@@ -25,12 +25,12 @@ def to_percent(text):
 
 def parse_cn_text(s: str):
     """
-    Parse Chinese text to number:
+    Parse Chinese text to float number:
         '21.62亿' --> 21.62 * 10^8
         '3215万' --> 3215 * 10^5
     """
     if s[-2:] == u"万亿":
-        return float(s[0:-2] * (10 ** 12))
+        return float(s[0:-2]) * (10 ** 12)
 
     # TODO: Check regex match numbers: \-?[0-9]*(\.[0-9]*)?
 
@@ -53,6 +53,9 @@ def cn_to_float(s):
 
 
 if __name__ == "__main__":
+    f = cn_to_float("1.47万亿")
+    print(f)
+
     n = parse_cn_text("21.62亿")
     assert n == int(21.62 * 10 ** 8)
     n = parse_cn_text("3215万")
