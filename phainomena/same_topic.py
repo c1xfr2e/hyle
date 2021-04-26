@@ -39,8 +39,8 @@ def match_keywords(product_list, industry_list):
 if __name__ == "__main__":
     # ["光学膜", "光学薄膜", "光学基膜", "反射膜"]
     # ["特种功能膜"]
-    product = ["涂料产品", "涂料", "传动系统"]
-    industry = ["微型传动系统", "传动系统"]
+    product = ["测试系统", "测试系统配件", "工业测试", "工业检测", "大功率测试电源", "小功率测试电源", "测试电源", "调测系统", "测试电源"]
+    industry = ["测试系统"]
 
     stocks = match_keywords(product, industry)
 
