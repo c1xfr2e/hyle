@@ -12,6 +12,12 @@
       "console": "integratedTerminal"
     },
     {
+      "name": "download.eastmoney.baostock",
+      "type": "python",
+      "request": "launch",
+      "module": "download.baostock.${fileBasenameNoExtension}"
+    },
+    {
       "name": "download.eastmoney.fund",
       "type": "python",
       "request": "launch",
