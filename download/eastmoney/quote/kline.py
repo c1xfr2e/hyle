@@ -110,5 +110,6 @@ if __name__ == "__main__":
                 upsert=True,
             )
         )
-        db.Kline.bulk_write(write_op_list)
         print_progress_bar(i + 1, progress_total, length=40)
+
+    db.Kline.bulk_write(write_op_list)
