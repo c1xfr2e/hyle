@@ -34,8 +34,8 @@ def _parse_tr(tr):
     tds = tr.find_all("td")
 
     # 加*号代表进入上市公司的十大流通股东却没有进入单只基金前十大重仓股的个股
-    if "*" in tds[0]:
-        return None
+    # if "*" in tds[0]:
+    #    return None
 
     return dict(
         code=tds[1].text,
