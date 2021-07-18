@@ -26,3 +26,10 @@ def get_fund_company_position(coid):
         p["exit_count"] = len(co_entry["exit"])
 
     return jsonify(position)
+
+
+@bp.route("/stock/kline/{sotck_code}")
+def get_stock_kline(sotck_code):
+    klines = db.Kline.find_one({"_id": sotck_code})
+    if not klines:
+        return {}
