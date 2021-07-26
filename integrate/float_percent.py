@@ -9,10 +9,11 @@
         - fund 中已有 position_history 数据
 """
 
+from numbers import Number
+
 import pymongo
 
 import db
-
 
 if __name__ == "__main__":
     stocks = list(
@@ -37,7 +38,8 @@ if __name__ == "__main__":
                 if p["code"] not in sp_dict:
                     p["float_percent"] = 0.0
                     continue
-                p["float_percent"] = round(p["quantity"] * 10000 * 100 / sp_dict[p["code"]]["float_shares"], 3)
+                if isinstance(sp_dict[p["code"]]["float_shares"], Number):
+                    p["float_percent"] = round(p["quantity"] * 10000 * 100 / sp_dict[p["code"]]["float_shares"], 3)
 
     op_list = []
     for f in fund_list:
