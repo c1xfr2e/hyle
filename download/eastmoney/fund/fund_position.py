@@ -112,8 +112,8 @@ def get_position_history_of_fund(session, fund_code, report_year):
 
 def get_position_history_of_funds(fund_list, year):
     """
-    拉取多个基金的持仓历史数据
-    打印进度条
+    - 拉取多个基金的持仓历史数据
+    - 打印进度条
     """
 
     sess = requests.Session()
