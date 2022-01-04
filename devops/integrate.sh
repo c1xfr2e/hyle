@@ -2,12 +2,6 @@
 
 . ./venv/bin/activate
 
-echo "#下载沪深股票列表"
-# python3 -m download.eastmoney.stock.stock_list
-
-echo "#下载基金持仓"
-python3 -m download.eastmoney.fund.fund_position
-
 echo "#计算基金持仓中的流通比"
 python3 -m integrate.float_percent
 
