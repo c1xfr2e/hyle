@@ -1,0 +1,72 @@
+<html>
+
+<!-- 引入在线资源 -->
+<script type="text/javascript" src="https://unpkg.com/@antv/g2plot@latest/dist/g2plot.min.js"></script>
+<script>
+  window.onload = () => {
+    const { Line } = G2Plot;
+
+    const data = [
+      { date: '1', value: 1.078 },
+      { date: '2', value: 3.216 },
+      { date: '3', value: 7.58 },
+      { date: '4', value: 6.23 },
+      { date: '5', value: 3.19 },
+      { date: '6', value: 4.22 },
+      { date: '7', value: 4 },
+      { date: '8', value: 2.17 },
+      { date: '9', value: 3.58 },
+      { date: '10', value: 1.513 },
+      { date: '11', value: 1.388 },
+      { date: '12', value: 5.97 },
+    ];
+
+    const line = new Line('container', {
+      data,
+      padding: 'auto',
+      xField: 'date',
+      yField: 'value',
+      meta: {
+        value: {
+          max: 16,
+          min: 0,
+        },
+        date: {
+          formatter: (val) => "",
+          // formatter: (val) => `${val} 月`,
+        },
+      },
+      annotations: [
+        {
+          type: 'region',
+          start: ['7', 'min'],
+          end: ['9', 'max'],
+          style: {
+            fill: '#f5222d',
+          },
+        },
+        {
+          type: 'dataMarker',
+          position: ['2', 1216],
+          line: null,
+          point: {
+            style: {
+              fill: '#f5222d',
+              stroke: '#f5222d',
+            },
+          },
+          autoAdjust: false,
+        },
+      ],
+      tooltip: false,
+    });
+
+    line.render();
+  }
+</script>
+
+<body>
+  <div id="container" style="width:600px"></div>
+</body>
+
+</html>
