@@ -79,8 +79,8 @@ def _write_op(house, position_history_list):
         },
         {
             "$set": {
-                "co_name": house["name"],
-                "co_size": house["size"],
+                "house_name": house["name"],
+                "house_size": house["size"],
                 "position_history": position_history_list,
             }
         },

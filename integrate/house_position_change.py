@@ -10,8 +10,8 @@
     document 格式:
         {
             "_id": "80001234",
-            "co_name": "广发基金",
-            "co_size": 1230.0,
+            "house_name": "广发基金",
+            "house_size": 1230.0,
             "enter": [
                 {
                     "name": "金螳螂",
@@ -83,10 +83,10 @@ def diff_house_position(new_position, old_position):
 
 
 if __name__ == "__main__":
-    co_position_change_doc_list = []
-    co_positions = list(db.FundHousePosition.find().sort("size", pymongo.DESCENDING))
+    house_position_change_doc_list = []
+    house_positions = list(db.FundHousePosition.find().sort("size", pymongo.DESCENDING))
 
-    for cop in co_positions:
+    for cop in house_positions:
         position_history = cop["position_history"]
         if len(position_history) < 2 or position_history[0]["date"] != REPORT_DATE:
             continue
@@ -94,11 +94,11 @@ if __name__ == "__main__":
             position_history[0]["position"],
             position_history[1]["position"],
         )
-        co_position_change_doc_list.append(
+        house_position_change_doc_list.append(
             {
                 "_id": cop["_id"],
-                "co_name": cop["co_name"],
-                "co_size": cop["co_size"],
+                "house_name": cop["house_name"],
+                "house_size": cop["house_size"],
                 "enter": enter_list,
                 "exit": exit_list,
             }
@@ -110,6 +110,6 @@ if __name__ == "__main__":
             {"$set": doc},
             upsert=True,
         )
-        for doc in co_position_change_doc_list
+        for doc in house_position_change_doc_list
     ]
     db.FundHousePositionChange.bulk_write(ops)

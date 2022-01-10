@@ -86,13 +86,13 @@ def get_fund_list_of_house(session, house_id, fund_type):
     return fund_list
 
 
-def _store_fund_list(fund_list, co_name):
+def _store_fund_list(fund_list, house_name):
     op_list = []
     for fund in fund_list:
         # 跳过B类，C类基金
         if fund["name"][-1] in "BC":
             continue
-        fund["co_name"] = co_name
+        fund["house_name"] = house_name
         op_list.append(
             pymongo.UpdateOne(
                 {"_id": fund["code"]},

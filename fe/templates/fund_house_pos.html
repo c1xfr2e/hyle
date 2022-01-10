@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
 
 <head>
-  <script src="/static/js/fund_co_pos.js"></script>
+  <script src="/static/js/fund_house_pos.js"></script>
   <script>
     // 首次加载的基金公司
     window.onload = () => {
@@ -39,7 +39,7 @@
     {% for house in house_list %}
     <button class="w3-bar-item w3-button tablink my-sidebar-item w3-hover-2021-illuminating"
             id="{{house['_id']}}"
-            onclick="openFundHouse(event, '{{house['_id']}}')">{{house['co_name']}}</button>
+            onclick="openFundHouse(event, '{{house['_id']}}')">{{house['house_name']}}</button>
     {% endfor %}
   </div>
 

@@ -38,7 +38,7 @@ def _format_fund_inc_dec_number(item, inc_dec, float_shares):
         item["float_percent"] = _format_inc_dec_text(item["float_percent"], float_percent_change)
 
 
-def _format_co_summary_inc_dec_number(summary):
+def _format_house_summary_inc_dec_number(summary):
     summary["quantity"] = _format_inc_dec_text(summary["quantity"], summary["quantity_change"])
     summary["float_percent"] = _format_inc_dec_text(summary["float_percent"], summary["float_percent_change"])
     summary["net_percent"] = _format_inc_dec_text(summary["net_percent"], summary["net_percent_change"])
@@ -47,7 +47,7 @@ def _format_co_summary_inc_dec_number(summary):
 def _to_display_list(house, stock_profile):
     summary = house["summary"]
     summary["float_percent"] = round(summary["quantity"] * 10000 * 100 / stock_profile["float_shares"], 3)
-    _format_co_summary_inc_dec_number(summary)
+    _format_house_summary_inc_dec_number(summary)
 
     display_funds = []
     enter_dict = {i["fund_code"]: i for i in house["enter"]}
