@@ -1,7 +1,7 @@
 
 let positionTableData;
 
-function openFundCompany(evt, coid) {
+function openFundHouse(evt, coid) {
   fetch(`/api/fundco/${coid}/position`)
     .then(response => response.json())
     .then(data => {

@@ -12,7 +12,7 @@ def copy_habermas():
     Fund = cli_src["fund"]
 
     company_inserts = [pymongo.InsertOne(doc) for doc in Company.find({})]
-    cli_dst["fund_company"].bulk_write(company_inserts)
+    cli_dst["fund_house"].bulk_write(company_inserts)
 
     fund_inserts = [pymongo.InsertOne(doc) for doc in Fund.find({})]
     cli_dst["fund"].bulk_write(fund_inserts)

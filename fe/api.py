@@ -7,13 +7,13 @@ bp = Blueprint("api", __name__, url_prefix="/api")
 
 
 @bp.route("/fundco/<coid>/position")
-def get_fund_company_position(coid):
-    co_pos = db.FundCompanyPosition.find_one({"_id": coid})
+def get_fund_house_position(coid):
+    co_pos = db.FundHousePosition.find_one({"_id": coid})
     if not co_pos:
         return {}
 
-    stock_co_pos_list = list(db.StockFundPosition.find({"by_company.{}".format(coid): {"$exists": 1}}))
-    stock_co_pos_dict = {it["_id"]: it["by_company"] for it in stock_co_pos_list}
+    stock_co_pos_list = list(db.StockFundPosition.find({"by_house.{}".format(coid): {"$exists": 1}}))
+    stock_co_pos_dict = {it["_id"]: it["by_house"] for it in stock_co_pos_list}
 
     position = co_pos["position_history"][0]["position"]
     for p in position:
@@ -21,9 +21,9 @@ def get_fund_company_position(coid):
         stock_co_pos = stock_co_pos_dict.get(p["code"])
         if not stock_co_pos:
             continue
-        co_entry = stock_co_pos[coid]
-        p["enter_count"] = len(co_entry["enter"])
-        p["exit_count"] = len(co_entry["exit"])
+        house_entry = stock_co_pos[coid]
+        p["enter_count"] = len(house_entry["enter"])
+        p["exit_count"] = len(house_entry["exit"])
 
     return jsonify(position)
 

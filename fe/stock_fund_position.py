@@ -5,11 +5,11 @@ from .app import app
 from .setting import REPORT_DATE
 
 
-def _company_dict_to_list(by_company_dict):
+def _house_dict_to_list(by_house_dict):
     list_ = []
-    for co_id, co_entry in by_company_dict.items():
-        co_entry["id"] = co_id
-        list_.append(co_entry)
+    for house_id, house_entry in by_house_dict.items():
+        house_entry["id"] = house_id
+        list_.append(house_entry)
     list_.sort(
         key=lambda x: x["summary"]["quantity"] if x["summary"]["quantity"] != 0 else x["summary"]["quantity_change"],
         reverse=True,
@@ -44,16 +44,16 @@ def _format_co_summary_inc_dec_number(summary):
     summary["net_percent"] = _format_inc_dec_text(summary["net_percent"], summary["net_percent_change"])
 
 
-def _to_display_list(company, stock_profile):
-    summary = company["summary"]
+def _to_display_list(house, stock_profile):
+    summary = house["summary"]
     summary["float_percent"] = round(summary["quantity"] * 10000 * 100 / stock_profile["float_shares"], 3)
     _format_co_summary_inc_dec_number(summary)
 
     display_funds = []
-    enter_dict = {i["fund_code"]: i for i in company["enter"]}
-    inc_dec_dict = {i["fund_code"]: i for i in company["inc_dec"]}
+    enter_dict = {i["fund_code"]: i for i in house["enter"]}
+    inc_dec_dict = {i["fund_code"]: i for i in house["inc_dec"]}
 
-    for p in company["latest"]:
+    for p in house["latest"]:
         fund_code = p["fund_code"]
         item = {
             "code": p["fund_code"],
@@ -69,7 +69,7 @@ def _to_display_list(company, stock_profile):
             _format_fund_inc_dec_number(item, inc_dec_dict[fund_code], stock_profile["float_shares"])
         display_funds.append(item)
 
-    for p in company["exit"]:
+    for p in house["exit"]:
         display_funds.append(
             {
                 "code": p["fund_code"],
@@ -83,8 +83,8 @@ def _to_display_list(company, stock_profile):
         )
 
     return {
-        "name": company["name"],
-        "logo": company.get("logo"),
+        "name": house["name"],
+        "logo": house.get("logo"),
         "funds": display_funds,
         "summary": summary,
     }
@@ -105,14 +105,14 @@ def get_stock_fund_position(id_):
     if not stock or not col:
         abort(404, description="{} not found".format(id_))
 
-    company_list = _company_dict_to_list(col["by_company"])
-    display_list = [_to_display_list(co, stock["profile"]) for co in company_list]
+    house_list = _house_dict_to_list(col["by_house"])
+    display_list = [_to_display_list(house, stock["profile"]) for house in house_list]
 
     render_param = {
         "stock_name": " ".join([c for c in stock["name"]]),
         "stock_code": id_,
         "report_date": REPORT_DATE,
-        "company_list": display_list,
+        "house_list": display_list,
         "change_type_styles": CHANGE_TYPE_STYLES,
     }
     return render_template("stock_fund_pos.html", **render_param)

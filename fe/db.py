@@ -9,11 +9,11 @@ DB = "hyle"
 
 cli = pymongo.MongoClient(URI)[DB]
 
-FundCompany = cli["fund_company"]
+FundHouse = cli["fund_house"]
 Fund = cli["fund"]
 Stock = cli["stock"]
 StockFundPosition = cli["stock_fund_position"]
-FundCompanyPosition = cli["fund_company_position"]
-FundCompanyPositionChange = cli["fund_company_position_change"]
+FundHousePosition = cli["fund_house_position"]
+FundHousePositionChange = cli["fund_house_position_change"]
 
 Kline = cli["kline"]

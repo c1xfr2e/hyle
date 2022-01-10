@@ -10,7 +10,7 @@ DB = "hyle"
 cli = pymongo.MongoClient(URI)[DB]
 
 # 基金公司
-FundCompany = cli["fund_company"]
+FundHouse = cli["fund_house"]
 
 # 基金
 Fund = cli["fund"]
@@ -19,10 +19,10 @@ Fund = cli["fund"]
 FundPositionChange = cli["fund_position_change"]
 
 # 基金公司持仓
-FundCompanyPosition = cli["fund_company_position"]
+FundHousePosition = cli["fund_house_position"]
 
 # 基金公司持仓变动
-FundCompanyPositionChange = cli["fund_company_position_change"]
+FundHousePositionChange = cli["fund_house_position_change"]
 
 # 股票基本信息
 Stock = cli["stock"]

@@ -6,7 +6,7 @@
     数据保存到 mongodb 的 fund collection
 
     Preconditions:
-        - mongodb documents: fund_company
+        - mongodb documents: fund_house
 """
 
 import argparse
@@ -45,7 +45,7 @@ def _parse_tr(tr):
     )
 
 
-def get_fund_list_of_company(session, company_id, fund_type):
+def get_fund_list_of_house(session, house_id, fund_type):
     """拉取某家基金公司旗下的基金列表
 
     Args:
@@ -61,12 +61,12 @@ def get_fund_list_of_company(session, company_id, fund_type):
         "Host": "fund.eastmoney.com",
         "Connection": "keep-alive",
         "Accept": "text/html, */*; q=0.01",
-        "Referer": "http://fund.eastmoney.com/Company/{gsid}.html".format(gsid=company_id),
+        "Referer": "http://fund.eastmoney.com/Company/{gsid}.html".format(gsid=house_id),
         "X-Requested-With": "XMLHttpRequest",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) Chrome/87.0.4280.141 Safari/537.36",
     }
     params = {
-        "gsid": company_id,
+        "gsid": house_id,
         "fundType": fund_type,
     }
     resp = session.get(url, headers=headers, params=params)
@@ -78,7 +78,7 @@ def get_fund_list_of_company(session, company_id, fund_type):
         fund = _parse_tr(tr)
         if not fund:
             continue
-        fund["co_id"] = company_id
+        fund["house_id"] = house_id
         fund["type"] = {"001": "stock", "002": "hybrid"}.get(fund_type, "")
         fund_list.append(fund)
     fund_list.sort(reverse=True, key=lambda x: x["size"])
@@ -110,13 +110,13 @@ if __name__ == "__main__":
 
     sess = requests.Session()
 
-    co_list = list(db.FundCompany.find())
-    for co in co_list:
+    house_list = list(db.FundHouse.find())
+    for house in house_list:
         if args.type in ["001", "002"]:
-            funds = get_fund_list_of_company(sess, co["gsid"], args.type)
+            funds = get_fund_list_of_house(sess, house["gsid"], args.type)
         else:
-            funds = get_fund_list_of_company(sess, co["gsid"], "001") + get_fund_list_of_company(sess, co["gsid"], "002")
+            funds = get_fund_list_of_house(sess, house["gsid"], "001") + get_fund_list_of_house(sess, house["gsid"], "002")
         if not funds:
-            logging.warning("no funds: %s %s", co["gsid"], co["name"])
+            logging.warning("no funds: %s %s", house["gsid"], house["name"])
             continue
-        _store_fund_list(funds, co["name"])
+        _store_fund_list(funds, house["name"])

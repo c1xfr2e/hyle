@@ -5,7 +5,7 @@
     比较基金公司最新两季持仓，得出持仓变动并保存
 
     Preconditions:
-        - mongodb documents: fund_company_position
+        - mongodb documents: fund_house_position
 
     document 格式:
         {
@@ -36,7 +36,7 @@ import db
 from setting import REPORT_DATE
 
 
-def diff_company_position(new_position, old_position):
+def diff_house_position(new_position, old_position):
     """
     比较两个基金公司持仓, 得出新进、退出列表
 
@@ -84,13 +84,13 @@ def diff_company_position(new_position, old_position):
 
 if __name__ == "__main__":
     co_position_change_doc_list = []
-    co_positions = list(db.FundCompanyPosition.find().sort("size", pymongo.DESCENDING))
+    co_positions = list(db.FundHousePosition.find().sort("size", pymongo.DESCENDING))
 
     for cop in co_positions:
         position_history = cop["position_history"]
         if len(position_history) < 2 or position_history[0]["date"] != REPORT_DATE:
             continue
-        enter_list, exit_list = diff_company_position(
+        enter_list, exit_list = diff_house_position(
             position_history[0]["position"],
             position_history[1]["position"],
         )
@@ -112,4 +112,4 @@ if __name__ == "__main__":
         )
         for doc in co_position_change_doc_list
     ]
-    db.FundCompanyPositionChange.bulk_write(ops)
+    db.FundHousePositionChange.bulk_write(ops)

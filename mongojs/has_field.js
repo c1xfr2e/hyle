@@ -1,4 +1,4 @@
 
 db.stock_fund_position.find(
-  {"by_company.80053708": {"$exists": 1}}
+  {"by_house.80053708": {"$exists": 1}}
 )

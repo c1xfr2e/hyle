@@ -47,20 +47,20 @@
         </tr>
       </thead>
       <tbody>
-        {% for co in company_list %}
+        {% for house in house_list %}
         <tr class="w3-leftbar w3-border-metro-darken w3-light-gray" style="font-weight: bold">
-          {% if co["logo"] %}
-          <td colspan="2" style="padding: 4px 8px 4px 8px" colspan="5"><img src="/static/img/{{co['logo']}}" height="28px"></img></td>
+          {% if house["logo"] %}
+          <td colspan="2" style="padding: 4px 8px 4px 8px" colspan="5"><img src="/static/img/{{house['logo']}}" height="28px"></img></td>
           {% else %}
-          <td colspan="2" style="font-size:15px; padding: 4px 8px 4px 8px; line-height: 28px;">{{co["name"]}}</td>
+          <td colspan="2" style="font-size:15px; padding: 4px 8px 4px 8px; line-height: 28px;">{{house["name"]}}</td>
           {% endif %}
-          <td>{{ co["summary"]["fund_size"]|safe }}</td>
-          <td>{{ co["summary"]["quantity"]|safe }}</td>
-          <td>{{ co["summary"]["float_percent"]|safe }}</td>
-          <td>{{ co["summary"]["net_percent"]|safe }}</td>
+          <td>{{ house["summary"]["fund_size"]|safe }}</td>
+          <td>{{ house["summary"]["quantity"]|safe }}</td>
+          <td>{{ house["summary"]["float_percent"]|safe }}</td>
+          <td>{{ house["summary"]["net_percent"]|safe }}</td>
           <td></td>
         </tr>
-          {% for fund in co["funds"] %}
+          {% for fund in house["funds"] %}
           <tr class="">
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["code"]|safe }}</td>
             <td {% if fund['change_type'] == '退出' %} class="strikethrough" {% endif %}>{{ fund["name"]|safe }}</td>

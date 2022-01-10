@@ -5,7 +5,7 @@
     统计基金公司整体持仓
 
     Preconditions:
-        - mongodb documents: fund_company, fund
+        - mongodb documents: fund_house, fund
         - fund 中已有 position_history 数据
 """
 
@@ -72,15 +72,15 @@ def _round_floats(position):
     return position
 
 
-def _write_op(company, position_history_list):
+def _write_op(house, position_history_list):
     return pymongo.UpdateOne(
         {
-            "_id": company["_id"],
+            "_id": house["_id"],
         },
         {
             "$set": {
-                "co_name": company["name"],
-                "co_size": company["size"],
+                "co_name": house["name"],
+                "co_size": house["size"],
                 "position_history": position_history_list,
             }
         },
@@ -90,14 +90,14 @@ def _write_op(company, position_history_list):
 
 def _fund_filter():
     return {
-        "co_id": co["_id"],
+        "house_id": house["_id"],
         "position_history.0": {"$exists": 1},
     }
 
 
 if __name__ == "__main__":
     write_op_list = []
-    for co in list(db.FundCompany.find()):
+    for house in list(db.FundHouse.find()):
         fund_list = list(db.Fund.find(_fund_filter()))
         position_history_dict = aggregate_fund_position_history(fund_list)
         # 转成 list 保存
@@ -108,5 +108,5 @@ if __name__ == "__main__":
             }
             for date in sorted(position_history_dict.keys(), reverse=True)
         ]
-        write_op_list.append(_write_op(co, position_history_list))
-    db.FundCompanyPosition.bulk_write(write_op_list)
+        write_op_list.append(_write_op(house, position_history_list))
+    db.FundHousePosition.bulk_write(write_op_list)

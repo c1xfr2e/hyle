@@ -3,7 +3,7 @@
 
 """
     调用 eastmoeny 接口获取基金基金公司列表（按资产规模排序）
-    数据保存到 mongodb 的 fund_company collection
+    数据保存到 mongodb 的 fund_house collection
 """
 
 import json
@@ -14,7 +14,7 @@ from datetime import datetime
 from download.eastmoney.fund import db
 
 
-def get_fund_company_list(session):
+def get_fund_house_list(session):
     """ 拉取基金公司列表 """
 
     url = "http://fund.eastmoney.com/Data/FundRankScale.aspx"
@@ -34,7 +34,7 @@ def get_fund_company_list(session):
     text = '{"datas"' + resp.text[offset:].replace("'", '"')
 
     ret_list = json.loads(text)["datas"]
-    company_list = [
+    house_list = [
         dict(
             gsid=i[0],
             name=i[9],
@@ -44,28 +44,28 @@ def get_fund_company_list(session):
         for i in ret_list
     ]
 
-    return company_list
+    return house_list
 
 
-def _store_company_list(company_list):
+def _store_house_list(house_list):
     ops = [
         pymongo.UpdateOne(
-            {"_id": co["gsid"]},
-            {"$set": co},
+            {"_id": house["gsid"]},
+            {"$set": house},
             upsert=True,
         )
-        for co in company_list
+        for house in house_list
     ]
-    db.FundCompany.bulk_write(ops)
+    db.FundHouse.bulk_write(ops)
 
 
 if __name__ == "__main__":
-    fund_co_list = get_fund_company_list(requests.Session())
+    fund_house_list = get_fund_house_list(requests.Session())
 
     # 按规模排序
-    fund_co_list.sort(key=lambda x: x["size"], reverse=True)
+    fund_house_list.sort(key=lambda x: x["size"], reverse=True)
 
     # 保存规模前几的基金公司
     FUND_COMPANY_TOP_COUNT = 50
 
-    _store_company_list(fund_co_list[0:FUND_COMPANY_TOP_COUNT])
+    _store_house_list(fund_house_list[0:FUND_COMPANY_TOP_COUNT])

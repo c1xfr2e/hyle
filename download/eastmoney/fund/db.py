@@ -9,6 +9,6 @@ DB = "hyle"
 
 cli = pymongo.MongoClient(URI)[DB]
 
-FundCompany = cli["fund_company"]
+FundHouse = cli["fund_house"]
 Fund = cli["fund"]
 Stock = cli["stock"]

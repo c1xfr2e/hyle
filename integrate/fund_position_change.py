@@ -101,7 +101,7 @@ def _write_op(fund, enter_list, inc_dec_list, exit_list):
         {"_id": fund["_id"]},
         {
             "$set": {
-                "co_id": fund["co_id"],
+                "house_id": fund["house_id"],
                 "co_name": fund["co_name"],
                 "date": fund["position_history"][0]["date"],
                 "name": fund["name"],
