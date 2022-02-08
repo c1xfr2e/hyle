@@ -41,7 +41,7 @@ def _parse_tr(tr):
         name=a[0].text,  # 基金名
         code=a[1].text,  # 基金代码
         size=to_float(tds[8].text),  # 基金规模
-        manager=tds[9].text.strip().split(" ")[0],  # 基金经历
+        manager=tds[9].text.strip().split(" ")[0],  # 基金经理
     )
 
 
