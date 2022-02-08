@@ -116,14 +116,14 @@ def get_position_history_of_funds(fund_list, year):
     - 打印进度条
     """
 
-    sess = requests.Session()
+    ses = requests.Session()
 
     progress_total = len(fund_list)
     print_progress_bar(0, progress_total, length=40)
 
     all_data = []
     for i, f in enumerate(fund_list):
-        position_history = get_position_history_of_fund(sess, f["_id"], year)
+        position_history = get_position_history_of_fund(ses, f["_id"], year)
         if position_history:
             all_data.append(
                 {

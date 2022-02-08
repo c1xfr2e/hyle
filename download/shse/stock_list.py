@@ -25,7 +25,7 @@ stock = namedtuple(
 )
 
 
-def get_stock_list_by_page(sess, page, stock_type) -> List[stock]:
+def get_stock_list_by_page(ses, page, stock_type) -> List[stock]:
     """
     分页获取上交所股票列表
 
@@ -73,7 +73,7 @@ def get_stock_list_by_page(sess, page, stock_type) -> List[stock]:
         "pageHelp.pageSize": 50,  # 每次请求返回的股票数量，最大 50
         "pageHelp.pageNo": 1,
     }
-    resp = sess.get(url, headers=headers, params=params)
+    resp = ses.get(url, headers=headers, params=params)
     if not resp.ok:
         logging.error("request failed: url=%s, response=%s", url, resp)
         resp.raise_for_status()
@@ -98,11 +98,11 @@ def get_stock_list(stock_type) -> List[stock]:
     """
     循环调用 get_stock_list_by_page 获取全部股票列表
     """
-    sess = requests.Session()
+    ses = requests.Session()
     page = 1
     stock_list = []
     while True:
-        p = get_stock_list_by_page(sess, page, stock_type)
+        p = get_stock_list_by_page(ses, page, stock_type)
         if not p:
             break
         page += 1

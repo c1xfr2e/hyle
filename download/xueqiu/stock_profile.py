@@ -93,9 +93,9 @@ def _try_get(session, stock_code):
 def _get_and_store(stock_codes):
     failed_stock_codes = []
     write_op_list = []
-    sess = requests.Session()
+    ses = requests.Session()
     for code in stock_codes:
-        p = _try_get(sess, code)
+        p = _try_get(ses, code)
         # 保存失败的 stock code 为了 retry
         if not p:
             failed_stock_codes.append(code)

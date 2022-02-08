@@ -108,14 +108,14 @@ if __name__ == "__main__":
     parser.add_argument("-t", "--type", help="基金类型: 001(股票型) 002(混合型)", type=str, default="")
     args = parser.parse_args()
 
-    sess = requests.Session()
+    ses = requests.Session()
 
     house_list = list(db.FundHouse.find())
     for house in house_list:
         if args.type in ["001", "002"]:
-            funds = get_fund_list_of_house(sess, house["gsid"], args.type)
+            funds = get_fund_list_of_house(ses, house["gsid"], args.type)
         else:
-            funds = get_fund_list_of_house(sess, house["gsid"], "001") + get_fund_list_of_house(sess, house["gsid"], "002")
+            funds = get_fund_list_of_house(ses, house["gsid"], "001") + get_fund_list_of_house(ses, house["gsid"], "002")
         if not funds:
             logging.warning("no funds: %s %s", house["gsid"], house["name"])
             continue

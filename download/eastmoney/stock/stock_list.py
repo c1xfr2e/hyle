@@ -100,13 +100,14 @@ def _parse_fields(data):
 
 
 def get_stock_list() -> List[Dict]:
-    sess = requests.Session()
+    ses = requests.Session()
     stock_list = []
-    total = get_stock_total(sess)
+    total = get_stock_total(ses)
     page_no = 1
     page_size = 500
-    while page_no <= (total + page_size - 1) // page_size:
-        data = get_stock_list_by_page(sess, page_no, page_size)
+    total_page = (total + page_size - 1) // page_size
+    while page_no <= total_page:
+        data = get_stock_list_by_page(ses, page_no, page_size)
         page_no += 1
         stock_list.extend([_parse_fields(d) for d in data])
     return stock_list

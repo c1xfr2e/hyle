@@ -86,7 +86,7 @@ def store_app_topics(mongo_col, stock, topic_list):
 if __name__ == "__main__":
     from download.eastmoney.stock import db
 
-    sess = requests.Session()
+    ses = requests.Session()
     stock_cols = db.Stock.find(projection=["market", "code"])
     for stock in stock_cols:
         market_code = {
@@ -94,5 +94,5 @@ if __name__ == "__main__":
             "kcb": "01",
             "sz": "02",
         }[stock["market"]]
-        topic = get_app_topics(sess, stock["code"], market_code)
+        topic = get_app_topics(ses, stock["code"], market_code)
         store_app_topics(db.Stock, stock, topic["Result"]["SuoShuBanKuaiList"])

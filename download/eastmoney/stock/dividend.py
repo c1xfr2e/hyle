@@ -55,13 +55,13 @@ def _extract(dividend_data):
 
 def get_and_store_dividend():
 
-    sess = requests.Session()
+    ses = requests.Session()
     write_op_list = []
     stock_cols = list(db.Stock.find(projection=["code"]))
     progress_total = len(stock_cols)
     print_progress_bar(0, progress_total, length=50)
     for i, stock in enumerate(stock_cols):
-        dividend_history = _extract(get_dividend_history(sess, stock["code"]))
+        dividend_history = _extract(get_dividend_history(ses, stock["code"]))
         write_op_list.append(
             pymongo.UpdateOne(
                 {"_id": stock["_id"]},

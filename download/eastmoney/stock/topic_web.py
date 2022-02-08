@@ -44,13 +44,13 @@ if __name__ == "__main__":
     import requests
     from download.eastmoney.stock import db
 
-    sess = requests.Session()
+    ses = requests.Session()
 
     write_op_list = []
     stock_cols = db.Stock.find(projection=["market", "code"])
     for stock in stock_cols:
         market = "sh" if stock["market"] == "kcb" else stock["market"]
-        topics_list = _filter_topics(get_web_topics(sess, stock["code"], market))
+        topics_list = _filter_topics(get_web_topics(ses, stock["code"], market))
         write_op_list.append(
             pymongo.UpdateOne(
                 {"_id": stock["_id"]},

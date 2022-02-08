@@ -84,7 +84,7 @@ def _find_filter():
 
 
 def get_and_store_business():
-    sess = requests.Session()
+    ses = requests.Session()
 
     write_op_list = []
 
@@ -99,7 +99,7 @@ def get_and_store_business():
     print_progress_bar(0, progress_total, length=40)
 
     for i, st in enumerate(stocks):
-        b = get_business(sess, st["code"], st["market"])
+        b = get_business(ses, st["code"], st["market"])
         if not b:
             continue
         business = _parse_business(b)

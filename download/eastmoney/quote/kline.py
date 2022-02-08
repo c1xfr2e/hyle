@@ -79,7 +79,7 @@ def _parse_kline(k):
 
 
 if __name__ == "__main__":
-    sess = requests.Session()
+    ses = requests.Session()
 
     write_op_list = []
 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     print_progress_bar(0, progress_total, length=40)
 
     for i, st in enumerate(stocks):
-        klines = get_kline_history(sess, st["_id"], kline_type, begin, end)
+        klines = get_kline_history(ses, st["_id"], kline_type, begin, end)
         if not klines:
             continue
         kline_field_name = {KLineType.Day: "day", KLineType.Week: "week"}[kline_type]
