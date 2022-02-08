@@ -38,7 +38,7 @@ def get_fund_house_list(session):
         dict(
             gsid=i[0],
             name=i[9],
-            size=float(text) if text else 0.0,
+            size=float(i[7]) if i[7] else 0.0,
             regdate=datetime.strptime(i[2], "%Y-%m-%d"),
         )
         for i in ret_list
