@@ -9,7 +9,7 @@ echo "#计算基金持仓变化"
 python3 -m integrate.fund_position_change
 
 echo "#计算基金公司整体持仓"
-python3 -m integrate.hosue_position
+python3 -m integrate.house_position
 
 echo "#计算基金公司整体持仓变化"
 python3 -m integrate.house_position_change
