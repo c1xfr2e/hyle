@@ -39,12 +39,12 @@ def get_stock_total(session):
     return resp.json()["data"]["total"]
 
 
-def get_stock_list_by_page(session, page_number, page_size) -> List[Dict]:
+def get_stock_list_by_page(session, page_no, page_size) -> List[Dict]:
     """
     分页 get 沪深股票列表
 
     Args:
-        page_number: 页号 (首页为 1)
+        page_no: 页号 (首页为 1)
         page_size:   页大小
 
     Returns:
@@ -61,7 +61,7 @@ def get_stock_list_by_page(session, page_number, page_size) -> List[Dict]:
         "Referer": "http://quote.eastmoney.com/",
     }
     params = {
-        "pn": page_number,
+        "pn": page_no,
         "pz": page_size,
         "po": "1",
         "np": "1",
