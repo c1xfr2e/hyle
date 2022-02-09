@@ -47,11 +47,17 @@
 sh devops/download.sh
 ```
 
-### 启动前端
+### 整合数据
+运行脚本 devops/integrate.sh
+```bash
+sh devops/integrate.sh
+```
+
+### 启动前端服务
 ```bash
 sh devops/run.sh
 ```
 
-### 访问地址
+### 访问前端地址
 - 基金持仓 /fundco/position
 - 个股基金仓位 /stock/{stock_code}/fundpos
