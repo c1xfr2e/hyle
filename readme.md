@@ -44,7 +44,7 @@
 ### 下载数据
 运行脚本 devops/init.sh
 ```bash
-sh devops/init.sh
+sh devops/download.sh
 ```
 
 ### 启动前端
