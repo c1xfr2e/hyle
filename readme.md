@@ -59,5 +59,5 @@ sh devops/run.sh
 ```
 
 ### 访问前端地址
-- 基金持仓 /fundco/position
-- 个股基金仓位 /stock/{stock_code}/fundpos
+- 基金持仓    http://localhost:5000/fundco/position
+- 个股基金仓位 http://localhost:5000/stock/{stock_code}/fundpos
