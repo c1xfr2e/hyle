@@ -98,7 +98,7 @@ CHANGE_TYPE_STYLES = {
 }
 
 
-@app.route("/stock/<id_>/fundpos")
+@app.route("/stock/fundpos/<id_>")
 def get_stock_fund_position(id_):
     stock = db.Stock.find_one({"_id": id_})
     col = db.StockFundPosition.find_one({"_id": id_})
@@ -109,7 +109,7 @@ def get_stock_fund_position(id_):
     display_list = [_to_display_list(house, stock["profile"]) for house in house_list]
 
     render_param = {
-        "stock_name": " ".join([c for c in stock["name"]]),
+        "stock_name": stock["name"],
         "stock_code": id_,
         "report_date": REPORT_DATE,
         "house_list": display_list,
