@@ -36,7 +36,7 @@ function loadTableData(data) {
     dataHTML += `<tr class="w3-hover-2021-illuminating">
       <td>
         <span style="display: inline-block; width: 70px; font-size: 13px;">
-          <a href="/stock/${p.code}/fundpos">${p.name}<a>
+          <a href="/stock/fundpos/${p.code}">${p.name}<a>
         </span>
         <span style="display: inline-block; color: gray;">${p.code}</span>
       </td>
