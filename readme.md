@@ -31,7 +31,7 @@
 
 ### 创建虚拟环境
   ```bash
-  cd 到项目目录
+  cd 项目文件夹
   virtualenv --python=python3 ./venv
   ```
 
