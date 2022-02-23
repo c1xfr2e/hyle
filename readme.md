@@ -35,7 +35,7 @@
   virtualenv --python=python3 ./venv
   ```
 
-### 安装 Python Package
+### 安装 Python packages
   ```bash
   . ./venv/bin/activate
   pip3 install -r requirement.txt
