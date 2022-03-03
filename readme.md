@@ -31,11 +31,11 @@
 
 ### 创建虚拟环境
   ```bash
-  cd 到项目目录
+  cd 项目文件夹
   virtualenv --python=python3 ./venv
   ```
 
-### 安装 Python Package
+### 安装 Python packages
   ```bash
   . ./venv/bin/activate
   pip3 install -r requirement.txt
