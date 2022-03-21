@@ -42,6 +42,8 @@ def get_app_topics(session, stock_code, market_code):
 
 def _topic_filter(t):
     exclude_names = [
+        "证金持股",
+        "沪股通"
         "融资融券",
         "富时罗素",
         "标准普尔",
