@@ -119,7 +119,8 @@ BACKOFF_TIME = 5
 
 
 if __name__ == "__main__":
-    stock_codes = [st["_id"] for st in db.Stock.find(projection=[])]
+    filters = {"profile.float_shares": "-"}
+    stock_codes = [st["_id"] for st in db.Stock.find(filters, projection=[])]
     n = TRY_TIMES
     while True:
         if n == 0:

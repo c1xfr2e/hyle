@@ -66,6 +66,6 @@ if __name__ == "__main__":
     fund_house_list.sort(key=lambda x: x["size"], reverse=True)
 
     # 保存规模前几的基金公司
-    FUND_COMPANY_TOP_COUNT = 50
+    FUND_COMPANY_TOP_COUNT = 20
 
     _store_house_list(fund_house_list[0:FUND_COMPANY_TOP_COUNT])

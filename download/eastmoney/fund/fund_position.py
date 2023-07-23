@@ -9,7 +9,6 @@
         - mongodb documents: fund
 """
 
-import logging
 import pymongo
 import requests
 from bs4 import BeautifulSoup

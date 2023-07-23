@@ -9,6 +9,7 @@
         - fund 中已有 position_history 数据
 """
 
+from ast import expr_context
 import pymongo
 from enum import Enum
 
@@ -47,16 +48,19 @@ def diff_fund_position(new, old):
 
     for code in enter_codes:
         p = new_dict[code]
-        enter_list.append(
-            {
-                "name": p["name"],
-                "code": p["code"],
-                "quantity": p["quantity"],
-                "value": p["value"],
-                "float_percent": p["float_percent"],
-                "net_percent": p["net_percent"],
-            }
-        )
+        try:
+            enter_list.append(
+                {
+                    "name": p["name"],
+                    "code": p["code"],
+                    "quantity": p["quantity"],
+                    "value": p["value"],
+                    "float_percent": p["float_percent"],
+                    "net_percent": p["net_percent"],
+                }
+            )
+        except:
+            pass
 
     for code in exit_codes:
         p = old_dict[code]

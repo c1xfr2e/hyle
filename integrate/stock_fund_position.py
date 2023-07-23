@@ -117,10 +117,14 @@ def _aggregate_fund_position_change(stock_dict, house):
         house_entry["summary"]["net_percent_change"] = round(house_entry["summary"]["net_percent_change"], 2)
         # 得出 float_percent_change
         if stock_code in ALL_STOCKS_DICT:
-            house_entry["summary"]["float_percent_change"] = round(
-                quantity_change * 10000 * 100 / ALL_STOCKS_DICT[stock_code]["profile"]["float_shares"],
-                3,
-            )
+            try:
+                house_entry["summary"]["float_percent_change"] = round(
+                    quantity_change * 10000 * 100 / ALL_STOCKS_DICT[stock_code]["profile"]["float_shares"],
+                    3,
+                )
+            except Exception:
+                house_entry["summary"]["float_percent_change"] = 0
+                pass
 
 
 def process_by_each_house(house):

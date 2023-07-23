@@ -49,24 +49,37 @@ def get_stock_list_by_page(session, page_no, page_size) -> List[Dict]:
 
     Returns:
         股票列表, 带基本信息, 见 samples/stock_list.json
+
+http://62.push2.eastmoney.com/api/qt/clist/get?cb=jQuery1124021881304596364082_1690103811240&pn=1&pz=20&po=1&np=1&ut=bd1d9ddb04089700cf9c27f6f7426281&fltt=2&invt=2&wbp2u=|0|0|0|web&fid=f3&fs=m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23,m:0+t:81+s:2048&fields=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152&_=1690103811241
+
+        fetch("http://62.push2.eastmoney.com/api/qt/clist/get?cb=jQuery1124021881304596364082_1690103811240&pn=1&pz=20&po=1&np=1&ut=bd1d9ddb04089700cf9c27f6f7426281&fltt=2&invt=2&wbp2u=|0|0|0|web&fid=f3&fs=m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23,m:0+t:81+s:2048&fields=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152&_=1690103811241", {
+        "headers": {
+            "accept": "*/*",
+            "accept-language": "zh-CN,zh;q=0.9,en;q=0.8"
+        },
+        "referrer": "http://quote.eastmoney.com/center/gridlist.html",
+        "referrerPolicy": "unsafe-url",
+        "body": null,
+        "method": "GET",
+        "mode": "cors",
+        "credentials": "include"
+        });
     """
 
-    url = "http://3.push2.eastmoney.com/api/qt/clist/get"
+    url = "http://62.push2.eastmoney.com/api/qt/clist/get"
     headers = {
         "Connection": "keep-alive",
         "Pragma": "no-cache",
         "Cache-Control": "no-cache",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6)",
         "Accept": "*/*",
-        "Referer": "http://quote.eastmoney.com/",
+        "Referer": "http://quote.eastmoney.com/center/gridlist.html",
     }
     params = {
         "pn": page_no,
         "pz": page_size,
         "po": "1",
         "np": "1",
-        "fltt": "2",
-        "invt": "2",
         "fid": "f20",  # 按市值排序
         "fs": "m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23",
         "fields": "f2,f3,f4,f5,f6,f7,f8,f12,f13,f14,f20,f21,f38,f39,f37,f23,f114,f9,f26,f112",
@@ -76,6 +89,8 @@ def get_stock_list_by_page(session, page_no, page_size) -> List[Dict]:
 
 
 def _parse_fields(data):
+    if data["f12"] == "002013":
+        return {}
     return {
         "code": data["f12"],
         "name": data["f14"].replace(" ", ""),
