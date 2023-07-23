@@ -89,8 +89,6 @@ http://62.push2.eastmoney.com/api/qt/clist/get?cb=jQuery1124021881304596364082_1
 
 
 def _parse_fields(data):
-    if data["f12"] == "002013":
-        return {}
     return {
         "code": data["f12"],
         "name": data["f14"].replace(" ", ""),
